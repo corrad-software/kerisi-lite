@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing & Subscription - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+
+                    <!-- Mobile Menu Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button id="menuToggle" class="lg:hidden text-gray-600 hover:text-black">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-black">Billing & Subscription</h2>
+                            <p class="text-sm text-gray-600">Manage your subscription and payment methods</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Side Actions -->
+                    <div class="flex items-center gap-4">
+                        <!-- Notifications -->
+                        <button class="relative p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bell text-lg"></i>
+                            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Billing Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <!-- Current Subscription Card -->
+                <div class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl shadow-xl p-8 mb-8 text-white">
+                    <div class="flex items-start justify-between mb-6">
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <i class="fas fa-crown text-yellow-300 text-3xl"></i>
+                                <h3 class="text-3xl font-bold">Professional Plan</h3>
+                            </div>
+                            <p class="text-blue-100 text-lg">You're currently on the Professional plan</p>
+                        </div>
+                        <span class="px-4 py-2 bg-green-500 text-white font-bold rounded-full text-sm">Active</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                            <p class="text-blue-200 text-sm mb-1">Monthly Price</p>
+                            <p class="text-2xl font-bold">RM 99.00</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                            <p class="text-blue-200 text-sm mb-1">Next Billing Date</p>
+                            <p class="text-2xl font-bold">Jan 15, 2026</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                            <p class="text-blue-200 text-sm mb-1">Days Remaining</p>
+                            <p class="text-2xl font-bold">15 days</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button onclick="showCancelModal()" class="px-6 py-3 bg-white/10 backdrop-blur hover:bg-white/20 text-white font-semibold rounded-lg transition-colors border border-white/20">
+                            <i class="fas fa-times-circle mr-2"></i>Cancel Subscription
+                        </button>
+                        <button onclick="document.getElementById('plans').scrollIntoView({behavior: 'smooth'})" class="px-6 py-3 bg-white text-blue-600 hover:bg-blue-50 font-semibold rounded-lg transition-colors">
+                            <i class="fas fa-arrow-up mr-2"></i>Change Plan
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Subscription Plans -->
+                <div id="plans" class="mb-8">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-black mb-2">Choose Your Plan</h3>
+                        <p class="text-gray-600">Select the perfect plan for your business needs</p>
+                    </div>
+
+                    <!-- Billing Toggle -->
+                    <div class="flex items-center justify-center gap-4 mb-8">
+                        <span id="monthlyLabel" class="text-sm font-semibold text-black">Monthly</span>
+                        <button onclick="toggleBilling()" class="relative w-14 h-7 bg-gray-300 rounded-full transition-colors" id="billingToggle">
+                            <div class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform" id="billingToggleCircle"></div>
+                        </button>
+                        <span id="yearlyLabel" class="text-sm font-medium text-gray-600">Yearly <span class="text-green-600 font-bold">(Save 20%)</span></span>
+                    </div>
+
+                    <!-- Plans Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                        <!-- Starter Plan -->
+                        <div class="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-8 hover:shadow-lg transition-shadow">
+                            <div class="mb-6">
+                                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                                    <i class="fas fa-rocket text-gray-600 text-xl"></i>
+                                </div>
+                                <h4 class="text-2xl font-bold text-black mb-2">Starter</h4>
+                                <p class="text-gray-600 text-sm">Perfect for freelancers and small businesses</p>
+                            </div>
+
+                            <div class="mb-6">
+                                <div class="flex items-baseline gap-2 mb-2">
+                                    <span class="text-4xl font-bold text-black">RM <span id="starterPrice">49</span></span>
+                                    <span class="text-gray-500">/month</span>
+                                </div>
+                                <p class="text-xs text-gray-500" id="starterYearlyPrice" style="display: none;">Billed RM 470.40 annually</p>
+                            </div>
+
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">Up to 50 invoices per month</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">Basic expense tracking</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">5 customers</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">Email support</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">Basic reports</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-times text-gray-300 mt-1"></i>
+                                    <span class="text-sm text-gray-400">AI Business Advisor</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-times text-gray-300 mt-1"></i>
+                                    <span class="text-sm text-gray-400">Advanced analytics</span>
+                                </li>
+                            </ul>
+
+                            <button onclick="changePlan('starter')" class="w-full py-3 px-6 border-2 border-gray-300 text-black font-semibold rounded-lg hover:bg-gray-50 transition-colors">
+                                Select Plan
+                            </button>
+                        </div>
+
+                        <!-- Professional Plan (Current) -->
+                        <div class="bg-white rounded-xl shadow-xl border-4 border-blue-600 p-8 relative transform scale-105">
+                            <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+                                <span class="px-4 py-1.5 bg-blue-600 text-white text-xs font-bold rounded-full">CURRENT PLAN</span>
+                            </div>
+
+                            <div class="mb-6">
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                    <i class="fas fa-crown text-blue-600 text-xl"></i>
+                                </div>
+                                <h4 class="text-2xl font-bold text-black mb-2">Professional</h4>
+                                <p class="text-gray-600 text-sm">Ideal for growing businesses</p>
+                            </div>
+
+                            <div class="mb-6">
+                                <div class="flex items-baseline gap-2 mb-2">
+                                    <span class="text-4xl font-bold text-black">RM <span id="proPrice">99</span></span>
+                                    <span class="text-gray-500">/month</span>
+                                </div>
+                                <p class="text-xs text-gray-500" id="proYearlyPrice" style="display: none;">Billed RM 950.40 annually</p>
+                            </div>
+
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700"><strong>Unlimited invoices</strong></span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">Advanced expense management</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">Unlimited customers</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">Priority email & chat support</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">Advanced reports & analytics</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700"><strong>AI Business Advisor (Daily)</strong></span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">Custom branding</span>
+                                </li>
+                            </ul>
+
+                            <button disabled class="w-full py-3 px-6 bg-gray-300 text-gray-500 font-semibold rounded-lg cursor-not-allowed">
+                                Current Plan
+                            </button>
+                        </div>
+
+                        <!-- Enterprise Plan -->
+                        <div class="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-8 hover:shadow-lg transition-shadow">
+                            <div class="mb-6">
+                                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                                    <i class="fas fa-building text-purple-600 text-xl"></i>
+                                </div>
+                                <h4 class="text-2xl font-bold text-black mb-2">Enterprise</h4>
+                                <p class="text-gray-600 text-sm">For large organizations</p>
+                            </div>
+
+                            <div class="mb-6">
+                                <div class="flex items-baseline gap-2 mb-2">
+                                    <span class="text-4xl font-bold text-black">RM <span id="enterprisePrice">199</span></span>
+                                    <span class="text-gray-500">/month</span>
+                                </div>
+                                <p class="text-xs text-gray-500" id="enterpriseYearlyPrice" style="display: none;">Billed RM 1,910.40 annually</p>
+                            </div>
+
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700"><strong>Everything in Professional</strong></span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">Multi-user access (up to 10 users)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">Advanced permissions</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">24/7 phone support</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">Dedicated account manager</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700"><strong>AI Advisor (Real-time)</strong></span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-sm text-gray-700">Custom integrations & API access</span>
+                                </li>
+                            </ul>
+
+                            <button onclick="changePlan('enterprise')" class="w-full py-3 px-6 bg-black text-white font-semibold rounded-lg hover:bg-gray-900 transition-colors">
+                                Upgrade to Enterprise
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h4 class="text-lg font-bold text-black">Payment Method</h4>
+                        <button onclick="window.location.href='payment-methods.html'" class="text-sm font-semibold text-blue-600 hover:text-blue-700">
+                            Manage Methods
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                        <div class="w-14 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded flex items-center justify-center">
+                            <i class="fas fa-credit-card text-white text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-semibold text-black">Visa ending in 4242</p>
+                            <p class="text-sm text-gray-600">Expires 12/2026</p>
+                        </div>
+                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded-full">Default</span>
+                    </div>
+                </div>
+
+                <!-- Billing History Preview -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h4 class="text-lg font-bold text-black">Recent Billing History</h4>
+                        <a href="billing-history.html" class="text-sm font-semibold text-blue-600 hover:text-blue-700">
+                            View All
+                        </a>
+                    </div>
+                    <div class="space-y-4">
+                        <!-- Invoice 1 -->
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-check text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-black">December 2025</p>
+                                    <p class="text-sm text-gray-600">Professional Plan - Paid on Dec 15, 2025</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-black">RM 99.00</p>
+                                <button class="text-sm text-blue-600 hover:text-blue-700 mt-1">
+                                    <i class="fas fa-download mr-1"></i>Download
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Invoice 2 -->
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-check text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-black">November 2025</p>
+                                    <p class="text-sm text-gray-600">Professional Plan - Paid on Nov 15, 2025</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-black">RM 99.00</p>
+                                <button class="text-sm text-blue-600 hover:text-blue-700 mt-1">
+                                    <i class="fas fa-download mr-1"></i>Download
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Invoice 3 -->
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-check text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-black">October 2025</p>
+                                    <p class="text-sm text-gray-600">Professional Plan - Paid on Oct 15, 2025</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-black">RM 99.00</p>
+                                <button class="text-sm text-blue-600 hover:text-blue-700 mt-1">
+                                    <i class="fas fa-download mr-1"></i>Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden hidden"></div>
+
+    <!-- Cancel Subscription Modal -->
+    <div id="cancelModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-8">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-black mb-2">Cancel Subscription?</h3>
+                <p class="text-gray-600">Are you sure you want to cancel your Professional plan? You'll lose access to premium features.</p>
+            </div>
+            <div class="space-y-3">
+                <button onclick="confirmCancel()" class="w-full py-3 px-6 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors">
+                    Yes, Cancel Subscription
+                </button>
+                <button onclick="hideCancelModal()" class="w-full py-3 px-6 border-2 border-gray-300 text-black font-semibold rounded-lg hover:bg-gray-50 transition-colors">
+                    Keep My Subscription
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let isYearly = false;
+
+        // Billing period toggle
+        function toggleBilling() {
+            isYearly = !isYearly;
+            const toggle = document.getElementById('billingToggle');
+            const circle = document.getElementById('billingToggleCircle');
+            const monthlyLabel = document.getElementById('monthlyLabel');
+            const yearlyLabel = document.getElementById('yearlyLabel');
+
+            if (isYearly) {
+                toggle.classList.remove('bg-gray-300');
+                toggle.classList.add('bg-blue-600');
+                circle.style.transform = 'translateX(28px)';
+                monthlyLabel.classList.remove('text-black', 'font-semibold');
+                monthlyLabel.classList.add('text-gray-600', 'font-medium');
+                yearlyLabel.classList.remove('text-gray-600', 'font-medium');
+                yearlyLabel.classList.add('text-black', 'font-semibold');
+
+                // Update prices (20% discount)
+                document.getElementById('starterPrice').textContent = '39.20';
+                document.getElementById('proPrice').textContent = '79.20';
+                document.getElementById('enterprisePrice').textContent = '159.20';
+
+                // Show yearly billing info
+                document.getElementById('starterYearlyPrice').style.display = 'block';
+                document.getElementById('proYearlyPrice').style.display = 'block';
+                document.getElementById('enterpriseYearlyPrice').style.display = 'block';
+            } else {
+                toggle.classList.remove('bg-blue-600');
+                toggle.classList.add('bg-gray-300');
+                circle.style.transform = 'translateX(0)';
+                monthlyLabel.classList.remove('text-gray-600', 'font-medium');
+                monthlyLabel.classList.add('text-black', 'font-semibold');
+                yearlyLabel.classList.remove('text-black', 'font-semibold');
+                yearlyLabel.classList.add('text-gray-600', 'font-medium');
+
+                // Update prices (monthly)
+                document.getElementById('starterPrice').textContent = '49';
+                document.getElementById('proPrice').textContent = '99';
+                document.getElementById('enterprisePrice').textContent = '199';
+
+                // Hide yearly billing info
+                document.getElementById('starterYearlyPrice').style.display = 'none';
+                document.getElementById('proYearlyPrice').style.display = 'none';
+                document.getElementById('enterpriseYearlyPrice').style.display = 'none';
+            }
+        }
+
+        // Change plan
+        function changePlan(plan) {
+            const planNames = {
+                'starter': 'Starter',
+                'enterprise': 'Enterprise'
+            };
+            const billing = isYearly ? 'yearly' : 'monthly';
+
+            if (confirm(`Change to ${planNames[plan]} plan (${billing} billing)?`)) {
+                alert(`Plan change to ${planNames[plan]} will be processed. You'll receive a confirmation email shortly.`);
+                // In production, this would trigger an API call
+            }
+        }
+
+        // Cancel subscription modal
+        function showCancelModal() {
+            document.getElementById('cancelModal').classList.remove('hidden');
+        }
+
+        function hideCancelModal() {
+            document.getElementById('cancelModal').classList.add('hidden');
+        }
+
+        function confirmCancel() {
+            alert('Subscription cancellation processed. Your plan will remain active until January 15, 2026.');
+            hideCancelModal();
+            // In production, this would trigger an API call
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('cancelModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideCancelModal();
+            }
+        });
+    </script>
+
+</body>
+</html>

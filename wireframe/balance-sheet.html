@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance Sheet - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Print styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container" class="no-print"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="no-print bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+
+                    <!-- Mobile Menu Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button id="menuToggle" class="lg:hidden p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-black">Balance Sheet</h2>
+                            <p class="text-sm text-gray-600">Statement of financial position</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Actions -->
+                    <div class="flex items-center gap-3">
+                        <button onclick="window.print()" class="flex items-center gap-2 px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-print"></i>
+                            <span>Print</span>
+                        </button>
+                        <button onclick="exportReport()" class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                            <i class="fas fa-download"></i>
+                            <span>Export</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <!-- Period Selection -->
+                <div class="no-print bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+                    <div class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+                        <div class="flex-1">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Report Date
+                            </label>
+                            <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                                <option value="today">Today</option>
+                                <option value="end-of-month">End of This Month</option>
+                                <option value="end-of-quarter">End of This Quarter</option>
+                                <option value="end-of-year" selected>End of This Year</option>
+                                <option value="custom">Custom Date</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end gap-3">
+                            <button onclick="compareReport()" class="px-4 py-3 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-exchange-alt mr-2"></i>Compare Dates
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Header -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                    <div class="text-center">
+                        <h1 class="text-3xl font-bold text-black mb-2">Kerisi Lite</h1>
+                        <h2 class="text-xl font-semibold text-gray-700 mb-1">Balance Sheet</h2>
+                        <p class="text-sm text-gray-600">As of December 31, 2024</p>
+                    </div>
+                </div>
+
+                <!-- Balance Sheet Report -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+
+                    <!-- Assets Section -->
+                    <div class="bg-blue-50 px-6 py-4 border-b border-blue-100">
+                        <h3 class="text-lg font-bold text-blue-900">Assets</h3>
+                    </div>
+
+                    <!-- Current Assets -->
+                    <div class="p-6 border-b border-gray-200">
+                        <h4 class="text-base font-bold text-gray-900 mb-4">Current Assets</h4>
+                        <div class="space-y-3 ml-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Cash and Cash Equivalents</span>
+                                <span class="text-sm font-semibold text-black">RM 125,430.50</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Accounts Receivable</span>
+                                <span class="text-sm font-semibold text-black">RM 28,450.00</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Inventory</span>
+                                <span class="text-sm font-semibold text-black">RM 45,200.00</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Prepaid Expenses</span>
+                                <span class="text-sm font-semibold text-black">RM 8,500.00</span>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-200">
+                                <span class="text-sm font-bold text-black">Total Current Assets</span>
+                                <span class="text-sm font-bold text-black">RM 207,580.50</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fixed Assets -->
+                    <div class="p-6 border-b border-gray-200">
+                        <h4 class="text-base font-bold text-gray-900 mb-4">Fixed Assets</h4>
+                        <div class="space-y-3 ml-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Property and Equipment</span>
+                                <span class="text-sm font-semibold text-black">RM 180,000.00</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Less: Accumulated Depreciation</span>
+                                <span class="text-sm font-semibold text-black">(RM 45,000.00)</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Furniture and Fixtures</span>
+                                <span class="text-sm font-semibold text-black">RM 30,000.00</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Less: Accumulated Depreciation</span>
+                                <span class="text-sm font-semibold text-black">(RM 7,500.00)</span>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-200">
+                                <span class="text-sm font-bold text-black">Total Fixed Assets</span>
+                                <span class="text-sm font-bold text-black">RM 157,500.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Assets -->
+                    <div class="bg-blue-50 px-6 py-4 border-b border-blue-100">
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-blue-900">TOTAL ASSETS</span>
+                            <span class="text-lg font-bold text-blue-900">RM 365,080.50</span>
+                        </div>
+                    </div>
+
+                    <!-- Liabilities Section -->
+                    <div class="bg-orange-50 px-6 py-4 border-b border-orange-100 mt-6">
+                        <h3 class="text-lg font-bold text-orange-900">Liabilities</h3>
+                    </div>
+
+                    <!-- Current Liabilities -->
+                    <div class="p-6 border-b border-gray-200">
+                        <h4 class="text-base font-bold text-gray-900 mb-4">Current Liabilities</h4>
+                        <div class="space-y-3 ml-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Accounts Payable</span>
+                                <span class="text-sm font-semibold text-black">RM 32,450.00</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Accrued Expenses</span>
+                                <span class="text-sm font-semibold text-black">RM 12,340.00</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Short-term Loans</span>
+                                <span class="text-sm font-semibold text-black">RM 25,000.00</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Income Tax Payable</span>
+                                <span class="text-sm font-semibold text-black">RM 8,900.00</span>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-200">
+                                <span class="text-sm font-bold text-black">Total Current Liabilities</span>
+                                <span class="text-sm font-bold text-black">RM 78,690.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Long-term Liabilities -->
+                    <div class="p-6 border-b border-gray-200">
+                        <h4 class="text-base font-bold text-gray-900 mb-4">Long-term Liabilities</h4>
+                        <div class="space-y-3 ml-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Long-term Loans</span>
+                                <span class="text-sm font-semibold text-black">RM 80,000.00</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Deferred Tax Liabilities</span>
+                                <span class="text-sm font-semibold text-black">RM 5,200.00</span>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-200">
+                                <span class="text-sm font-bold text-black">Total Long-term Liabilities</span>
+                                <span class="text-sm font-bold text-black">RM 85,200.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Liabilities -->
+                    <div class="bg-orange-50 px-6 py-4 border-b border-orange-100">
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-orange-900">TOTAL LIABILITIES</span>
+                            <span class="text-lg font-bold text-orange-900">RM 163,890.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Equity Section -->
+                    <div class="bg-emerald-50 px-6 py-4 border-b border-emerald-100 mt-6">
+                        <h3 class="text-lg font-bold text-emerald-900">Equity</h3>
+                    </div>
+
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="space-y-3 ml-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Owner's Capital</span>
+                                <span class="text-sm font-semibold text-black">RM 150,000.00</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-700">Retained Earnings</span>
+                                <span class="text-sm font-semibold text-black">RM 51,190.50</span>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-200">
+                                <span class="text-sm font-bold text-black">Total Equity</span>
+                                <span class="text-sm font-bold text-black">RM 201,190.50</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Liabilities and Equity -->
+                    <div class="bg-emerald-50 px-6 py-6">
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-emerald-900">TOTAL LIABILITIES & EQUITY</span>
+                            <span class="text-2xl font-bold text-emerald-900">RM 365,080.50</span>
+                        </div>
+                    </div>
+
+                    <!-- Summary Metrics -->
+                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <p class="text-xs text-gray-600 mb-1">Current Ratio</p>
+                                <p class="text-lg font-bold text-emerald-600">2.64</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-xs text-gray-600 mb-1">Debt to Equity Ratio</p>
+                                <p class="text-lg font-bold text-emerald-600">0.81</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-xs text-gray-600 mb-1">Working Capital</p>
+                                <p class="text-lg font-bold text-emerald-600">RM 128,890.50</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Report Footer -->
+                <div class="mt-6 text-center text-sm text-gray-500">
+                    Generated on December 31, 2024 at 3:45 PM
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden hidden"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        if (menuToggle && sidebar && overlay) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        }
+
+        // Export report function
+        function exportReport() {
+            alert('Exporting Balance Sheet as PDF...');
+        }
+
+        // Compare report function
+        function compareReport() {
+            alert('Compare with another date - feature coming soon!');
+        }
+    </script>
+
+</body>
+</html>

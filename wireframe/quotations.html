@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotations - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+
+                    <!-- Mobile Menu Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button id="menuToggle" class="lg:hidden p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h1 class="text-2xl font-bold text-black">Quotations</h1>
+                            <p class="text-sm text-gray-600">Create and manage price quotes for your customers</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Actions -->
+                    <div class="flex items-center gap-3">
+                        <!-- Notifications -->
+                        <button class="relative p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bell text-lg"></i>
+                            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </button>
+
+                        <!-- Create Quotation Button -->
+                        <button onclick="window.location.href='create-quotation.html'" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors">
+                            <i class="fas fa-plus"></i>
+                            <span>New Quotation</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <!-- Stats & Filters Card -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+
+                    <!-- Filters -->
+                    <div class="flex flex-wrap items-center gap-4 mb-6">
+                        <!-- Status Filter -->
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm font-medium text-gray-700">Status:</label>
+                            <select id="statusFilter" class="px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium focus:outline-none focus:border-black">
+                                <option value="">All Statuses</option>
+                                <option value="draft">Draft</option>
+                                <option value="sent">Sent</option>
+                                <option value="viewed">Viewed</option>
+                                <option value="accepted">Accepted</option>
+                                <option value="declined">Declined</option>
+                                <option value="expired">Expired</option>
+                            </select>
+                        </div>
+
+                        <!-- Date Range Filter -->
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm font-medium text-gray-700">Period:</label>
+                            <select id="dateFilter" class="px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium focus:outline-none focus:border-black">
+                                <option value="all">All Time</option>
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month" selected>This Month</option>
+                                <option value="quarter">This Quarter</option>
+                                <option value="year">This Year</option>
+                                <option value="custom">Custom Range</option>
+                            </select>
+                        </div>
+
+                        <!-- Customer Filter -->
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm font-medium text-gray-700">Customer:</label>
+                            <select id="customerFilter" class="px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium focus:outline-none focus:border-black">
+                                <option value="">All Customers</option>
+                                <option value="acme">Acme Corporation</option>
+                                <option value="tech">Tech Solutions Ltd</option>
+                                <option value="creative">Creative Agency</option>
+                                <option value="marketing">Marketing Pro</option>
+                                <option value="digital">Digital Startups Inc</option>
+                                <option value="global">Global Brands Co</option>
+                            </select>
+                        </div>
+
+                        <!-- Export & Actions -->
+                        <div class="ml-auto flex items-center gap-2">
+                            <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-download mr-2"></i>Export
+                            </button>
+                            <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-filter mr-2"></i>More Filters
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Summary Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 pt-6 border-t border-gray-200">
+                        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-sm p-4 text-white text-center">
+                            <p class="text-xs font-semibold text-blue-100 mb-1">Total Quotations</p>
+                            <p class="text-2xl font-bold">32</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-sm p-4 text-white text-center">
+                            <p class="text-xs font-semibold text-blue-100 mb-1">Total Value</p>
+                            <p class="text-2xl font-bold">RM 245,800</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-sm p-4 text-white text-center">
+                            <p class="text-xs font-semibold text-green-100 mb-1">Accepted</p>
+                            <p class="text-2xl font-bold">RM 156,400</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-sm p-4 text-white text-center">
+                            <p class="text-xs font-semibold text-orange-100 mb-1">Pending</p>
+                            <p class="text-2xl font-bold">RM 67,200</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-xl shadow-sm p-4 text-white text-center">
+                            <p class="text-xs font-semibold text-red-100 mb-1">Declined</p>
+                            <p class="text-2xl font-bold">RM 22,200</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search by quotation number, customer name, or amount..."
+                            class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                        >
+                    </div>
+                </div>
+
+                <!-- Quotations Table -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+
+                    <!-- Table Header -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th class="px-6 py-4 text-left">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Quote #
+                                    </th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Customer
+                                    </th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Issue Date
+                                    </th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Valid Until
+                                    </th>
+                                    <th class="px-6 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Amount
+                                    </th>
+                                    <th class="px-6 py-4 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+
+                                <!-- Quotation Row 1 - Accepted -->
+                                <tr class="quotation-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="accepted" onclick="window.location.href='view-quotation.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-purple-600">QUO-2024-001</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-blue-600">AC</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-black">Acme Corporation</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Dec 1, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Dec 31, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 45,000.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            <i class="fas fa-check-circle mr-1"></i> Accepted
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Quotation Row 2 - Sent -->
+                                <tr class="quotation-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="sent" onclick="window.location.href='view-quotation.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-purple-600">QUO-2024-002</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-purple-600">TS</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-black">Tech Solutions Ltd</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Dec 8, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Jan 7, 2025
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 28,500.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-50 text-blue-700">
+                                            <i class="fas fa-paper-plane mr-1"></i> Sent
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Quotation Row 3 - Declined -->
+                                <tr class="quotation-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="declined" onclick="window.location.href='view-quotation.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-purple-600">QUO-2024-003</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-pink-600">CA</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-black">Creative Agency</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Nov 20, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Dec 20, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 15,800.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-50 text-red-700">
+                                            <i class="fas fa-times-circle mr-1"></i> Declined
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Quotation Row 4 - Viewed -->
+                                <tr class="quotation-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="viewed" onclick="window.location.href='view-quotation.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-purple-600">QUO-2024-004</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-green-600">MP</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-black">Marketing Pro</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Dec 15, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Jan 14, 2025
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 18,200.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-indigo-50 text-indigo-700">
+                                            <i class="fas fa-eye mr-1"></i> Viewed
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Quotation Row 5 - Accepted -->
+                                <tr class="quotation-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="accepted" onclick="window.location.href='view-quotation.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-purple-600">QUO-2024-005</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-orange-600">DS</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-black">Digital Startups Inc</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Dec 3, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Jan 2, 2025
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 62,300.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            <i class="fas fa-check-circle mr-1"></i> Accepted
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Quotation Row 6 - Expired -->
+                                <tr class="quotation-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="expired" onclick="window.location.href='view-quotation.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-purple-600">QUO-2024-006</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-teal-600">GB</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-black">Global Brands Co</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Nov 1, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                                        Nov 30, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 35,700.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-600">
+                                            <i class="fas fa-calendar-times mr-1"></i> Expired
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Quotation Row 7 - Draft -->
+                                <tr class="quotation-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="draft" onclick="window.location.href='view-quotation.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-purple-600">DRAFT-007</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-gray-600">AC</span>
+                                            </div>
+                                            <span class="text-sm font-medium text-black">Acme Corporation</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                                        -
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                                        -
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 40,100.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-600">
+                                            <i class="fas fa-file mr-1"></i> Draft
+                                        </span>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Empty State (hidden by default) -->
+                    <div id="emptyState" class="hidden p-12 text-center">
+                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-file-contract text-gray-400 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-black mb-2">No quotations found</h3>
+                        <p class="text-gray-600 mb-4">Try adjusting your filters or create a new quotation</p>
+                        <button onclick="window.location.href='create-quotation.html'" class="px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors">
+                            <i class="fas fa-plus mr-2"></i>Create Quotation
+                        </button>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="border-t border-gray-200 px-6 py-4 flex items-center justify-between">
+                        <div class="text-sm text-gray-600">
+                            Showing <span class="font-semibold text-black">1-7</span> of <span class="font-semibold text-black">32</span> quotations
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="px-3 py-2 text-sm font-medium text-white bg-black rounded-lg">1</button>
+                            <button class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">2</button>
+                            <button class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">3</button>
+                            <span class="px-2 text-gray-500">...</span>
+                            <button class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">5</button>
+                            <button class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden hidden"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        if (menuToggle && sidebar && overlay) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        }
+
+        // Status Filter
+        document.getElementById('statusFilter')?.addEventListener('change', function(e) {
+            const status = e.target.value;
+            const rows = document.querySelectorAll('.quotation-row');
+
+            rows.forEach(row => {
+                const rowStatus = row.getAttribute('data-status');
+                if (status === '' || rowStatus === status) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            checkEmptyState();
+        });
+
+        // Search functionality
+        document.getElementById('searchInput')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('.quotation-row');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            checkEmptyState();
+        });
+
+        // Customer Filter
+        document.getElementById('customerFilter')?.addEventListener('change', function(e) {
+            const customer = e.target.value;
+            const rows = document.querySelectorAll('.quotation-row');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (customer === '' || text.includes(customer)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            checkEmptyState();
+        });
+
+        // Check if table is empty and show empty state
+        function checkEmptyState() {
+            const rows = document.querySelectorAll('.quotation-row');
+            const visibleRows = Array.from(rows).filter(row => row.style.display !== 'none');
+            const emptyState = document.getElementById('emptyState');
+            const table = document.querySelector('table');
+
+            if (visibleRows.length === 0) {
+                emptyState.classList.remove('hidden');
+                table.style.display = 'none';
+            } else {
+                emptyState.classList.add('hidden');
+                table.style.display = '';
+            }
+        }
+
+        // Make quotation rows clickable
+        document.querySelectorAll('.quotation-row').forEach(row => {
+            row.addEventListener('click', function(e) {
+                // Don't navigate if clicking on checkbox
+                if (e.target.type !== 'checkbox') {
+                    window.location.href = 'view-quotation.html';
+                }
+            });
+        });
+
+        // Prevent actual navigation on anchor clicks (for wireframe)
+        document.querySelectorAll('a[href="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('Link clicked:', this.textContent);
+            });
+        });
+    </script>
+
+</body>
+</html>

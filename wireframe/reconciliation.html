@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Reconciliation - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Print styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container" class="no-print"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="no-print bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+
+                    <!-- Mobile Menu Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button id="menuToggle" class="lg:hidden p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-black">Bank Reconciliation</h2>
+                            <p class="text-sm text-gray-600">Reconcile your bank accounts</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Actions -->
+                    <div class="flex items-center gap-3">
+                        <button onclick="window.location.href='start-reconciliation.html'" class="flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white font-semibold rounded-lg hover:bg-cyan-700 transition-colors">
+                            <i class="fas fa-plus"></i>
+                            <span>Start Reconciliation</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <!-- Account Selection -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                        <div class="flex-1">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Select Account to Reconcile
+                            </label>
+                            <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500">
+                                <option value="">Choose an account...</option>
+                                <option value="1000" selected>Business Checking Account - RM 125,430.50</option>
+                                <option value="1010">Business Savings Account - RM 50,000.00</option>
+                                <option value="2100">Business Credit Card - RM 8,450.00</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end gap-3">
+                            <button onclick="viewHistory()" class="px-4 py-3 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-history mr-2"></i>View History
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reconciliation Status Card -->
+                <div class="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl shadow-sm p-6 mb-6 text-white">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div>
+                            <p class="text-cyan-100 text-sm mb-1">Statement Balance</p>
+                            <p class="text-3xl font-bold">RM 125,430.50</p>
+                        </div>
+                        <div>
+                            <p class="text-cyan-100 text-sm mb-1">Book Balance</p>
+                            <p class="text-3xl font-bold">RM 125,430.50</p>
+                        </div>
+                        <div>
+                            <p class="text-cyan-100 text-sm mb-1">Difference</p>
+                            <p class="text-3xl font-bold text-green-300">RM 0.00</p>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <div class="text-center">
+                                <i class="fas fa-check-circle text-6xl text-green-300 mb-2"></i>
+                                <p class="text-sm font-semibold">Reconciled</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <!-- Cleared -->
+                    <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-green-100">Cleared</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-check-circle text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">45</p>
+                    </div>
+
+<!-- Uncleared -->
+                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-orange-100">Uncleared</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-clock text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">8</p>
+                    </div>
+
+<!-- Deposits -->
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-blue-100">Deposits</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-arrow-down text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">3</p>
+                    </div>
+
+<!-- Checks -->
+                    <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-red-100">Checks</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-arrow-up text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">5</p>
+                    </div>
+
+                </div>
+
+                <!-- Search Bar -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search transactions..."
+                            class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                        >
+                    </div>
+                </div>
+
+                <!-- Transactions to Reconcile -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="bg-cyan-50 px-6 py-4 border-b border-cyan-100">
+                        <h3 class="text-lg font-bold text-cyan-900">Transactions to Reconcile</h3>
+                        <p class="text-sm text-cyan-700 mt-1">Check transactions that appear on your bank statement</p>
+                    </div>
+
+                    <!-- Table Header -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4 text-left">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Date
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Description
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Type
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Debit
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Credit
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+
+                                <!-- Transaction 1 - Cleared -->
+                                <tr class="reconcile-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="cleared" onclick="window.location.href='view-transaction.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300" checked>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 28, 2024
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <p class="text-sm font-medium text-black">Payment from Acme Corporation</p>
+                                            <p class="text-xs text-gray-500">Invoice INV-2024-001</p>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Deposit
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500">
+                                        -
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-green-600">
+                                        RM 5,500.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            <i class="fas fa-check mr-1"></i> Cleared
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Transaction 2 - Cleared -->
+                                <tr class="reconcile-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="cleared" onclick="window.location.href='view-transaction.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300" checked>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 27, 2024
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <p class="text-sm font-medium text-black">Office Rent Payment</p>
+                                            <p class="text-xs text-gray-500">Monthly payment</p>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-50 text-red-700">
+                                            Withdrawal
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-red-600">
+                                        RM 5,000.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500">
+                                        -
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            <i class="fas fa-check mr-1"></i> Cleared
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Transaction 3 - Uncleared -->
+                                <tr class="reconcile-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="uncleared" onclick="window.location.href='view-transaction.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 26, 2024
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <p class="text-sm font-medium text-black">Payment from Tech Solutions Ltd</p>
+                                            <p class="text-xs text-gray-500">Invoice INV-2024-002</p>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Deposit
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500">
+                                        -
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-green-600">
+                                        RM 8,900.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-orange-50 text-orange-700">
+                                            <i class="fas fa-clock mr-1"></i> Uncleared
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Transaction 4 - Cleared -->
+                                <tr class="reconcile-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="cleared" onclick="window.location.href='view-transaction.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300" checked>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 25, 2024
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <p class="text-sm font-medium text-black">Utilities Payment</p>
+                                            <p class="text-xs text-gray-500">Electricity & Water</p>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-50 text-red-700">
+                                            Withdrawal
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-red-600">
+                                        RM 1,250.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500">
+                                        -
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            <i class="fas fa-check mr-1"></i> Cleared
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Transaction 5 - Uncleared -->
+                                <tr class="reconcile-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="uncleared" onclick="window.location.href='view-transaction.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 24, 2024
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <p class="text-sm font-medium text-black">Office Supplies Purchase</p>
+                                            <p class="text-xs text-gray-500">Check #1025</p>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-50 text-red-700">
+                                            Withdrawal
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-red-600">
+                                        RM 875.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500">
+                                        -
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-orange-50 text-orange-700">
+                                            <i class="fas fa-clock mr-1"></i> Uncleared
+                                        </span>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="bg-white px-6 py-4 border-t border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-700">
+                                Showing <span class="font-semibold">1</span> to <span class="font-semibold">5</span> of <span class="font-semibold">53</span> transactions
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50" disabled>
+                                    Previous
+                                </button>
+                                <button class="px-4 py-2 text-sm font-medium text-white bg-cyan-600 border border-cyan-600 rounded-lg hover:bg-cyan-700">
+                                    1
+                                </button>
+                                <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                    2
+                                </button>
+                                <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Finish Reconciliation Button -->
+                <div class="mt-6 flex justify-end">
+                    <button onclick="finishReconciliation()" class="px-8 py-3 bg-cyan-600 text-white font-semibold rounded-lg hover:bg-cyan-700 transition-colors">
+                        <i class="fas fa-check-circle mr-2"></i>Finish Reconciliation
+                    </button>
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden hidden"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        if (menuToggle && sidebar && overlay) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('.reconcile-row');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // View history function
+        function viewHistory() {
+            alert('Reconciliation History - Would show past reconciliations');
+        }
+
+        // Finish reconciliation function
+        function finishReconciliation() {
+            alert('Reconciliation completed successfully!');
+        }
+    </script>
+
+</body>
+</html>

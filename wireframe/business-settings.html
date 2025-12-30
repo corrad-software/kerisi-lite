@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Settings - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Tab active state */
+        .tab-active {
+            border-bottom: 3px solid #6366f1;
+            color: #6366f1;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container" class="no-print"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+
+                    <!-- Mobile Menu Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button id="menuToggle" class="lg:hidden p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-black">Business Settings</h2>
+                            <p class="text-sm text-gray-600">Manage your business information and preferences</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Actions -->
+                    <div class="flex items-center gap-3">
+                        <button onclick="saveAllSettings()" class="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors">
+                            <i class="fas fa-save"></i>
+                            <span>Save Changes</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <!-- Settings Navigation Tabs -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6 overflow-hidden">
+                    <div class="flex overflow-x-auto">
+                        <button onclick="showTab('company')" id="tab-company" class="tab-active flex-shrink-0 px-6 py-4 text-sm font-medium border-b-3 transition-colors hover:bg-gray-50">
+                            <i class="fas fa-building mr-2"></i>Company Info
+                        </button>
+                        <button onclick="showTab('preferences')" id="tab-preferences" class="flex-shrink-0 px-6 py-4 text-sm font-medium text-gray-600 border-b-3 border-transparent transition-colors hover:bg-gray-50">
+                            <i class="fas fa-cog mr-2"></i>Preferences
+                        </button>
+                        <button onclick="showTab('tax')" id="tab-tax" class="flex-shrink-0 px-6 py-4 text-sm font-medium text-gray-600 border-b-3 border-transparent transition-colors hover:bg-gray-50">
+                            <i class="fas fa-receipt mr-2"></i>Tax Settings
+                        </button>
+                        <button onclick="showTab('payment')" id="tab-payment" class="flex-shrink-0 px-6 py-4 text-sm font-medium text-gray-600 border-b-3 border-transparent transition-colors hover:bg-gray-50">
+                            <i class="fas fa-credit-card mr-2"></i>Payment Methods
+                        </button>
+                        <button onclick="showTab('invoice')" id="tab-invoice" class="flex-shrink-0 px-6 py-4 text-sm font-medium text-gray-600 border-b-3 border-transparent transition-colors hover:bg-gray-50">
+                            <i class="fas fa-file-invoice mr-2"></i>Invoice Customization
+                        </button>
+                        <button onclick="showTab('quotation')" id="tab-quotation" class="flex-shrink-0 px-6 py-4 text-sm font-medium text-gray-600 border-b-3 border-transparent transition-colors hover:bg-gray-50">
+                            <i class="fas fa-file-alt mr-2"></i>Quotation Customization
+                        </button>
+                        <button onclick="showTab('integrations')" id="tab-integrations" class="flex-shrink-0 px-6 py-4 text-sm font-medium text-gray-600 border-b-3 border-transparent transition-colors hover:bg-gray-50">
+                            <i class="fas fa-plug mr-2"></i>Integrations
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Company Info Tab -->
+                <div id="content-company" class="tab-content">
+                    <!-- Business Information -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                        <h3 class="text-lg font-bold text-black mb-6 flex items-center gap-2">
+                            <i class="fas fa-building text-indigo-600"></i>
+                            Business Information
+                        </h3>
+
+                        <div class="space-y-6">
+                            <!-- Business Name -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Business Name <span class="text-red-600">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    value="Kerisi Lite"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                >
+                            </div>
+
+                            <!-- Legal Business Name -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Legal Business Name
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Kerisi Lite Sdn Bhd"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                >
+                            </div>
+
+                            <!-- Business Type -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Business Type
+                                </label>
+                                <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                    <option value="sole">Sole Proprietorship</option>
+                                    <option value="partnership">Partnership</option>
+                                    <option value="llc" selected>Limited Liability Company (Sdn Bhd)</option>
+                                    <option value="corporation">Corporation</option>
+                                    <option value="nonprofit">Non-Profit</option>
+                                </select>
+                            </div>
+
+                            <!-- Industry -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Industry
+                                </label>
+                                <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                    <option value="">Select industry</option>
+                                    <option value="tech" selected>Technology & Software</option>
+                                    <option value="retail">Retail & E-commerce</option>
+                                    <option value="consulting">Consulting & Professional Services</option>
+                                    <option value="creative">Creative & Design</option>
+                                    <option value="hospitality">Hospitality & Food Service</option>
+                                    <option value="construction">Construction & Real Estate</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="education">Education</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <!-- Business Registration Number -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Business Registration Number
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="202301234567"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Tax ID / SSM Number
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="C12345678"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Business Logo -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Business Logo
+                                </label>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
+                                        <i class="fas fa-image text-gray-400 text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <button class="px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
+                                            <i class="fas fa-upload mr-2"></i>Upload Logo
+                                        </button>
+                                        <p class="text-xs text-gray-500 mt-2">Recommended: 500x500px, PNG or JPG</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                        <h3 class="text-lg font-bold text-black mb-6 flex items-center gap-2">
+                            <i class="fas fa-address-card text-indigo-600"></i>
+                            Contact Information
+                        </h3>
+
+                        <div class="space-y-6">
+                            <!-- Email & Phone -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Business Email <span class="text-red-600">*</span>
+                                    </label>
+                                    <input
+                                        type="email"
+                                        value="hello@kerisilite.com"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Business Phone
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        value="+60 3-1234 5678"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Website -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Website
+                                </label>
+                                <input
+                                    type="url"
+                                    value="https://www.kerisilite.com"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                >
+                            </div>
+
+                            <!-- Address -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Business Address
+                                </label>
+                                <input
+                                    type="text"
+                                    value="123 Jalan Bukit Bintang"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 mb-3"
+                                    placeholder="Street Address"
+                                >
+                                <input
+                                    type="text"
+                                    placeholder="Suite, Unit, Building (optional)"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                >
+                            </div>
+
+                            <!-- City, State, Postal -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        City
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value="Kuala Lumpur"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        State / Province
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value="Wilayah Persekutuan"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Postal Code
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value="50200"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Country -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Country
+                                </label>
+                                <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                    <option value="MY" selected>Malaysia</option>
+                                    <option value="SG">Singapore</option>
+                                    <option value="US">United States</option>
+                                    <option value="GB">United Kingdom</option>
+                                    <option value="AU">Australia</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preferences Tab -->
+                <div id="content-preferences" class="tab-content hidden">
+                    <!-- Regional Settings -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                        <h3 class="text-lg font-bold text-black mb-6 flex items-center gap-2">
+                            <i class="fas fa-globe text-indigo-600"></i>
+                            Regional Settings
+                        </h3>
+
+                        <div class="space-y-6">
+                            <!-- Currency -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Default Currency
+                                    </label>
+                                    <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                        <option value="MYR" selected>Malaysian Ringgit (RM)</option>
+                                        <option value="USD">US Dollar ($)</option>
+                                        <option value="SGD">Singapore Dollar (S$)</option>
+                                        <option value="EUR">Euro (€)</option>
+                                        <option value="GBP">British Pound (£)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Timezone
+                                    </label>
+                                    <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                        <option value="Asia/Kuala_Lumpur" selected>Kuala Lumpur (GMT+8)</option>
+                                        <option value="Asia/Singapore">Singapore (GMT+8)</option>
+                                        <option value="America/New_York">New York (GMT-5)</option>
+                                        <option value="Europe/London">London (GMT+0)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Date & Number Format -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Date Format
+                                    </label>
+                                    <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                        <option value="DD/MM/YYYY" selected>DD/MM/YYYY (31/12/2024)</option>
+                                        <option value="MM/DD/YYYY">MM/DD/YYYY (12/31/2024)</option>
+                                        <option value="YYYY-MM-DD">YYYY-MM-DD (2024-12-31)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Number Format
+                                    </label>
+                                    <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                        <option value="1,234.56" selected>1,234.56</option>
+                                        <option value="1.234,56">1.234,56</option>
+                                        <option value="1 234.56">1 234.56</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Fiscal Year -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Fiscal Year Start Month
+                                </label>
+                                <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                    <option value="1" selected>January</option>
+                                    <option value="4">April</option>
+                                    <option value="7">July</option>
+                                    <option value="10">October</option>
+                                </select>
+                                <p class="text-xs text-gray-500 mt-2">When does your financial year begin?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invoice Settings -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                        <h3 class="text-lg font-bold text-black mb-6 flex items-center gap-2">
+                            <i class="fas fa-file-invoice-dollar text-indigo-600"></i>
+                            Invoice & Quote Settings
+                        </h3>
+
+                        <div class="space-y-6">
+                            <!-- Default Payment Terms -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Default Payment Terms
+                                </label>
+                                <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                    <option value="due-on-receipt">Due on Receipt</option>
+                                    <option value="net15">Net 15</option>
+                                    <option value="net30" selected>Net 30</option>
+                                    <option value="net45">Net 45</option>
+                                    <option value="net60">Net 60</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+
+                            <!-- Invoice Prefix -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Invoice Number Prefix
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value="INV"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                    >
+                                    <p class="text-xs text-gray-500 mt-2">Example: INV-2024-001</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Quote Number Prefix
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value="QUO"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                    >
+                                    <p class="text-xs text-gray-500 mt-2">Example: QUO-2024-001</p>
+                                </div>
+                            </div>
+
+                            <!-- Auto-reminders -->
+                            <div class="space-y-3">
+                                <div class="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        id="autoReminders"
+                                        class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                        checked
+                                    >
+                                    <label for="autoReminders" class="ml-3 text-sm font-medium text-gray-700">
+                                        Send automatic payment reminders for overdue invoices
+                                    </label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        id="thankYouEmail"
+                                        class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                        checked
+                                    >
+                                    <label for="thankYouEmail" class="ml-3 text-sm font-medium text-gray-700">
+                                        Send thank you email when payment is received
+                                    </label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        id="ccMyself"
+                                        class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                    >
+                                    <label for="ccMyself" class="ml-3 text-sm font-medium text-gray-700">
+                                        CC myself on all invoice emails
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tax Settings Tab -->
+                <div id="content-tax" class="tab-content hidden">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                        <h3 class="text-lg font-bold text-black mb-6 flex items-center gap-2">
+                            <i class="fas fa-percent text-indigo-600"></i>
+                            Tax Configuration
+                        </h3>
+
+                        <div class="space-y-6">
+                            <!-- Tax System -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Tax System
+                                </label>
+                                <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                    <option value="none">No Tax</option>
+                                    <option value="sst" selected>SST (Sales and Service Tax) - Malaysia</option>
+                                    <option value="gst">GST (Goods and Services Tax)</option>
+                                    <option value="vat">VAT (Value Added Tax)</option>
+                                    <option value="custom">Custom Tax</option>
+                                </select>
+                            </div>
+
+                            <!-- Tax Rates -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-4">
+                                    Tax Rates
+                                </label>
+
+                                <!-- Tax Rate 1 -->
+                                <div class="p-4 bg-gray-50 rounded-lg mb-3">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <label class="block text-xs font-medium text-gray-600 mb-1">Tax Name</label>
+                                            <input
+                                                type="text"
+                                                value="SST (6%)"
+                                                class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500"
+                                            >
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-medium text-gray-600 mb-1">Rate (%)</label>
+                                            <input
+                                                type="number"
+                                                value="6"
+                                                step="0.01"
+                                                class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500"
+                                            >
+                                        </div>
+                                        <div class="flex items-end">
+                                            <button class="w-full px-3 py-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                                <i class="fas fa-trash mr-2"></i>Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tax Rate 2 -->
+                                <div class="p-4 bg-gray-50 rounded-lg mb-3">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <label class="block text-xs font-medium text-gray-600 mb-1">Tax Name</label>
+                                            <input
+                                                type="text"
+                                                value="SST (10%)"
+                                                class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500"
+                                            >
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-medium text-gray-600 mb-1">Rate (%)</label>
+                                            <input
+                                                type="number"
+                                                value="10"
+                                                step="0.01"
+                                                class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500"
+                                            >
+                                        </div>
+                                        <div class="flex items-end">
+                                            <button class="w-full px-3 py-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                                <i class="fas fa-trash mr-2"></i>Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="mt-3 px-4 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors">
+                                    <i class="fas fa-plus mr-2"></i>Add Tax Rate
+                                </button>
+                            </div>
+
+                            <!-- Tax Number -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Tax Registration Number
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="e.g., A01-1234-56789012"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Methods Tab -->
+                <div id="content-payment" class="tab-content hidden">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                        <h3 class="text-lg font-bold text-black mb-6 flex items-center gap-2">
+                            <i class="fas fa-money-check-alt text-indigo-600"></i>
+                            Accepted Payment Methods
+                        </h3>
+
+                        <p class="text-sm text-gray-600 mb-6">Select which payment methods you accept from customers</p>
+
+                        <div class="space-y-4">
+                            <!-- Bank Transfer -->
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-start gap-3 flex-1">
+                                        <input
+                                            type="checkbox"
+                                            id="payment-bank"
+                                            class="w-4 h-4 mt-1 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                            checked
+                                        >
+                                        <div class="flex-1">
+                                            <label for="payment-bank" class="block font-semibold text-gray-900">Bank Transfer</label>
+                                            <p class="text-sm text-gray-600 mt-1">Direct bank deposit or wire transfer</p>
+
+                                            <div class="mt-3 space-y-2">
+                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Bank Name"
+                                                        value="Maybank"
+                                                        class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500"
+                                                    >
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Account Number"
+                                                        value="1234567890"
+                                                        class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500"
+                                                    >
+                                                </div>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Account Holder Name"
+                                                    value="Kerisi Lite Sdn Bhd"
+                                                    class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-500"
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-university text-2xl text-gray-400"></i>
+                                </div>
+                            </div>
+
+                            <!-- Credit Card -->
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-start gap-3">
+                                        <input
+                                            type="checkbox"
+                                            id="payment-card"
+                                            class="w-4 h-4 mt-1 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                            checked
+                                        >
+                                        <div>
+                                            <label for="payment-card" class="block font-semibold text-gray-900">Credit/Debit Card</label>
+                                            <p class="text-sm text-gray-600 mt-1">Accept Visa, Mastercard, and American Express</p>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-credit-card text-2xl text-gray-400"></i>
+                                </div>
+                            </div>
+
+                            <!-- Online Payment -->
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-start gap-3">
+                                        <input
+                                            type="checkbox"
+                                            id="payment-online"
+                                            class="w-4 h-4 mt-1 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                            checked
+                                        >
+                                        <div>
+                                            <label for="payment-online" class="block font-semibold text-gray-900">Online Payment (FPX)</label>
+                                            <p class="text-sm text-gray-600 mt-1">Malaysian online banking payment</p>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-globe text-2xl text-gray-400"></i>
+                                </div>
+                            </div>
+
+                            <!-- Cash -->
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-start gap-3">
+                                        <input
+                                            type="checkbox"
+                                            id="payment-cash"
+                                            class="w-4 h-4 mt-1 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                        >
+                                        <div>
+                                            <label for="payment-cash" class="block font-semibold text-gray-900">Cash</label>
+                                            <p class="text-sm text-gray-600 mt-1">Payment in cash</p>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-money-bill-wave text-2xl text-gray-400"></i>
+                                </div>
+                            </div>
+
+                            <!-- Check -->
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-start gap-3">
+                                        <input
+                                            type="checkbox"
+                                            id="payment-check"
+                                            class="w-4 h-4 mt-1 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                        >
+                                        <div>
+                                            <label for="payment-check" class="block font-semibold text-gray-900">Check / Cheque</label>
+                                            <p class="text-sm text-gray-600 mt-1">Payment by check</p>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-money-check text-2xl text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Invoice Customization Tab -->
+                <div id="content-invoice" class="tab-content hidden">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-black flex items-center gap-2">
+                                <i class="fas fa-palette text-indigo-600"></i>
+                                Invoice Appearance
+                            </h3>
+                            <button onclick="previewInvoice()" class="flex items-center gap-2 px-4 py-2 bg-white border border-indigo-600 text-indigo-600 font-semibold rounded-lg hover:bg-indigo-50 transition-colors">
+                                <i class="fas fa-eye"></i>
+                                <span>Preview</span>
+                            </button>
+                        </div>
+
+                        <div class="space-y-6">
+                            <!-- Color Theme -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-3">
+                                    Primary Color
+                                </label>
+                                <div class="flex items-center gap-3">
+                                    <input
+                                        type="color"
+                                        value="#6366f1"
+                                        class="w-16 h-12 border border-gray-200 rounded-lg cursor-pointer"
+                                    >
+                                    <input
+                                        type="text"
+                                        value="#6366f1"
+                                        class="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Footer Text -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Invoice Footer Text
+                                </label>
+                                <textarea
+                                    rows="3"
+                                    placeholder="Thank you for your business!"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 resize-none"
+                                >Thank you for your business! Payment is due within 30 days.</textarea>
+                            </div>
+
+                            <!-- Terms & Conditions -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Default Terms & Conditions
+                                </label>
+                                <textarea
+                                    rows="4"
+                                    placeholder="Add your terms and conditions here..."
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 resize-none"
+                                >1. Payment must be made within the specified period.
+2. Late payment may incur additional charges.
+3. All prices are in Malaysian Ringgit unless otherwise stated.</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quotation Customization Tab -->
+                <div id="content-quotation" class="tab-content hidden">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-black flex items-center gap-2">
+                                <i class="fas fa-palette text-indigo-600"></i>
+                                Quotation Appearance
+                            </h3>
+                            <button onclick="previewQuotation()" class="flex items-center gap-2 px-4 py-2 bg-white border border-indigo-600 text-indigo-600 font-semibold rounded-lg hover:bg-indigo-50 transition-colors">
+                                <i class="fas fa-eye"></i>
+                                <span>Preview</span>
+                            </button>
+                        </div>
+
+                        <div class="space-y-6">
+                            <!-- Color Theme -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-3">
+                                    Primary Color
+                                </label>
+                                <div class="flex items-center gap-3">
+                                    <input
+                                        type="color"
+                                        value="#6366f1"
+                                        class="w-16 h-12 border border-gray-200 rounded-lg cursor-pointer"
+                                    >
+                                    <input
+                                        type="text"
+                                        value="#6366f1"
+                                        class="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Validity Period -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Default Validity Period
+                                </label>
+                                <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                    <option value="7">Valid for 7 days</option>
+                                    <option value="15">Valid for 15 days</option>
+                                    <option value="30" selected>Valid for 30 days</option>
+                                    <option value="60">Valid for 60 days</option>
+                                    <option value="90">Valid for 90 days</option>
+                                </select>
+                            </div>
+
+                            <!-- Footer Text -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Quotation Footer Text
+                                </label>
+                                <textarea
+                                    rows="3"
+                                    placeholder="Thank you for considering our proposal!"
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 resize-none"
+                                >Thank you for considering our proposal! Please let us know if you have any questions.</textarea>
+                            </div>
+
+                            <!-- Terms & Conditions -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Default Terms & Conditions
+                                </label>
+                                <textarea
+                                    rows="4"
+                                    placeholder="Add your terms and conditions here..."
+                                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 resize-none"
+                                >1. This quotation is valid for the period stated above.
+2. Prices are subject to change without notice after expiry.
+3. All prices are in Malaysian Ringgit unless otherwise stated.
+4. Payment terms will be confirmed upon order placement.</textarea>
+                            </div>
+
+                            <!-- Additional Options -->
+                            <div class="space-y-3">
+                                <div class="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        id="showDiscount"
+                                        class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                        checked
+                                    >
+                                    <label for="showDiscount" class="ml-3 text-sm font-medium text-gray-700">
+                                        Show discount field by default
+                                    </label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        id="autoConvert"
+                                        class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                    >
+                                    <label for="autoConvert" class="ml-3 text-sm font-medium text-gray-700">
+                                        Automatically convert accepted quotations to invoices
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Integrations Tab -->
+                <div id="content-integrations" class="tab-content hidden">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                        <h3 class="text-lg font-bold text-black mb-6 flex items-center gap-2">
+                            <i class="fas fa-puzzle-piece text-indigo-600"></i>
+                            Available Integrations
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Payment Gateway -->
+                            <div class="p-6 border border-gray-200 rounded-lg hover:border-indigo-300 transition-colors">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-credit-card text-indigo-600 text-xl"></i>
+                                    </div>
+                                    <span class="px-2 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full">Connected</span>
+                                </div>
+                                <h4 class="font-bold text-black mb-2">Stripe</h4>
+                                <p class="text-sm text-gray-600 mb-4">Accept credit card payments directly on invoices</p>
+                                <button class="w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                                    Configure
+                                </button>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="p-6 border border-gray-200 rounded-lg hover:border-indigo-300 transition-colors">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-envelope text-blue-600 text-xl"></i>
+                                    </div>
+                                    <span class="px-2 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full">Connected</span>
+                                </div>
+                                <h4 class="font-bold text-black mb-2">Email Service</h4>
+                                <p class="text-sm text-gray-600 mb-4">Send invoices and receipts via email</p>
+                                <button class="w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                                    Configure
+                                </button>
+                            </div>
+
+                            <!-- Cloud Storage -->
+                            <div class="p-6 border border-gray-200 rounded-lg hover:border-indigo-300 transition-colors">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-cloud text-purple-600 text-xl"></i>
+                                    </div>
+                                    <span class="px-2 py-1 text-xs font-semibold text-gray-700 bg-gray-100 rounded-full">Not Connected</span>
+                                </div>
+                                <h4 class="font-bold text-black mb-2">Google Drive</h4>
+                                <p class="text-sm text-gray-600 mb-4">Automatically backup invoices to Google Drive</p>
+                                <button class="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors">
+                                    Connect
+                                </button>
+                            </div>
+
+                            <!-- Accounting Software -->
+                            <div class="p-6 border border-gray-200 rounded-lg hover:border-indigo-300 transition-colors">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-calculator text-green-600 text-xl"></i>
+                                    </div>
+                                    <span class="px-2 py-1 text-xs font-semibold text-gray-700 bg-gray-100 rounded-full">Not Connected</span>
+                                </div>
+                                <h4 class="font-bold text-black mb-2">Xero</h4>
+                                <p class="text-sm text-gray-600 mb-4">Sync transactions with Xero accounting software</p>
+                                <button class="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors">
+                                    Connect
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden hidden"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        if (menuToggle && sidebar && overlay) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        }
+
+        // Tab switching function
+        function showTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('[id^="tab-"]');
+            tabs.forEach(tab => {
+                tab.classList.remove('tab-active');
+                tab.classList.add('text-gray-600');
+            });
+
+            // Show selected tab content
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+
+            // Add active class to selected tab
+            const activeTab = document.getElementById('tab-' + tabName);
+            activeTab.classList.add('tab-active');
+            activeTab.classList.remove('text-gray-600');
+        }
+
+        // Save settings function
+        function saveAllSettings() {
+            // In production, this would save to backend
+            alert('Settings saved successfully!');
+        }
+
+        // Preview invoice function
+        function previewInvoice() {
+            // In production, this would open a preview modal or new window
+            window.open('invoice-preview.html', '_blank', 'width=800,height=1000');
+        }
+
+        // Preview quotation function
+        function previewQuotation() {
+            // In production, this would open a preview modal or new window
+            window.open('quotation-preview.html', '_blank', 'width=800,height=1000');
+        }
+    </script>
+
+</body>
+</html>

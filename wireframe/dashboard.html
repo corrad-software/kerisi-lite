@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+
+                    <!-- Mobile Menu Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button id="menuToggle" class="lg:hidden text-gray-600 hover:text-black">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <h2 class="text-2xl font-bold text-black">Dashboard</h2>
+                    </div>
+
+                    <!-- Right Side Actions -->
+                    <div class="flex items-center gap-4">
+                        <!-- Search -->
+                        <div class="hidden md:block relative">
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                class="w-64 pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10 transition-all"
+                            >
+                            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        </div>
+
+                        <!-- Notifications -->
+                        <button class="relative p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bell text-lg"></i>
+                            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </button>
+
+                        <!-- Create Invoice Button -->
+                        <button onclick="window.location.href='create-invoice.html'" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-file-invoice"></i>
+                            <span>Create Invoice</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <!-- Welcome Message -->
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-black mb-1">Welcome back, John!</h3>
+                    <p class="text-gray-600">Here's what's happening with your business today.</p>
+                </div>
+
+                <!-- AI Business Advisor Card -->
+                <div class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-xl shadow-sm border-2 border-indigo-200 mb-6 overflow-hidden">
+                    <div class="p-6 cursor-pointer hover:bg-indigo-50/50 transition-colors" onclick="toggleAIAdvisor()">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-center gap-3 flex-1">
+                                <div class="w-12 h-12 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                                    <i class="fas fa-brain text-white text-xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-lg font-bold text-black flex items-center gap-2">
+                                        AI Business Advisor
+                                        <span class="text-xs font-semibold text-indigo-600 bg-indigo-100 px-2 py-1 rounded-full">Daily Insight</span>
+                                    </h4>
+                                    <p class="text-xs text-gray-600">Last updated: Today, 8:00 AM</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <select id="advisorFrequency" class="px-3 py-1.5 text-xs font-medium border border-indigo-200 rounded-lg focus:outline-none focus:border-indigo-500 bg-white" onclick="event.stopPropagation()">
+                                    <option value="daily" selected>Daily</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="annual">Annual</option>
+                                </select>
+                                <button onclick="event.stopPropagation(); refreshInsights()" class="p-2 text-indigo-600 hover:bg-indigo-100 rounded-lg transition-colors" title="Refresh insights">
+                                    <i class="fas fa-sync-alt text-sm"></i>
+                                </button>
+                                <div class="p-2 text-indigo-600">
+                                    <i class="fas fa-chevron-down transition-transform" id="aiAdvisorIcon" style="transform: rotate(-90deg);"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="aiAdvisorContent" class="hidden px-6 pb-6 space-y-4">
+                        <!-- Key Findings -->
+                        <div class="bg-white/80 backdrop-blur rounded-lg p-4 border border-indigo-100">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fas fa-chart-line text-green-600 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h5 class="font-bold text-black mb-1 text-sm">📈 Strong Revenue Growth</h5>
+                                    <p class="text-sm text-gray-700 leading-relaxed">Your revenue has increased by 12.5% compared to last month. The upward trend is primarily driven by increased invoice volume (+8.2%) and successful payment collection. Outstanding payments decreased by 3.1%, indicating improved cash flow management.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prediction -->
+                        <div class="bg-white/80 backdrop-blur rounded-lg p-4 border border-indigo-100">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fas fa-crystal-ball text-blue-600 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h5 class="font-bold text-black mb-1 text-sm">🔮 Next Month Projection</h5>
+                                    <p class="text-sm text-gray-700 leading-relaxed">Based on current trends, your revenue is projected to reach <span class="font-bold text-indigo-600">RM 48,500 - RM 51,200</span> next month. This assumes similar invoice patterns and a seasonal uptick typically observed in January. Consider preparing additional capacity to handle increased demand.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recommendations -->
+                        <div class="bg-white/80 backdrop-blur rounded-lg p-4 border border-indigo-100">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fas fa-lightbulb text-orange-600 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h5 class="font-bold text-black mb-2 text-sm">💡 Action Recommendations</h5>
+                                    <ul class="space-y-1.5 text-sm text-gray-700">
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-orange-600 mt-0.5">•</span>
+                                            <span><strong>Follow up on overdue invoices:</strong> RM 8,080 is currently overdue. Send payment reminders to improve cash flow.</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-orange-600 mt-0.5">•</span>
+                                            <span><strong>Review expense breakdown:</strong> Payroll represents 45% of total expenses. Consider if this aligns with your revenue growth strategy.</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-orange-600 mt-0.5">•</span>
+                                            <span><strong>Optimize marketing spend:</strong> Marketing expenses are RM 4,100/month. With strong organic growth, evaluate ROI to ensure efficiency.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Disclaimer -->
+                        <div class="flex items-start gap-2 pt-2 border-t border-indigo-100">
+                            <i class="fas fa-info-circle text-gray-400 text-xs mt-0.5"></i>
+                            <p class="text-xs text-gray-500 leading-relaxed">
+                                <strong>Disclaimer:</strong> This AI-generated business advice is based on your historical data and general business patterns. Predictions and recommendations may not be entirely accurate and should be used as guidance only. Always consult with financial advisors for important business decisions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+
+                    <!-- Total Revenue -->
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-blue-100">Total Revenue</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-dollar-sign text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">RM 45,231</p>
+                        <p class="text-xs text-blue-100">
+                            <i class="fas fa-arrow-up mr-1"></i>
+                            <span class="font-semibold">+12.5%</span> vs last month
+                        </p>
+                    </div>
+
+                    <!-- Invoices Sent -->
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-purple-100">Invoices Sent</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-file-invoice text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">142</p>
+                        <p class="text-xs text-purple-100">
+                            <i class="fas fa-arrow-up mr-1"></i>
+                            <span class="font-semibold">+8.2%</span> vs last month
+                        </p>
+                    </div>
+
+                    <!-- Outstanding -->
+                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-orange-100">Outstanding</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-clock text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">RM 12,876</p>
+                        <p class="text-xs text-orange-100">
+                            <i class="fas fa-arrow-down mr-1"></i>
+                            <span class="font-semibold">-3.1%</span> vs last month
+                        </p>
+                    </div>
+
+                    <!-- Expenses -->
+                    <div class="bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-pink-100">Total Expenses</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-credit-card text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">RM 18,924</p>
+                        <p class="text-xs text-pink-100">
+                            <i class="fas fa-arrow-down mr-1"></i>
+                            <span class="font-semibold">-5.4%</span> vs last month
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+
+                    <!-- Revenue Chart -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h4 class="text-lg font-bold text-black">Revenue Overview</h4>
+                                <p class="text-sm text-gray-600">Monthly revenue trends</p>
+                            </div>
+                            <select class="px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium focus:outline-none focus:border-black">
+                                <option>Last 6 months</option>
+                                <option>Last year</option>
+                                <option>All time</option>
+                            </select>
+                        </div>
+                        <div style="position: relative; height: 300px;">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Expense Breakdown -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h4 class="text-lg font-bold text-black">Expense Breakdown</h4>
+                                <p class="text-sm text-gray-600">By category this month</p>
+                            </div>
+                        </div>
+                        <div style="position: relative; height: 300px;">
+                            <canvas id="expenseChart"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Recent Activity & Invoices -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                    <!-- Recent Invoices -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="text-lg font-bold text-black">Recent Invoices</h4>
+                            <a href="#" class="text-sm font-semibold text-black hover:opacity-70">View all</a>
+                        </div>
+                        <div class="space-y-4">
+                            <!-- Invoice Item -->
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-file-invoice text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-black">INV-2024-001</p>
+                                        <p class="text-sm text-gray-600">Acme Corporation</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-black">RM 2,450</p>
+                                    <span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full">Paid</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-file-invoice text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-black">INV-2024-002</p>
+                                        <p class="text-sm text-gray-600">Tech Solutions Ltd</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-black">RM 5,890</p>
+                                    <span class="text-xs font-semibold text-orange-600 bg-orange-50 px-2 py-1 rounded-full">Pending</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-file-invoice text-pink-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-black">INV-2024-003</p>
+                                        <p class="text-sm text-gray-600">Creative Agency</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-black">RM 3,200</p>
+                                    <span class="text-xs font-semibold text-red-600 bg-red-50 px-2 py-1 rounded-full">Overdue</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-file-invoice text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-black">INV-2024-004</p>
+                                        <p class="text-sm text-gray-600">Marketing Pro</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-black">RM 1,750</p>
+                                    <span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full">Paid</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="text-lg font-bold text-black">Recent Activity</h4>
+                            <a href="#" class="text-sm font-semibold text-black hover:opacity-70">View all</a>
+                        </div>
+                        <div class="space-y-4">
+                            <!-- Activity Item -->
+                            <div class="flex gap-4">
+                                <div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold text-black">Invoice sent to Acme Corporation</p>
+                                    <p class="text-xs text-gray-600 mt-1">2 hours ago</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold text-black">Payment received from Marketing Pro</p>
+                                    <p class="text-xs text-gray-600 mt-1">5 hours ago</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold text-black">New expense added: Office Supplies</p>
+                                    <p class="text-xs text-gray-600 mt-1">1 day ago</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold text-black">Invoice overdue reminder sent</p>
+                                    <p class="text-xs text-gray-600 mt-1">2 days ago</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="w-2 h-2 bg-pink-500 rounded-full mt-2"></div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold text-black">New customer added: Creative Agency</p>
+                                    <p class="text-xs text-gray-600 mt-1">3 days ago</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold text-black">Monthly report generated</p>
+                                    <p class="text-xs text-gray-600 mt-1">5 days ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden hidden"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Toggle AI Advisor
+        function toggleAIAdvisor() {
+            const content = document.getElementById('aiAdvisorContent');
+            const icon = document.getElementById('aiAdvisorIcon');
+
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(-90deg)';
+            }
+        }
+
+        // Refresh insights (placeholder function)
+        function refreshInsights() {
+            console.log('Refreshing AI insights...');
+            // In production, this would fetch new insights from the API
+            alert('AI insights refreshed! (Demo)');
+        }
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        if (menuToggle && sidebar && overlay) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        }
+
+        // Initialize charts after page load
+        window.addEventListener('load', function() {
+            initializeCharts();
+        });
+
+        function initializeCharts() {
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart');
+            if (!revenueCtx) return;
+
+            const revenueChart = new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Revenue',
+                    data: [30000, 35000, 32000, 40000, 42000, 45231],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#3b82f6',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#000',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        padding: 12,
+                        cornerRadius: 8,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                return 'RM ' + context.parsed.y.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return 'RM ' + (value / 1000) + 'k';
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+            // Expense Chart (Doughnut)
+            const expenseCtx = document.getElementById('expenseChart');
+            if (!expenseCtx) return;
+
+            const expenseChart = new Chart(expenseCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Payroll', 'Office', 'Marketing', 'Software', 'Others'],
+                datasets: [{
+                    data: [8500, 3200, 4100, 2024, 1100],
+                    backgroundColor: [
+                        '#3b82f6', // Blue
+                        '#8b5cf6', // Purple
+                        '#ec4899', // Pink
+                        '#f59e0b', // Orange
+                        '#10b981'  // Green
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true,
+                            font: {
+                                size: 13
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#000',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = 'RM ' + context.parsed.toLocaleString();
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((context.parsed / total) * 100).toFixed(1) + '%';
+                                return label + ': ' + value + ' (' + percentage + ')';
+                            }
+                        }
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+        }
+    </script>
+
+</body>
+</html>

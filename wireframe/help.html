@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Support - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* FAQ accordion animation */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-answer.active {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+
+                    <!-- Mobile Menu Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button id="menuToggle" class="lg:hidden text-gray-600 hover:text-black">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-black">Help & Support</h2>
+                            <p class="text-sm text-gray-600">Get help and learn how to use Kerisi Lite</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Side Actions -->
+                    <div class="flex items-center gap-4">
+                        <!-- Search -->
+                        <div class="hidden md:flex items-center gap-2 bg-gray-100 rounded-lg px-4 py-2">
+                            <i class="fas fa-search text-gray-400"></i>
+                            <input type="text" id="helpSearch" placeholder="Search help articles..." class="bg-transparent border-none outline-none text-sm w-64" oninput="searchHelp()">
+                        </div>
+
+                        <!-- Notifications -->
+                        <button class="relative p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </button>
+
+                        <!-- User Profile -->
+                        <div class="flex items-center gap-3 pl-4 border-l border-gray-200">
+                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                <span class="text-white font-semibold text-sm">JD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <!-- Quick Actions Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <!-- Contact Support -->
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-sm p-6 text-white cursor-pointer hover:shadow-lg transition-shadow" onclick="showTab('contact')">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-headset text-2xl"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1">Contact Support</h3>
+                        <p class="text-sm text-blue-100">Get help from our team</p>
+                    </div>
+
+                    <!-- Documentation -->
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-sm p-6 text-white cursor-pointer hover:shadow-lg transition-shadow" onclick="showTab('docs')">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-book text-2xl"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1">Documentation</h3>
+                        <p class="text-sm text-purple-100">Browse user guides</p>
+                    </div>
+
+                    <!-- Video Tutorials -->
+                    <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-sm p-6 text-white cursor-pointer hover:shadow-lg transition-shadow" onclick="showTab('videos')">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-video text-2xl"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1">Video Tutorials</h3>
+                        <p class="text-sm text-green-100">Watch how-to videos</p>
+                    </div>
+
+                    <!-- Community Forum -->
+                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-sm p-6 text-white cursor-pointer hover:shadow-lg transition-shadow" onclick="window.open('https://community.kerisilite.com', '_blank')">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-2xl"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold mb-1">Community</h3>
+                        <p class="text-sm text-orange-100">Join discussions</p>
+                    </div>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
+                    <div class="border-b border-gray-200 overflow-x-auto">
+                        <div class="flex">
+                            <button onclick="showTab('faq')" id="tab-faq" class="flex-shrink-0 px-6 py-4 text-sm font-semibold text-black border-b-2 border-black transition-colors">
+                                <i class="fas fa-question-circle mr-2"></i>FAQ
+                            </button>
+                            <button onclick="showTab('docs')" id="tab-docs" class="flex-shrink-0 px-6 py-4 text-sm font-medium text-gray-600 border-b-2 border-transparent transition-colors hover:bg-gray-50">
+                                <i class="fas fa-book mr-2"></i>Documentation
+                            </button>
+                            <button onclick="showTab('videos')" id="tab-videos" class="flex-shrink-0 px-6 py-4 text-sm font-medium text-gray-600 border-b-2 border-transparent transition-colors hover:bg-gray-50">
+                                <i class="fas fa-video mr-2"></i>Video Tutorials
+                            </button>
+                            <button onclick="showTab('contact')" id="tab-contact" class="flex-shrink-0 px-6 py-4 text-sm font-medium text-gray-600 border-b-2 border-transparent transition-colors hover:bg-gray-50">
+                                <i class="fas fa-envelope mr-2"></i>Contact Us
+                            </button>
+                            <button onclick="showTab('system')" id="tab-system" class="flex-shrink-0 px-6 py-4 text-sm font-medium text-gray-600 border-b-2 border-transparent transition-colors hover:bg-gray-50">
+                                <i class="fas fa-info-circle mr-2"></i>System Info
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Tab -->
+                <div id="content-faq" class="tab-content">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                        <h3 class="text-lg font-bold text-black mb-6 flex items-center gap-2">
+                            <i class="fas fa-question-circle text-indigo-600"></i>
+                            Frequently Asked Questions
+                        </h3>
+
+                        <div class="space-y-4">
+                            <!-- FAQ Item 1 -->
+                            <div class="border border-gray-200 rounded-lg">
+                                <button onclick="toggleFAQ(1)" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors">
+                                    <span class="font-semibold text-black">How do I create my first invoice?</span>
+                                    <i class="fas fa-chevron-down text-gray-400 transition-transform" id="faq-icon-1"></i>
+                                </button>
+                                <div id="faq-answer-1" class="faq-answer">
+                                    <div class="px-6 pb-4 text-sm text-gray-600">
+                                        <p class="mb-3">To create your first invoice:</p>
+                                        <ol class="list-decimal ml-5 space-y-2">
+                                            <li>Navigate to Invoices > Create Invoice from the sidebar</li>
+                                            <li>Select or add a customer</li>
+                                            <li>Add line items for products or services</li>
+                                            <li>Configure tax and discount if needed</li>
+                                            <li>Review the total and click "Save & Send Invoice"</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 2 -->
+                            <div class="border border-gray-200 rounded-lg">
+                                <button onclick="toggleFAQ(2)" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors">
+                                    <span class="font-semibold text-black">How do I add a new customer?</span>
+                                    <i class="fas fa-chevron-down text-gray-400 transition-transform" id="faq-icon-2"></i>
+                                </button>
+                                <div id="faq-answer-2" class="faq-answer">
+                                    <div class="px-6 pb-4 text-sm text-gray-600">
+                                        <p class="mb-3">There are two ways to add a customer:</p>
+                                        <p class="mb-2"><strong>Method 1:</strong> Go to Customers > Add Customer and fill in the customer details form.</p>
+                                        <p><strong>Method 2:</strong> When creating an invoice, click "Add New Customer" in the customer selection modal.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 3 -->
+                            <div class="border border-gray-200 rounded-lg">
+                                <button onclick="toggleFAQ(3)" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors">
+                                    <span class="font-semibold text-black">How do I track expenses?</span>
+                                    <i class="fas fa-chevron-down text-gray-400 transition-transform" id="faq-icon-3"></i>
+                                </button>
+                                <div id="faq-answer-3" class="faq-answer">
+                                    <div class="px-6 pb-4 text-sm text-gray-600">
+                                        <p class="mb-3">To track expenses:</p>
+                                        <ol class="list-decimal ml-5 space-y-2">
+                                            <li>Go to Expenses > Add Expense</li>
+                                            <li>Enter the expense amount and select a category</li>
+                                            <li>Add vendor information and upload receipt if available</li>
+                                            <li>Click "Save Expense" to record it</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 4 -->
+                            <div class="border border-gray-200 rounded-lg">
+                                <button onclick="toggleFAQ(4)" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors">
+                                    <span class="font-semibold text-black">How do I manage user permissions?</span>
+                                    <i class="fas fa-chevron-down text-gray-400 transition-transform" id="faq-icon-4"></i>
+                                </button>
+                                <div id="faq-answer-4" class="faq-answer">
+                                    <div class="px-6 pb-4 text-sm text-gray-600">
+                                        <p class="mb-3">To manage user permissions:</p>
+                                        <ol class="list-decimal ml-5 space-y-2">
+                                            <li>Navigate to Settings > User Management</li>
+                                            <li>Click on a user to edit their details</li>
+                                            <li>Adjust their role and specific permissions</li>
+                                            <li>Click "Save Changes" to update</li>
+                                        </ol>
+                                        <p class="mt-3 text-xs text-gray-500">Note: Only administrators can manage user permissions.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 5 -->
+                            <div class="border border-gray-200 rounded-lg">
+                                <button onclick="toggleFAQ(5)" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors">
+                                    <span class="font-semibold text-black">How do I generate financial reports?</span>
+                                    <i class="fas fa-chevron-down text-gray-400 transition-transform" id="faq-icon-5"></i>
+                                </button>
+                                <div id="faq-answer-5" class="faq-answer">
+                                    <div class="px-6 pb-4 text-sm text-gray-600">
+                                        <p class="mb-3">To generate reports:</p>
+                                        <ol class="list-decimal ml-5 space-y-2">
+                                            <li>Go to the Reports section in the sidebar</li>
+                                            <li>Select the report type (Profit & Loss, Balance Sheet, Cash Flow, etc.)</li>
+                                            <li>Choose the date range for the report</li>
+                                            <li>Click "Generate Report" or use the export options</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 6 -->
+                            <div class="border border-gray-200 rounded-lg">
+                                <button onclick="toggleFAQ(6)" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors">
+                                    <span class="font-semibold text-black">How do I customize my invoices?</span>
+                                    <i class="fas fa-chevron-down text-gray-400 transition-transform" id="faq-icon-6"></i>
+                                </button>
+                                <div id="faq-answer-6" class="faq-answer">
+                                    <div class="px-6 pb-4 text-sm text-gray-600">
+                                        <p class="mb-3">To customize invoice appearance:</p>
+                                        <ol class="list-decimal ml-5 space-y-2">
+                                            <li>Go to Settings > Business Settings</li>
+                                            <li>Navigate to the "Invoice Customization" tab</li>
+                                            <li>Choose your primary color, logo, and footer text</li>
+                                            <li>Click "Preview" to see how it looks</li>
+                                            <li>Save your changes</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Documentation Tab -->
+                <div id="content-docs" class="tab-content hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                        <!-- Getting Started -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-rocket text-blue-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-black mb-2">Getting Started</h3>
+                            <p class="text-sm text-gray-600 mb-4">Learn the basics of Kerisi Lite and set up your account</p>
+                            <a href="#" class="text-sm text-blue-600 font-semibold hover:text-blue-700">
+                                Read Guide <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+
+                        <!-- Invoicing Guide -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-file-invoice text-purple-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-black mb-2">Invoicing Guide</h3>
+                            <p class="text-sm text-gray-600 mb-4">Create, send, and manage invoices effectively</p>
+                            <a href="#" class="text-sm text-blue-600 font-semibold hover:text-blue-700">
+                                Read Guide <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+
+                        <!-- Expense Management -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-receipt text-green-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-black mb-2">Expense Management</h3>
+                            <p class="text-sm text-gray-600 mb-4">Track and categorize your business expenses</p>
+                            <a href="#" class="text-sm text-blue-600 font-semibold hover:text-blue-700">
+                                Read Guide <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+
+                        <!-- Reports & Analytics -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-chart-line text-orange-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-black mb-2">Reports & Analytics</h3>
+                            <p class="text-sm text-gray-600 mb-4">Generate insights from your financial data</p>
+                            <a href="#" class="text-sm text-blue-600 font-semibold hover:text-blue-700">
+                                Read Guide <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+
+                        <!-- Tax Management -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-percentage text-red-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-black mb-2">Tax Management</h3>
+                            <p class="text-sm text-gray-600 mb-4">Handle SST and other tax requirements</p>
+                            <a href="#" class="text-sm text-blue-600 font-semibold hover:text-blue-700">
+                                Read Guide <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+
+                        <!-- User Management -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-users-cog text-indigo-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-black mb-2">User Management</h3>
+                            <p class="text-sm text-gray-600 mb-4">Manage team access and permissions</p>
+                            <a href="#" class="text-sm text-blue-600 font-semibold hover:text-blue-700">
+                                Read Guide <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Video Tutorials Tab -->
+                <div id="content-videos" class="tab-content hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        <!-- Video 1 -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="relative bg-gradient-to-br from-blue-500 to-purple-600 h-48 flex items-center justify-center cursor-pointer group">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors"></div>
+                                <i class="fas fa-play-circle text-white text-6xl relative z-10 group-hover:scale-110 transition-transform"></i>
+                                <span class="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">5:32</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-black mb-2">Getting Started with Kerisi Lite</h3>
+                                <p class="text-sm text-gray-600 mb-3">Learn how to set up your account and navigate the dashboard</p>
+                                <div class="flex items-center gap-4 text-xs text-gray-500">
+                                    <span><i class="fas fa-eye mr-1"></i>1,234 views</span>
+                                    <span><i class="fas fa-clock mr-1"></i>2 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Video 2 -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="relative bg-gradient-to-br from-green-500 to-emerald-600 h-48 flex items-center justify-center cursor-pointer group">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors"></div>
+                                <i class="fas fa-play-circle text-white text-6xl relative z-10 group-hover:scale-110 transition-transform"></i>
+                                <span class="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">8:45</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-black mb-2">Creating Your First Invoice</h3>
+                                <p class="text-sm text-gray-600 mb-3">Step-by-step guide to create and send professional invoices</p>
+                                <div class="flex items-center gap-4 text-xs text-gray-500">
+                                    <span><i class="fas fa-eye mr-1"></i>2,567 views</span>
+                                    <span><i class="fas fa-clock mr-1"></i>5 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Video 3 -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="relative bg-gradient-to-br from-orange-500 to-red-600 h-48 flex items-center justify-center cursor-pointer group">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors"></div>
+                                <i class="fas fa-play-circle text-white text-6xl relative z-10 group-hover:scale-110 transition-transform"></i>
+                                <span class="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">6:15</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-black mb-2">Managing Expenses & Receipts</h3>
+                                <p class="text-sm text-gray-600 mb-3">Track expenses and upload receipts for better record keeping</p>
+                                <div class="flex items-center gap-4 text-xs text-gray-500">
+                                    <span><i class="fas fa-eye mr-1"></i>987 views</span>
+                                    <span><i class="fas fa-clock mr-1"></i>1 week ago</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Video 4 -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="relative bg-gradient-to-br from-purple-500 to-pink-600 h-48 flex items-center justify-center cursor-pointer group">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors"></div>
+                                <i class="fas fa-play-circle text-white text-6xl relative z-10 group-hover:scale-110 transition-transform"></i>
+                                <span class="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">10:22</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-black mb-2">Understanding Financial Reports</h3>
+                                <p class="text-sm text-gray-600 mb-3">Generate and interpret profit & loss, balance sheet reports</p>
+                                <div class="flex items-center gap-4 text-xs text-gray-500">
+                                    <span><i class="fas fa-eye mr-1"></i>1,456 views</span>
+                                    <span><i class="fas fa-clock mr-1"></i>1 week ago</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Contact Tab -->
+                <div id="content-contact" class="tab-content hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                        <!-- Contact Form -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h3 class="text-lg font-bold text-black mb-6 flex items-center gap-2">
+                                <i class="fas fa-paper-plane text-indigo-600"></i>
+                                Send us a message
+                            </h3>
+
+                            <form id="contactForm" class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Subject *</label>
+                                    <select required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500">
+                                        <option value="">Select a subject</option>
+                                        <option value="technical">Technical Support</option>
+                                        <option value="billing">Billing Question</option>
+                                        <option value="feature">Feature Request</option>
+                                        <option value="bug">Report a Bug</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Priority</label>
+                                    <div class="flex gap-3">
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="priority" value="low" checked class="w-4 h-4 text-indigo-600">
+                                            <span class="text-sm text-gray-700">Low</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="priority" value="medium" class="w-4 h-4 text-indigo-600">
+                                            <span class="text-sm text-gray-700">Medium</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="priority" value="high" class="w-4 h-4 text-indigo-600">
+                                            <span class="text-sm text-gray-700">High</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Message *</label>
+                                    <textarea required rows="6" placeholder="Describe your issue or question in detail..." class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-indigo-500 resize-none"></textarea>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Attach Files (Optional)</label>
+                                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-indigo-400 transition-colors cursor-pointer">
+                                        <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                        <p class="text-sm text-gray-600">Click to upload or drag and drop</p>
+                                        <p class="text-xs text-gray-500 mt-1">PNG, JPG, PDF up to 10MB</p>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="w-full px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors">
+                                    <i class="fas fa-paper-plane mr-2"></i>Send Message
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="space-y-6">
+
+                            <!-- Email Support -->
+                            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-envelope text-blue-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-black mb-1">Email Support</h4>
+                                        <p class="text-sm text-gray-600 mb-2">We typically respond within 24 hours</p>
+                                        <a href="mailto:support@kerisilite.com" class="text-sm text-blue-600 font-semibold hover:text-blue-700">
+                                            support@kerisilite.com
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Phone Support -->
+                            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-phone text-green-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-black mb-1">Phone Support</h4>
+                                        <p class="text-sm text-gray-600 mb-2">Mon-Fri, 9:00 AM - 6:00 PM (GMT+8)</p>
+                                        <a href="tel:+60123456789" class="text-sm text-blue-600 font-semibold hover:text-blue-700">
+                                            +60 12-345 6789
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Live Chat -->
+                            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-comments text-purple-600 text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-bold text-black mb-1">Live Chat</h4>
+                                        <p class="text-sm text-gray-600 mb-3">Chat with our support team in real-time</p>
+                                        <button onclick="startLiveChat()" class="px-4 py-2 bg-purple-600 text-white text-sm font-semibold rounded-lg hover:bg-purple-700 transition-colors">
+                                            <i class="fas fa-comment-dots mr-2"></i>Start Chat
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Office Location -->
+                            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-map-marker-alt text-orange-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-black mb-1">Office Location</h4>
+                                        <p class="text-sm text-gray-600">
+                                            Menara ABC, Level 12<br>
+                                            Jalan Sultan Ismail<br>
+                                            50250 Kuala Lumpur, Malaysia
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- System Info Tab -->
+                <div id="content-system" class="tab-content hidden">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                        <h3 class="text-lg font-bold text-black mb-6 flex items-center gap-2">
+                            <i class="fas fa-info-circle text-indigo-600"></i>
+                            System Information
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Application Version</label>
+                                <div class="px-4 py-3 bg-gray-50 rounded-lg text-sm text-gray-900 font-mono">
+                                    v2.5.1
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Account ID</label>
+                                <div class="px-4 py-3 bg-gray-50 rounded-lg text-sm text-gray-900 font-mono">
+                                    ACC-2025-8472
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Plan Type</label>
+                                <div class="px-4 py-3 bg-gray-50 rounded-lg text-sm text-gray-900">
+                                    Professional
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Subscription Status</label>
+                                <div class="px-4 py-3 bg-gray-50 rounded-lg">
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-700">
+                                        Active
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Last Login</label>
+                                <div class="px-4 py-3 bg-gray-50 rounded-lg text-sm text-gray-900">
+                                    2025-12-29 10:30 AM
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Browser</label>
+                                <div class="px-4 py-3 bg-gray-50 rounded-lg text-sm text-gray-900" id="browserInfo">
+                                    Loading...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Status -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-lg font-bold text-black mb-6 flex items-center gap-2">
+                            <i class="fas fa-server text-indigo-600"></i>
+                            System Status
+                        </h3>
+
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                    <span class="font-semibold text-black">API Services</span>
+                                </div>
+                                <span class="text-sm text-green-700 font-semibold">Operational</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                    <span class="font-semibold text-black">Database</span>
+                                </div>
+                                <span class="text-sm text-green-700 font-semibold">Operational</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                    <span class="font-semibold text-black">Email Services</span>
+                                </div>
+                                <span class="text-sm text-green-700 font-semibold">Operational</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                    <span class="font-semibold text-black">File Storage</span>
+                                </div>
+                                <span class="text-sm text-green-700 font-semibold">Operational</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                            <p class="text-sm text-blue-900">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                All systems are running normally. Check our
+                                <a href="#" class="text-blue-600 font-semibold hover:text-blue-700">status page</a>
+                                for real-time updates.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Overlay for mobile menu -->
+    <div id="overlay" class="hidden fixed inset-0 bg-black/50 z-30 lg:hidden"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Tab management
+        function showTab(tabName) {
+            // Hide all content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Remove active state from all tabs
+            document.querySelectorAll('[id^="tab-"]').forEach(tab => {
+                tab.classList.remove('text-black', 'border-black', 'font-semibold');
+                tab.classList.add('text-gray-600', 'border-transparent', 'font-medium');
+            });
+
+            // Show selected content
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+
+            // Set active tab
+            const activeTab = document.getElementById(`tab-${tabName}`);
+            activeTab.classList.remove('text-gray-600', 'border-transparent', 'font-medium');
+            activeTab.classList.add('text-black', 'border-black', 'font-semibold');
+        }
+
+        // FAQ toggle
+        function toggleFAQ(index) {
+            const answer = document.getElementById(`faq-answer-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+
+            answer.classList.toggle('active');
+            icon.style.transform = answer.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for contacting us! We will respond within 24 hours.');
+            this.reset();
+        });
+
+        // Start live chat
+        function startLiveChat() {
+            alert('Live chat feature coming soon! Please use email or phone support in the meantime.');
+        }
+
+        // Help search
+        function searchHelp() {
+            const searchTerm = document.getElementById('helpSearch').value.toLowerCase();
+            // In production, this would filter FAQ and documentation
+            console.log('Searching for:', searchTerm);
+        }
+
+        // Get browser info
+        function getBrowserInfo() {
+            const ua = navigator.userAgent;
+            let browser = 'Unknown';
+
+            if (ua.indexOf('Chrome') > -1) browser = 'Google Chrome';
+            else if (ua.indexOf('Safari') > -1) browser = 'Safari';
+            else if (ua.indexOf('Firefox') > -1) browser = 'Firefox';
+            else if (ua.indexOf('Edge') > -1) browser = 'Microsoft Edge';
+
+            document.getElementById('browserInfo').textContent = browser;
+        }
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const overlay = document.getElementById('overlay');
+
+        if (menuToggle && overlay) {
+            menuToggle.addEventListener('click', () => {
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                overlay.classList.add('hidden');
+            });
+        }
+
+        // Initialize
+        getBrowserInfo();
+    </script>
+
+</body>
+</html>

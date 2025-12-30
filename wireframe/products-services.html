@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products & Services - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+
+                    <!-- Mobile Menu Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button id="menuToggle" class="lg:hidden text-gray-600 hover:text-black">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-black">Products & Services</h2>
+                            <p class="text-sm text-gray-600">Manage your product catalog and service offerings</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Side Actions -->
+                    <div class="flex items-center gap-4">
+                        <!-- Search -->
+                        <div class="hidden md:flex items-center gap-2 bg-gray-100 rounded-lg px-4 py-2">
+                            <i class="fas fa-search text-gray-400"></i>
+                            <input type="text" placeholder="Search..." class="bg-transparent border-none outline-none text-sm w-64">
+                        </div>
+
+                        <!-- Notifications -->
+                        <button class="relative p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </button>
+
+                        <!-- User Profile -->
+                        <div class="flex items-center gap-3 pl-4 border-l border-gray-200">
+                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                <span class="text-white font-semibold text-sm">JD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <!-- Action Bar -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+
+                        <!-- Left Side - Add Button -->
+                        <div class="flex gap-3">
+                            <button onclick="openAddModal()" class="px-4 py-2 text-sm font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fas fa-plus mr-2"></i>Add Product or Service
+                            </button>
+                            <button class="px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-file-import mr-2"></i>Import
+                            </button>
+                        </div>
+
+                        <!-- Right Side - Filters -->
+                        <div class="flex gap-3">
+                            <select class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-black" id="typeFilter">
+                                <option value="">All Types</option>
+                                <option value="product">Products</option>
+                                <option value="service">Services</option>
+                            </select>
+                            <select class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-black" id="categoryFilter">
+                                <option value="">All Categories</option>
+                                <option value="development">Development</option>
+                                <option value="design">Design</option>
+                                <option value="consulting">Consulting</option>
+                                <option value="software">Software</option>
+                                <option value="digital">Digital Products</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- Search Bar -->
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <div class="flex items-center gap-2 bg-gray-100 rounded-lg px-4 py-2.5">
+                            <i class="fas fa-search text-gray-400"></i>
+                            <input type="text" id="searchInput" placeholder="Search by name, description, or price..." class="bg-transparent border-none outline-none text-sm flex-1">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products/Services Table -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+
+                    <!-- Table Header -->
+                    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-black">All Items</h3>
+                        <div class="flex items-center gap-2">
+                            <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors" title="Export">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors" title="Print">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Name
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Type
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Category
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        SKU
+                                    </th>
+                                    <th class="px-6 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Price
+                                    </th>
+                                    <th class="px-6 py-3 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                    <th class="px-6 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200" id="itemsTableBody">
+
+                                <!-- Item Row 1 -->
+                                <tr class="hover:bg-gray-50 transition-colors item-row" data-type="service" data-category="development">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-code text-blue-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-black">Website Development</p>
+                                                <p class="text-xs text-gray-500">Full-stack web development service</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-50 text-blue-700">
+                                            Service
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Development
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
+                                        WEB-DEV-001
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 8,500.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button onclick="editItem(1)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="duplicateItem(1)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button onclick="deleteItem(1)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Item Row 2 -->
+                                <tr class="hover:bg-gray-50 transition-colors item-row" data-type="service" data-category="design">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-palette text-purple-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-black">UI/UX Design</p>
+                                                <p class="text-xs text-gray-500">Complete UI/UX design for web and mobile</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-50 text-blue-700">
+                                            Service
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Design
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
+                                        DES-UX-001
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 5,200.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button onclick="editItem(2)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="duplicateItem(2)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button onclick="deleteItem(2)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Item Row 3 -->
+                                <tr class="hover:bg-gray-50 transition-colors item-row" data-type="product" data-category="software">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-box text-green-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-black">CRM Software License</p>
+                                                <p class="text-xs text-gray-500">Annual license for enterprise CRM</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-purple-50 text-purple-700">
+                                            Product
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Software
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
+                                        SOFT-CRM-001
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 12,000.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button onclick="editItem(3)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="duplicateItem(3)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button onclick="deleteItem(3)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Item Row 4 -->
+                                <tr class="hover:bg-gray-50 transition-colors item-row" data-type="service" data-category="consulting">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-handshake text-orange-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-black">Business Consulting</p>
+                                                <p class="text-xs text-gray-500">Strategic business consulting services</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-50 text-blue-700">
+                                            Service
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Consulting
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
+                                        CON-BUS-001
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 3,500.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button onclick="editItem(4)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="duplicateItem(4)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button onclick="deleteItem(4)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Item Row 5 -->
+                                <tr class="hover:bg-gray-50 transition-colors item-row" data-type="service" data-category="design">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-paint-brush text-pink-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-black">Logo Design Package</p>
+                                                <p class="text-xs text-gray-500">Professional logo design with revisions</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-50 text-blue-700">
+                                            Service
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Design
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
+                                        DES-LOG-001
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 1,800.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button onclick="editItem(5)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="duplicateItem(5)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button onclick="deleteItem(5)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Item Row 6 -->
+                                <tr class="hover:bg-gray-50 transition-colors item-row" data-type="service" data-category="development">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-mobile-alt text-indigo-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-black">Mobile App Development</p>
+                                                <p class="text-xs text-gray-500">iOS and Android app development</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-50 text-blue-700">
+                                            Service
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Development
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
+                                        MOB-APP-001
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 15,000.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button onclick="editItem(6)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="duplicateItem(6)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button onclick="deleteItem(6)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Item Row 7 -->
+                                <tr class="hover:bg-gray-50 transition-colors item-row" data-type="service" data-category="design">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-photo-video text-yellow-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-black">Branding Package</p>
+                                                <p class="text-xs text-gray-500">Complete branding and identity design</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-50 text-blue-700">
+                                            Service
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Design
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
+                                        DES-BRD-001
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 4,200.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button onclick="editItem(7)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="duplicateItem(7)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button onclick="deleteItem(7)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Item Row 8 -->
+                                <tr class="hover:bg-gray-50 transition-colors item-row" data-type="service" data-category="consulting">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-chart-line text-teal-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-black">SEO Optimization</p>
+                                                <p class="text-xs text-gray-500">Complete SEO audit and optimization</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-50 text-blue-700">
+                                            Service
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Consulting
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
+                                        SEO-OPT-001
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 2,800.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button onclick="editItem(8)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="duplicateItem(8)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button onclick="deleteItem(8)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Item Row 9 -->
+                                <tr class="hover:bg-gray-50 transition-colors item-row" data-type="product" data-category="digital">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-book text-gray-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-black">E-book: Business Growth</p>
+                                                <p class="text-xs text-gray-500">Digital guide to scaling your business</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-purple-50 text-purple-700">
+                                            Product
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Digital Products
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
+                                        EBOOK-BGW-001
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 150.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-50 text-gray-700">
+                                            Inactive
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button onclick="editItem(9)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="duplicateItem(9)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button onclick="deleteItem(9)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Item Row 10 -->
+                                <tr class="hover:bg-gray-50 transition-colors item-row" data-type="service" data-category="development">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-database text-red-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-black">Database Management</p>
+                                                <p class="text-xs text-gray-500">Monthly database maintenance service</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-50 text-blue-700">
+                                            Service
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        Development
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
+                                        DB-MGT-001
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 1,200.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button onclick="editItem(10)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="duplicateItem(10)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button onclick="deleteItem(10)" class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Empty State (hidden by default) -->
+                    <div id="emptyState" class="hidden p-12 text-center">
+                        <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-box-open text-gray-400 text-3xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-black mb-2">No items found</h3>
+                        <p class="text-sm text-gray-600 mb-4">Try adjusting your filters or search terms</p>
+                        <button onclick="clearFilters()" class="px-4 py-2 text-sm font-semibold text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                            Clear Filters
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Pagination -->
+                <div class="mt-6 flex items-center justify-between bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                    <div class="text-sm text-gray-600">
+                        Showing <span class="font-semibold text-black">1-10</span> of <span class="font-semibold text-black">10</span> items
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="px-3 py-2 text-sm font-semibold text-gray-400 border border-gray-200 rounded-lg cursor-not-allowed">
+                            <i class="fas fa-chevron-left mr-1"></i>Previous
+                        </button>
+                        <button class="px-3 py-2 text-sm font-semibold bg-black text-white rounded-lg">1</button>
+                        <button class="px-3 py-2 text-sm font-semibold text-gray-400 border border-gray-200 rounded-lg cursor-not-allowed">
+                            Next<i class="fas fa-chevron-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Add/Edit Item Modal -->
+    <div id="itemModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-black">Add Product or Service</h3>
+                <button onclick="closeAddModal()" class="text-gray-400 hover:text-black transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <form class="p-6 space-y-5">
+                <!-- Item Type -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Item Type *</label>
+                    <div class="flex gap-4">
+                        <label class="flex-1 flex items-center gap-3 p-4 border-2 border-blue-500 bg-blue-50 rounded-lg cursor-pointer">
+                            <input type="radio" name="itemType" value="service" checked class="w-4 h-4">
+                            <div>
+                                <i class="fas fa-briefcase text-blue-600 mr-2"></i>
+                                <span class="font-semibold text-gray-700">Service</span>
+                            </div>
+                        </label>
+                        <label class="flex-1 flex items-center gap-3 p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-colors">
+                            <input type="radio" name="itemType" value="product" class="w-4 h-4">
+                            <div>
+                                <i class="fas fa-box text-gray-600 mr-2"></i>
+                                <span class="font-semibold text-gray-700">Product</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Name -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Name *</label>
+                    <input type="text" placeholder="e.g., Website Development" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-black">
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                    <textarea rows="3" placeholder="Brief description of your product or service" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-black"></textarea>
+                </div>
+
+                <!-- Price and SKU -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Price (RM) *</label>
+                        <input type="number" placeholder="0.00" step="0.01" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-black">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">SKU</label>
+                        <input type="text" placeholder="e.g., WEB-DEV-001" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-black">
+                    </div>
+                </div>
+
+                <!-- Category -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Category</label>
+                    <select class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-black">
+                        <option value="">Select category</option>
+                        <option value="development">Development</option>
+                        <option value="design">Design</option>
+                        <option value="consulting">Consulting</option>
+                        <option value="software">Software</option>
+                        <option value="digital">Digital Products</option>
+                    </select>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex gap-3 pt-4 border-t border-gray-200">
+                    <button type="button" onclick="closeAddModal()" class="flex-1 px-4 py-2.5 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-2.5 text-sm font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-save mr-2"></i>Save Item
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Overlay for mobile menu -->
+    <div id="overlay" class="hidden fixed inset-0 bg-black/50 z-30 lg:hidden"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Type filter
+        document.getElementById('typeFilter')?.addEventListener('change', function(e) {
+            const type = e.target.value;
+            const rows = document.querySelectorAll('.item-row');
+
+            rows.forEach(row => {
+                const rowType = row.getAttribute('data-type');
+                if (type === '' || rowType === type) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            checkEmptyState();
+        });
+
+        // Category filter
+        document.getElementById('categoryFilter')?.addEventListener('change', function(e) {
+            const category = e.target.value;
+            const rows = document.querySelectorAll('.item-row');
+
+            rows.forEach(row => {
+                const rowCategory = row.getAttribute('data-category');
+                if (category === '' || rowCategory === category) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            checkEmptyState();
+        });
+
+        // Search functionality
+        document.getElementById('searchInput')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('.item-row');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            checkEmptyState();
+        });
+
+        // Check if table is empty and show empty state
+        function checkEmptyState() {
+            const rows = document.querySelectorAll('.item-row');
+            const visibleRows = Array.from(rows).filter(row => row.style.display !== 'none');
+            const emptyState = document.getElementById('emptyState');
+            const tableBody = document.getElementById('itemsTableBody');
+
+            if (visibleRows.length === 0) {
+                tableBody.style.display = 'none';
+                emptyState.classList.remove('hidden');
+            } else {
+                tableBody.style.display = '';
+                emptyState.classList.add('hidden');
+            }
+        }
+
+        // Clear all filters
+        function clearFilters() {
+            document.getElementById('typeFilter').value = '';
+            document.getElementById('categoryFilter').value = '';
+            document.getElementById('searchInput').value = '';
+
+            const rows = document.querySelectorAll('.item-row');
+            rows.forEach(row => {
+                row.style.display = '';
+            });
+            checkEmptyState();
+        }
+
+        // Modal functions
+        function openAddModal() {
+            document.getElementById('itemModal').classList.remove('hidden');
+        }
+
+        function closeAddModal() {
+            document.getElementById('itemModal').classList.add('hidden');
+        }
+
+        function editItem(id) {
+            console.log('Edit item:', id);
+            openAddModal();
+        }
+
+        function duplicateItem(id) {
+            console.log('Duplicate item:', id);
+            if (confirm('Duplicate this item?')) {
+                alert('Item duplicated! (Demo)');
+            }
+        }
+
+        function deleteItem(id) {
+            if (confirm('Are you sure you want to delete this item?')) {
+                console.log('Delete item:', id);
+                alert('Item deleted! (Demo)');
+            }
+        }
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const overlay = document.getElementById('overlay');
+
+        if (menuToggle && overlay) {
+            menuToggle.addEventListener('click', () => {
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                overlay.classList.add('hidden');
+            });
+        }
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeAddModal();
+            }
+        });
+    </script>
+
+</body>
+</html>

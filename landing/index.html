@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kerisi Lite - Simple, powerful financial management for small businesses. Manage invoices, expenses, and reports in one place.">
+    <title>Kerisi Lite - Financial Management Made Simple</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .pricing-card {
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: scale(1.05);
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 text-white rounded-lg flex items-center justify-center text-xl font-bold">
+                        K
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">Kerisi Lite</h1>
+                        <p class="text-xs text-gray-500">Financial Management</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#features" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Features</a>
+                    <a href="#pricing" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Pricing</a>
+                    <a href="extensions.html" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Extensions</a>
+                    <a href="developers.html" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Developers</a>
+                    <a href="../wireframe/login.html" class="text-indigo-600 hover:text-indigo-700 font-semibold transition-colors">Sign In</a>
+                    <a href="#pricing" class="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all">
+                        Start Free Trial
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200 bg-white">
+            <div class="px-4 py-3 space-y-3">
+                <a href="#features" class="block text-gray-700 hover:text-indigo-600 font-medium py-2">Features</a>
+                <a href="#pricing" class="block text-gray-700 hover:text-indigo-600 font-medium py-2">Pricing</a>
+                <a href="extensions.html" class="block text-gray-700 hover:text-indigo-600 font-medium py-2">Extensions</a>
+                <a href="developers.html" class="block text-gray-700 hover:text-indigo-600 font-medium py-2">Developers</a>
+                <a href="../wireframe/login.html" class="block text-indigo-600 font-semibold py-2">Sign In</a>
+                <a href="#pricing" class="block px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg text-center">
+                    Start Free Trial
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="text-white animate-fadeInUp">
+                    <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
+                        Financial Management <span class="text-indigo-400">Made Simple</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                        Streamline your business finances with Kerisi Lite. Manage invoices, track expenses, and generate reports - all in one powerful platform.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#pricing" class="px-8 py-4 bg-white text-indigo-600 font-bold rounded-lg hover:shadow-2xl transition-all text-center">
+                            Start Free Trial
+                        </a>
+                        <a href="#features" class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-indigo-600 transition-all text-center">
+                            Learn More
+                        </a>
+                    </div>
+                    <div class="mt-12 flex items-center gap-8">
+                        <div>
+                            <p class="text-3xl font-bold">10K+</p>
+                            <p class="text-gray-400 text-sm">Active Users</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold">99.9%</p>
+                            <p class="text-gray-400 text-sm">Uptime</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold">4.9/5</p>
+                            <p class="text-gray-400 text-sm">Rating</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content - Dashboard Preview -->
+                <div class="relative animate-fadeInUp">
+                    <div class="bg-white rounded-2xl shadow-2xl p-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <img src="https://via.placeholder.com/600x400/667eea/ffffff?text=Dashboard+Preview" alt="Dashboard Preview" class="w-full rounded-lg">
+                    </div>
+                    <!-- Floating Card 1 -->
+                    <div class="absolute -top-6 -right-6 bg-white rounded-lg shadow-lg p-4 hidden lg:block">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-check text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-900">Invoice Sent</p>
+                                <p class="text-xs text-gray-500">RM 8,500.00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Floating Card 2 -->
+                    <div class="absolute -bottom-6 -left-6 bg-white rounded-lg shadow-lg p-4 hidden lg:block">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-900">Revenue Up</p>
+                                <p class="text-xs text-gray-500">+24% this month</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Everything You Need to <span class="gradient-text">Manage Your Finances</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Powerful features designed to help small businesses thrive
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-file-invoice text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Invoice Management</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Create, send, and track professional invoices with ease. Customize templates and automate reminders.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+                    <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-receipt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Expense Tracking</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Monitor all your business expenses in real-time. Upload receipts and categorize spending effortlessly.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+                    <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-bar text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Financial Reports</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Generate comprehensive reports including P&L, balance sheets, and cash flow statements instantly.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+                    <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-percentage text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Tax Management</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Stay compliant with SST and other tax requirements. Automate calculations and generate tax reports.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+                    <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Customer Management</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Maintain detailed customer profiles, track interactions, and manage relationships effectively.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+                    <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Secure & Reliable</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Bank-level encryption and daily backups ensure your financial data is always safe and accessible.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-gradient-to-r from-indigo-600 to-purple-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
+                <div>
+                    <p class="text-5xl font-bold mb-2">10K+</p>
+                    <p class="text-indigo-200">Happy Customers</p>
+                </div>
+                <div>
+                    <p class="text-5xl font-bold mb-2">500K+</p>
+                    <p class="text-indigo-200">Invoices Processed</p>
+                </div>
+                <div>
+                    <p class="text-5xl font-bold mb-2">99.9%</p>
+                    <p class="text-indigo-200">Uptime Guarantee</p>
+                </div>
+                <div>
+                    <p class="text-5xl font-bold mb-2">24/7</p>
+                    <p class="text-indigo-200">Customer Support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI-Powered Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="inline-block px-4 py-2 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 font-semibold rounded-full text-sm mb-6">
+                    <i class="fas fa-brain mr-2"></i>AI-Powered Intelligence
+                </div>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Smart Financial Management with <span class="gradient-text">Artificial Intelligence</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Harness the power of AI to automate tasks, gain insights, and make smarter financial decisions
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <!-- Left - AI Features List -->
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-robot text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">AI-Powered Data Entry</h3>
+                            <p class="text-gray-600">
+                                Automatically extract and populate invoice data from receipts, bills, and documents using advanced OCR and machine learning. Reduce manual entry by up to 90%.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-chart-line text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Predictive Financial Analytics</h3>
+                            <p class="text-gray-600">
+                                AI algorithms analyze your historical data to forecast cash flow, predict payment patterns, and identify potential financial risks before they happen.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-lightbulb text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Smart Expense Categorization</h3>
+                            <p class="text-gray-600">
+                                Machine learning automatically categorizes expenses with 95% accuracy, learns from your patterns, and suggests optimal tax deductions.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-shield-alt text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Fraud Detection & Risk Assessment</h3>
+                            <p class="text-gray-600">
+                                AI monitors transactions in real-time to detect anomalies, duplicate invoices, and potential fraud, protecting your business finances 24/7.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right - AI Chatbot Assistant -->
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 border border-purple-200">
+                    <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-comments text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">AI Financial Assistant</h4>
+                                <p class="text-sm text-gray-500">Always available to help</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- User Message -->
+                            <div class="flex justify-end">
+                                <div class="bg-indigo-600 text-white rounded-2xl rounded-tr-sm px-4 py-3 max-w-xs">
+                                    <p class="text-sm">What were my top expenses last month?</p>
+                                </div>
+                            </div>
+
+                            <!-- AI Response -->
+                            <div class="flex justify-start">
+                                <div class="bg-gray-100 text-gray-900 rounded-2xl rounded-tl-sm px-4 py-3 max-w-xs">
+                                    <p class="text-sm">Your top 3 expenses in November were:</p>
+                                    <ul class="text-sm mt-2 space-y-1">
+                                        <li>• Office Rent: RM 12,500</li>
+                                        <li>• Salaries: RM 45,200</li>
+                                        <li>• Marketing: RM 8,750</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- User Message -->
+                            <div class="flex justify-end">
+                                <div class="bg-indigo-600 text-white rounded-2xl rounded-tr-sm px-4 py-3 max-w-xs">
+                                    <p class="text-sm">Generate an invoice for Acme Corp</p>
+                                </div>
+                            </div>
+
+                            <!-- AI Response -->
+                            <div class="flex justify-start">
+                                <div class="bg-gray-100 text-gray-900 rounded-2xl rounded-tl-sm px-4 py-3 max-w-xs">
+                                    <p class="text-sm">I've created Invoice #INV-2025-001 for Acme Corp. Would you like to review before sending?</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <i class="fas fa-check text-purple-600"></i>
+                            <span>Natural language processing for easy queries</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <i class="fas fa-check text-purple-600"></i>
+                            <span>Instant answers to financial questions</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <i class="fas fa-check text-purple-600"></i>
+                            <span>Automate repetitive tasks with voice commands</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <i class="fas fa-check text-purple-600"></i>
+                            <span>24/7 availability in multiple languages</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 border border-purple-200">
+                    <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-file-invoice text-purple-600 text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-2">Smart Invoice Matching</h4>
+                    <p class="text-sm text-gray-700">
+                        AI automatically matches invoices with purchase orders and payments, eliminating manual reconciliation work.
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
+                    <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-calendar-check text-blue-600 text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-2">Payment Reminders</h4>
+                    <p class="text-sm text-gray-700">
+                        Intelligent reminder system learns customer payment behavior and sends optimally-timed follow-ups.
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200">
+                    <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-comments-dollar text-green-600 text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-2">Financial Insights</h4>
+                    <p class="text-sm text-gray-700">
+                        Get AI-generated insights and recommendations to improve profitability and reduce costs.
+                    </p>
+                </div>
+            </div>
+
+            <!-- AI Stats -->
+            <div class="mt-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl p-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-white">
+                    <div>
+                        <p class="text-4xl font-bold mb-2">90%</p>
+                        <p class="text-purple-100 text-sm">Less Manual Data Entry</p>
+                    </div>
+                    <div>
+                        <p class="text-4xl font-bold mb-2">95%</p>
+                        <p class="text-purple-100 text-sm">Categorization Accuracy</p>
+                    </div>
+                    <div>
+                        <p class="text-4xl font-bold mb-2">70%</p>
+                        <p class="text-purple-100 text-sm">Faster Invoice Processing</p>
+                    </div>
+                    <div>
+                        <p class="text-4xl font-bold mb-2">99%</p>
+                        <p class="text-purple-100 text-sm">Fraud Detection Rate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Extensions & Modules Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Extend Your <span class="gradient-text">Capabilities</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Scale your business with powerful add-on modules designed for growing enterprises
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
+                <!-- Module 1 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-shopping-cart text-white text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-2">Procurement</h4>
+                    <p class="text-sm text-gray-600 mb-3">Purchase orders & vendor management</p>
+                    <p class="text-sm font-bold text-blue-600">RM 99/mo</p>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-box text-white text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-2">Asset</h4>
+                    <p class="text-sm text-gray-600 mb-3">Fixed assets & depreciation tracking</p>
+                    <p class="text-sm font-bold text-purple-600">RM 79/mo</p>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-book text-white text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-2">General Ledger</h4>
+                    <p class="text-sm text-gray-600 mb-3">Complete accounting ledger system</p>
+                    <p class="text-sm font-bold text-orange-600">RM 129/mo</p>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-file-invoice-dollar text-white text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-2">E-Invoices</h4>
+                    <p class="text-sm text-gray-600 mb-3">LHDN MyInvois integration</p>
+                    <p class="text-sm font-bold text-red-600">RM 149/mo</p>
+                </div>
+
+                <!-- Module 5 -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-users text-white text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-2">Payroll</h4>
+                    <p class="text-sm text-gray-600 mb-3">EPF, SOCSO, PCB automation</p>
+                    <p class="text-sm font-bold text-yellow-600">RM 159/mo</p>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="extensions.html" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-lg hover:shadow-lg transition-all">
+                    View All 9 Modules
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enterprise & Compliance Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div>
+                    <div class="inline-block px-4 py-2 bg-green-100 text-green-700 font-semibold rounded-full text-sm mb-6">
+                        <i class="fas fa-flag mr-2"></i>100% Made in Malaysia
+                    </div>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                        Enterprise-Grade Solution <span class="gradient-text">Built by Malaysians</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        Developed entirely by local Malaysian developers, Kerisi Lite is powered by proven technology trusted by government agencies and large enterprises across Malaysia.
+                    </p>
+
+                    <!-- Compliance Badges -->
+                    <div class="grid grid-cols-3 gap-4 mb-8">
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-200">
+                            <div class="flex items-center justify-center mb-2">
+                                <i class="fas fa-certificate text-blue-600 text-2xl"></i>
+                            </div>
+                            <p class="text-center font-bold text-gray-900 text-sm">SAGA</p>
+                            <p class="text-center text-xs text-gray-600 mt-1">Compliant</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-4 border border-purple-200">
+                            <div class="flex items-center justify-center mb-2">
+                                <i class="fas fa-shield-alt text-purple-600 text-2xl"></i>
+                            </div>
+                            <p class="text-center font-bold text-gray-900 text-sm">MPASAS</p>
+                            <p class="text-center text-xs text-gray-600 mt-1">Certified</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
+                            <div class="flex items-center justify-center mb-2">
+                                <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                            </div>
+                            <p class="text-center font-bold text-gray-900 text-sm">PPIBZW</p>
+                            <p class="text-center text-xs text-gray-600 mt-1">Compliant</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-6">
+                        <h4 class="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                            <i class="fas fa-building text-indigo-600"></i>
+                            Enterprise & Government Solutions
+                        </h4>
+                        <p class="text-gray-700 mb-4">
+                            For large enterprises and government agencies requiring SAGA, MPASAS, or PPIBZW compliance, we offer customized B2B solutions with dedicated consultation and implementation support.
+                        </p>
+                        <a href="#contact" class="inline-flex items-center gap-2 text-indigo-600 font-semibold hover:text-indigo-700">
+                            Schedule a Consultation
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Content - Technology Stack -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Built on Proven Technology</h3>
+
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-database text-red-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-1">Oracle Database Platform</h4>
+                                <p class="text-sm text-gray-600">Enterprise-grade database technology partner</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-code text-orange-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-1">CORRAD Framework</h4>
+                                <p class="text-sm text-gray-600">Proven robust, secure, and reliable in government projects</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-cloud text-blue-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-1">AWS Cloud Infrastructure</h4>
+                                <p class="text-sm text-gray-600">Scalable and secure cloud deployment</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl p-6 border border-gray-200">
+                        <p class="text-sm text-gray-600 mb-3">
+                            <i class="fas fa-info-circle text-indigo-600 mr-2"></i>
+                            <strong>Enterprise Edition:</strong> KERISI SAGA
+                        </p>
+                        <p class="text-sm text-gray-700">
+                            Our enterprise platform features 13 integrated modules for comprehensive financial management, trusted by educational institutions, Islamic Religious Councils, local authorities, and statutory bodies.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted By Section -->
+    <section class="py-20 bg-gradient-to-br from-gray-900 to-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">
+                    Trusted by <span class="text-indigo-400">Government Agencies</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Our enterprise platform powers financial operations for Malaysian government institutions
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Testimonial 1 -->
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-white/90 mb-6 leading-relaxed italic">
+                        "The financial management system has significantly improved our operational efficiency and compliance reporting capabilities."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-white">Deputy Director</p>
+                            <p class="text-sm text-gray-300">Finance Division, Tourism Malaysia</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-white/90 mb-6 leading-relaxed italic">
+                        "Robust, reliable, and built to handle the complex requirements of government procurement and financial processes."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-white">Senior IT Officer</p>
+                            <p class="text-sm text-gray-300">Procurement Division, Ministry of Finance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <div class="inline-flex items-center gap-8 bg-white/10 backdrop-blur-sm rounded-full px-8 py-4 border border-white/20">
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-white mb-1">Educational</p>
+                        <p class="text-sm text-gray-300">Institutions</p>
+                    </div>
+                    <div class="w-px h-12 bg-white/20"></div>
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-white mb-1">Islamic</p>
+                        <p class="text-sm text-gray-300">Religious Councils</p>
+                    </div>
+                    <div class="w-px h-12 bg-white/20"></div>
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-white mb-1">Local</p>
+                        <p class="text-sm text-gray-300">Authorities</p>
+                    </div>
+                    <div class="w-px h-12 bg-white/20"></div>
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-white mb-1">Statutory</p>
+                        <p class="text-sm text-gray-300">Bodies</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Simple, <span class="gradient-text">Transparent Pricing</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Choose the perfect plan for your business. No hidden fees.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Starter Plan -->
+                <div class="pricing-card bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Starter</h3>
+                    <p class="text-gray-600 mb-6">Perfect for freelancers</p>
+                    <div class="mb-6">
+                        <span class="text-5xl font-bold text-gray-900">RM 0</span>
+                        <span class="text-gray-600">/month</span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">Up to 10 invoices/month</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">5 customers</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">Basic reports</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">Email support</span>
+                        </li>
+                    </ul>
+                    <a href="#" class="block w-full px-6 py-3 bg-gray-100 text-gray-900 font-semibold rounded-lg text-center hover:bg-gray-200 transition-colors">
+                        Get Started Free
+                    </a>
+                </div>
+
+                <!-- Professional Plan -->
+                <div class="pricing-card bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl shadow-2xl p-8 transform scale-105 relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-gray-900 text-sm font-bold px-4 py-1 rounded-full">
+                        MOST POPULAR
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Professional</h3>
+                    <p class="text-indigo-200 mb-6">For growing businesses</p>
+                    <div class="mb-6">
+                        <span class="text-5xl font-bold text-white">RM 49</span>
+                        <span class="text-indigo-200">/month</span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-white"></i>
+                            <span class="text-white">Unlimited invoices</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-white"></i>
+                            <span class="text-white">Unlimited customers</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-white"></i>
+                            <span class="text-white">Advanced reports</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-white"></i>
+                            <span class="text-white">Priority support</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-white"></i>
+                            <span class="text-white">Multi-user access</span>
+                        </li>
+                    </ul>
+                    <a href="#" class="block w-full px-6 py-3 bg-white text-indigo-600 font-semibold rounded-lg text-center hover:shadow-lg transition-all">
+                        Start Free Trial
+                    </a>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="pricing-card bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
+                    <p class="text-gray-600 mb-6">For large organizations</p>
+                    <div class="mb-6">
+                        <span class="text-5xl font-bold text-gray-900">Custom</span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">Everything in Professional</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">Custom integrations</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">Dedicated account manager</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">24/7 phone support</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">SLA guarantee</span>
+                        </li>
+                    </ul>
+                    <a href="#" class="block w-full px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg text-center hover:bg-gray-800 transition-colors">
+                        Contact Sales
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Loved by <span class="gradient-text">Businesses Worldwide</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    See what our customers have to say about Kerisi Lite
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        "Kerisi Lite has transformed how we manage our finances. The invoicing feature alone has saved us hours every week!"
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                            SL
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900">Sarah Lim</p>
+                            <p class="text-sm text-gray-600">CEO, Tech Solutions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        "The reporting features are incredible. I can now make data-driven decisions for my business with confidence."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold">
+                            MC
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900">Michael Chen</p>
+                            <p class="text-sm text-gray-600">Founder, Creative Studio</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        "Simple, intuitive, and powerful. Exactly what small businesses need. The support team is also fantastic!"
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center text-white font-bold">
+                            AR
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900">Ahmad Rahman</p>
+                            <p class="text-sm text-gray-600">Owner, Retail Business</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Frequently Asked <span class="gradient-text">Questions</span>
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Everything you need to know about Kerisi Lite
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ 1 -->
+                <div class="border border-gray-200 rounded-lg">
+                    <button onclick="toggleFAQ(1)" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-lg">
+                        <span class="font-semibold text-gray-900">Is there a free trial available?</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform" id="faq-icon-1"></i>
+                    </button>
+                    <div id="faq-content-1" class="hidden px-6 pb-4">
+                        <p class="text-gray-600">
+                            Yes! We offer a 14-day free trial with full access to all Professional features. No credit card required to start.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="border border-gray-200 rounded-lg">
+                    <button onclick="toggleFAQ(2)" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-lg">
+                        <span class="font-semibold text-gray-900">Can I change plans later?</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform" id="faq-icon-2"></i>
+                    </button>
+                    <div id="faq-content-2" class="hidden px-6 pb-4">
+                        <p class="text-gray-600">
+                            Absolutely! You can upgrade or downgrade your plan at any time. Changes take effect immediately, and billing is prorated.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="border border-gray-200 rounded-lg">
+                    <button onclick="toggleFAQ(3)" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-lg">
+                        <span class="font-semibold text-gray-900">Is my data secure?</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform" id="faq-icon-3"></i>
+                    </button>
+                    <div id="faq-content-3" class="hidden px-6 pb-4">
+                        <p class="text-gray-600">
+                            Yes! We use bank-level 256-bit SSL encryption to protect your data. We also perform daily backups and comply with international data protection standards.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="border border-gray-200 rounded-lg">
+                    <button onclick="toggleFAQ(4)" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-lg">
+                        <span class="font-semibold text-gray-900">Do you offer customer support?</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform" id="faq-icon-4"></i>
+                    </button>
+                    <div id="faq-content-4" class="hidden px-6 pb-4">
+                        <p class="text-gray-600">
+                            Yes! We provide email support for all plans, priority support for Professional users, and 24/7 phone support for Enterprise customers.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="border border-gray-200 rounded-lg">
+                    <button onclick="toggleFAQ(5)" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-lg">
+                        <span class="font-semibold text-gray-900">Can I export my data?</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform" id="faq-icon-5"></i>
+                    </button>
+                    <div id="faq-content-5" class="hidden px-6 pb-4">
+                        <p class="text-gray-600">
+                            Yes! You can export all your data anytime in multiple formats including CSV, Excel, and PDF. You own your data completely.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact/Enterprise Consultation Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Left Content -->
+                <div>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                        Enterprise & <span class="gradient-text">Government Solutions</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        For large enterprises and government agencies requiring compliance certification or customized implementations, our team provides dedicated B2B consultation and support.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-certificate text-indigo-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-1">Compliance Certification</h4>
+                                <p class="text-gray-600">SAGA, MPASAS, PPIBZW compliance assessment and implementation</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-handshake text-purple-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-1">B2B Engagement</h4>
+                                <p class="text-gray-600">Dedicated account manager and custom SLA agreements</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-cogs text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-1">Custom Implementation</h4>
+                                <p class="text-gray-600">Tailored modules and integration with existing systems</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-headset text-orange-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-1">Premium Support</h4>
+                                <p class="text-gray-600">24/7 dedicated support team and on-site training</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <i class="fas fa-phone text-indigo-600 text-xl"></i>
+                            <span class="font-bold text-gray-900">+60 3-XXXX XXXX</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-indigo-600 text-xl"></i>
+                            <span class="font-bold text-gray-900">enterprise@kerisilite.com.my</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content - Contact Form -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Request a Consultation</h3>
+                    <form class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">First Name *</label>
+                                <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Last Name *</label>
+                                <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Organization *</label>
+                            <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+                            <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label>
+                            <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Organization Type *</label>
+                            <select required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600">
+                                <option value="">Select type</option>
+                                <option value="government">Government Agency</option>
+                                <option value="education">Educational Institution</option>
+                                <option value="islamic">Islamic Religious Council</option>
+                                <option value="local-authority">Local Authority</option>
+                                <option value="statutory">Statutory Body</option>
+                                <option value="enterprise">Private Enterprise</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Compliance Requirements</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" class="w-4 h-4 text-indigo-600 rounded">
+                                    <span class="text-sm text-gray-700">SAGA Compliance</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" class="w-4 h-4 text-indigo-600 rounded">
+                                    <span class="text-sm text-gray-700">MPASAS Certification</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" class="w-4 h-4 text-indigo-600 rounded">
+                                    <span class="text-sm text-gray-700">PPIBZW Compliance</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Message</label>
+                            <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600" placeholder="Tell us about your requirements..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full px-6 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-lg hover:shadow-lg transition-all">
+                            Submit Request
+                        </button>
+
+                        <p class="text-xs text-gray-500 text-center">
+                            Our team will respond within 1 business day
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-indigo-600 to-purple-600">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6">
+                Ready to Transform Your Financial Management?
+            </h2>
+            <p class="text-xl text-indigo-100 mb-8">
+                Join thousands of businesses already using Kerisi Lite
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#pricing" class="px-8 py-4 bg-white text-indigo-600 font-bold rounded-lg hover:shadow-2xl transition-all">
+                    Start Free Trial
+                </a>
+                <a href="../wireframe/dashboard.html" class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-indigo-600 transition-all">
+                    View Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center text-xl font-bold">
+                            K
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Kerisi Lite</h3>
+                            <p class="text-xs text-gray-400">Financial Management</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Simple and powerful financial management for small businesses.
+                    </p>
+                </div>
+
+                <!-- Product -->
+                <div>
+                    <h4 class="font-bold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#pricing" class="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="extensions.html" class="text-gray-400 hover:text-white transition-colors">Extensions</a></li>
+                        <li><a href="developers.html" class="text-gray-400 hover:text-white transition-colors">API Documentation</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">Enterprise Solutions</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div>
+                    <h4 class="font-bold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div>
+                    <h4 class="font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Cookie Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">GDPR</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                        &copy; 2025 Kerisi Lite. All rights reserved.
+                    </p>
+                    <div class="flex gap-6">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-green-900/30 border border-green-700 rounded-full">
+                        <i class="fas fa-flag text-green-400"></i>
+                        <span class="text-sm text-green-300 font-semibold">100% Developed by Malaysian Developers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // FAQ Toggle
+        function toggleFAQ(index) {
+            const content = document.getElementById(`faq-content-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+
+            content.classList.toggle('hidden');
+            icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Add scroll animation
+        window.addEventListener('scroll', () => {
+            const elements = document.querySelectorAll('.feature-card, .pricing-card');
+            elements.forEach(element => {
+                const position = element.getBoundingClientRect();
+                if (position.top < window.innerHeight && position.bottom >= 0) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        // Floating Chatbot Toggle - Wrapped in DOMContentLoaded to ensure elements exist
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatbotBtn = document.getElementById('chatbotBtn');
+            const chatbotWindow = document.getElementById('chatbotWindow');
+            const closeChatBtn = document.getElementById('closeChatBtn');
+            const minimizeChatBtn = document.getElementById('minimizeChatBtn');
+            const chatInput = document.getElementById('chatInput');
+            const sendMessageBtn = document.getElementById('sendMessageBtn');
+            const chatMessages = document.getElementById('chatMessages');
+
+            if (!chatbotBtn || !chatbotWindow) {
+                console.error('Chatbot elements not found');
+                return;
+            }
+
+            chatbotBtn.addEventListener('click', () => {
+                chatbotWindow.classList.remove('hidden');
+                chatbotBtn.classList.add('hidden');
+                chatInput.focus();
+            });
+
+            closeChatBtn.addEventListener('click', () => {
+                chatbotWindow.classList.add('hidden');
+                chatbotBtn.classList.remove('hidden');
+            });
+
+            minimizeChatBtn.addEventListener('click', () => {
+                chatbotWindow.classList.add('hidden');
+                chatbotBtn.classList.remove('hidden');
+            });
+
+            // Helper functions for chat messages
+            function addUserMessage(message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'flex justify-end mb-4';
+                messageDiv.innerHTML = `
+                    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg rounded-br-none px-4 py-2 max-w-[80%]">
+                        <p class="text-sm">${message}</p>
+                    </div>
+                `;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function addBotResponse(action) {
+                const responses = {
+                    'pricing': 'Our Lite plan starts at RM99/month with 14-day free trial. For enterprise solutions with SAGA, MPASAS, or PPIBZW compliance, please contact our team for a customized quote.',
+                    'demo': 'I\'d be happy to arrange a demo! Please provide your email and our team will contact you within 24 hours to schedule a personalized demonstration.',
+                    'support': 'Our technical support team is available 24/7. You can reach us at support@kerisilite.com.my or through the support portal. How can I help you today?',
+                    'features': 'Our AI features include: Smart OCR data entry (90% reduction in manual work), predictive analytics, automated expense categorization (95% accuracy), and real-time fraud detection. Would you like to know more about any specific feature?'
+                };
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'flex justify-start mb-4';
+                messageDiv.innerHTML = `
+                    <div class="bg-white border border-gray-200 rounded-lg rounded-bl-none px-4 py-2 max-w-[80%] shadow-sm">
+                        <div class="flex items-center gap-2 mb-1">
+                            <div class="w-5 h-5 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-robot text-white text-xs"></i>
+                            </div>
+                            <p class="text-xs font-semibold text-gray-700">AI Assistant</p>
+                        </div>
+                        <p class="text-sm text-gray-800">${responses[action]}</p>
+                    </div>
+                `;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Quick action buttons - make it globally accessible
+            window.handleQuickAction = function(action) {
+                const quickActions = {
+                    'pricing': 'I would like to know more about pricing',
+                    'demo': 'Can I book a demo?',
+                    'support': 'I need technical support',
+                    'features': 'Tell me about AI features'
+                };
+
+                if (quickActions[action]) {
+                    addUserMessage(quickActions[action]);
+                    setTimeout(() => {
+                        addBotResponse(action);
+                    }, 1000);
+                }
+            };
+
+            sendMessageBtn.addEventListener('click', () => {
+                const message = chatInput.value.trim();
+                if (message) {
+                    addUserMessage(message);
+                    chatInput.value = '';
+
+                    setTimeout(() => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = 'flex justify-start mb-4';
+                        messageDiv.innerHTML = `
+                            <div class="bg-white border border-gray-200 rounded-lg rounded-bl-none px-4 py-2 max-w-[80%] shadow-sm">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <div class="w-5 h-5 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-robot text-white text-xs"></i>
+                                    </div>
+                                    <p class="text-xs font-semibold text-gray-700">AI Assistant</p>
+                                </div>
+                                <p class="text-sm text-gray-800">Thank you for your message! Our team will get back to you shortly. In the meantime, feel free to explore our features or try one of the quick actions below.</p>
+                            </div>
+                        `;
+                        chatMessages.appendChild(messageDiv);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 1000);
+                }
+            });
+
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessageBtn.click();
+                }
+            });
+        });
+    </script>
+
+    <!-- Floating AI Chatbot -->
+    <div id="chatbotBtn" class="fixed bottom-6 right-6 z-50 cursor-pointer group">
+        <div class="relative">
+            <!-- Pulse animation ring -->
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full opacity-75 group-hover:opacity-100 animate-pulse"></div>
+
+            <!-- Main button -->
+            <div class="relative bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 p-4 flex items-center gap-3 group-hover:scale-105">
+                <i class="fas fa-comments text-2xl"></i>
+                <span class="font-semibold pr-2">Chat with AI</span>
+            </div>
+
+            <!-- Online indicator -->
+            <div class="absolute -top-1 -right-1 w-4 h-4 bg-green-400 border-2 border-white rounded-full animate-pulse"></div>
+        </div>
+    </div>
+
+    <!-- Chatbot Window -->
+    <div id="chatbotWindow" class="hidden fixed bottom-6 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] shadow-2xl rounded-2xl overflow-hidden bg-white border border-gray-200">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <i class="fas fa-robot text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">AI Assistant</h4>
+                        <p class="text-xs text-purple-100">Online • Usually replies instantly</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="minimizeChatBtn" class="hover:bg-white/20 rounded-full p-2 transition-colors">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button id="closeChatBtn" class="hover:bg-white/20 rounded-full p-2 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Messages -->
+        <div id="chatMessages" class="h-96 overflow-y-auto p-4 bg-gray-50">
+            <!-- Welcome Message -->
+            <div class="flex justify-start mb-4">
+                <div class="bg-white border border-gray-200 rounded-lg rounded-bl-none px-4 py-3 max-w-[85%] shadow-sm">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-6 h-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-robot text-white text-xs"></i>
+                        </div>
+                        <p class="text-xs font-semibold text-gray-700">AI Assistant</p>
+                    </div>
+                    <p class="text-sm text-gray-800 mb-2">👋 Hello! I'm your Kerisi Lite AI Assistant. How can I help you today?</p>
+                    <p class="text-xs text-gray-600">I can help you with:</p>
+                    <ul class="text-xs text-gray-600 ml-4 mt-1 space-y-1">
+                        <li>• Pricing information</li>
+                        <li>• Feature demonstrations</li>
+                        <li>• Technical support</li>
+                        <li>• Enterprise solutions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="px-4 py-3 bg-white border-t border-gray-200">
+            <p class="text-xs text-gray-600 mb-2 font-semibold">Quick Actions:</p>
+            <div class="grid grid-cols-2 gap-2 mb-3">
+                <button onclick="handleQuickAction('pricing')" class="text-xs bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 text-indigo-700 font-semibold px-3 py-2 rounded-lg hover:from-indigo-100 hover:to-purple-100 transition-all">
+                    <i class="fas fa-tag mr-1"></i> Get Pricing
+                </button>
+                <button onclick="handleQuickAction('demo')" class="text-xs bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 text-indigo-700 font-semibold px-3 py-2 rounded-lg hover:from-indigo-100 hover:to-purple-100 transition-all">
+                    <i class="fas fa-calendar mr-1"></i> Book Demo
+                </button>
+                <button onclick="handleQuickAction('support')" class="text-xs bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 text-indigo-700 font-semibold px-3 py-2 rounded-lg hover:from-indigo-100 hover:to-purple-100 transition-all">
+                    <i class="fas fa-headset mr-1"></i> Support
+                </button>
+                <button onclick="handleQuickAction('features')" class="text-xs bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 text-indigo-700 font-semibold px-3 py-2 rounded-lg hover:from-indigo-100 hover:to-purple-100 transition-all">
+                    <i class="fas fa-brain mr-1"></i> AI Features
+                </button>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="p-4 bg-white border-t border-gray-200">
+            <div class="flex items-center gap-2">
+                <input
+                    type="text"
+                    id="chatInput"
+                    placeholder="Type your message..."
+                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 text-sm"
+                />
+                <button id="sendMessageBtn" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-2 rounded-lg hover:shadow-lg transition-all">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            <p class="text-xs text-gray-500 mt-2 text-center">
+                <i class="fas fa-lock mr-1"></i> Your conversations are secure and private
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

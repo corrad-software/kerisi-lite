@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotation QUO-2024-001 - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Print styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            body {
+                background: white;
+            }
+            .quotation-container {
+                box-shadow: none !important;
+                border: none !important;
+            }
+        }
+        .print-only {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container" class="no-print"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="bg-white border-b border-gray-200 px-6 py-4 no-print">
+                <div class="flex items-center justify-between">
+
+                    <!-- Back Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button onclick="window.history.back()" class="p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-arrow-left text-xl"></i>
+                        </button>
+                        <div>
+                            <h1 class="text-2xl font-bold text-black">Quotation QUO-2024-001</h1>
+                            <p class="text-sm text-gray-600">Issued Dec 1, 2024 • Valid until Dec 31, 2024</p>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex items-center gap-3">
+                        <button onclick="window.print()" class="flex items-center gap-2 px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-print"></i>
+                            <span>Print</span>
+                        </button>
+                        <button onclick="downloadPDF()" class="flex items-center gap-2 px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-download"></i>
+                            <span>Download PDF</span>
+                        </button>
+                        <button onclick="sendQuotation()" class="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors">
+                            <i class="fas fa-envelope"></i>
+                            <span>Send</span>
+                        </button>
+                        <button onclick="alert('Edit quotation functionality - would redirect to edit-quotation.html')" class="p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors" title="Edit">
+                            <i class="fas fa-edit text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Quotation Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <div class="max-w-4xl mx-auto">
+
+                    <!-- Status Banner -->
+                    <div class="bg-green-50 border-l-4 border-green-500 rounded-lg p-4 mb-6 no-print">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-green-900">Accepted by Client</p>
+                                    <p class="text-sm text-green-700">Quotation accepted on Dec 10, 2024</p>
+                                </div>
+                            </div>
+                            <button onclick="convertToInvoice()" class="px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors">
+                                <i class="fas fa-file-invoice mr-2"></i>Convert to Invoice
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quotation Document -->
+                    <div class="quotation-container bg-white rounded-xl shadow-sm border border-gray-200 p-8 md:p-12">
+
+                        <!-- Header -->
+                        <div class="flex items-start justify-between mb-8 pb-8 border-b border-gray-200">
+                            <!-- Company Info -->
+                            <div>
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-12 h-12 bg-black text-white rounded-lg flex items-center justify-center text-xl font-bold">
+                                        K
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-black">Kerisi Lite</h2>
+                                        <p class="text-sm text-gray-600">Financial Management</p>
+                                    </div>
+                                </div>
+                                <div class="text-sm text-gray-600 space-y-1">
+                                    <p>123 Business Street</p>
+                                    <p>Kuala Lumpur, 50450</p>
+                                    <p>Malaysia</p>
+                                    <p class="mt-2">
+                                        <i class="fas fa-envelope mr-2"></i>hello@kerisilite.com
+                                    </p>
+                                    <p>
+                                        <i class="fas fa-phone mr-2"></i>+60 3-1234 5678
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Quotation Info -->
+                            <div class="text-right">
+                                <h3 class="text-4xl font-bold text-purple-600 mb-2">QUOTATION</h3>
+                                <div class="space-y-1 text-sm">
+                                    <p class="text-gray-600">Quotation Number</p>
+                                    <p class="text-lg font-bold text-black">QUO-2024-001</p>
+                                    <p class="text-gray-600 mt-3">Issue Date</p>
+                                    <p class="font-semibold text-black">December 1, 2024</p>
+                                    <p class="text-gray-600 mt-3">Valid Until</p>
+                                    <p class="font-semibold text-black">December 31, 2024</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quote For -->
+                        <div class="mb-8">
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Quote For</p>
+                            <div class="bg-purple-50 rounded-lg p-4">
+                                <p class="text-lg font-bold text-black mb-1">Acme Corporation</p>
+                                <div class="text-sm text-gray-600 space-y-1">
+                                    <p>Attn: John Smith</p>
+                                    <p>456 Client Avenue</p>
+                                    <p>Petaling Jaya, 47800</p>
+                                    <p>Malaysia</p>
+                                    <p class="mt-2">
+                                        <i class="fas fa-envelope mr-2"></i>john@acmecorp.com
+                                    </p>
+                                    <p>
+                                        <i class="fas fa-phone mr-2"></i>+60 3-8765 4321
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project Description -->
+                        <div class="mb-8 bg-gray-50 rounded-lg p-4">
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Project Description</p>
+                            <p class="text-sm text-gray-700 leading-relaxed">
+                                Complete enterprise website redesign with modern UI/UX, including responsive design, SEO optimization, content management system integration, and comprehensive training for your team.
+                            </p>
+                        </div>
+
+                        <!-- Line Items -->
+                        <div class="mb-8">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b-2 border-purple-600">
+                                        <th class="text-left py-3 text-xs font-bold text-gray-700 uppercase tracking-wider">Description</th>
+                                        <th class="text-center py-3 text-xs font-bold text-gray-700 uppercase tracking-wider">Qty</th>
+                                        <th class="text-right py-3 text-xs font-bold text-gray-700 uppercase tracking-wider">Rate</th>
+                                        <th class="text-right py-3 text-xs font-bold text-gray-700 uppercase tracking-wider">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="py-4">
+                                            <p class="font-semibold text-black">Website Design & Development</p>
+                                            <p class="text-sm text-gray-600">Complete website redesign with modern UI/UX and responsive design</p>
+                                        </td>
+                                        <td class="text-center py-4 text-gray-600">1</td>
+                                        <td class="text-right py-4 text-gray-600">RM 25,000.00</td>
+                                        <td class="text-right py-4 font-semibold text-black">RM 25,000.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-4">
+                                            <p class="font-semibold text-black">SEO Optimization</p>
+                                            <p class="text-sm text-gray-600">Comprehensive on-page and technical SEO improvements</p>
+                                        </td>
+                                        <td class="text-center py-4 text-gray-600">1</td>
+                                        <td class="text-right py-4 text-gray-600">RM 8,000.00</td>
+                                        <td class="text-right py-4 font-semibold text-black">RM 8,000.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-4">
+                                            <p class="font-semibold text-black">CMS Integration</p>
+                                            <p class="text-sm text-gray-600">Content management system setup and configuration</p>
+                                        </td>
+                                        <td class="text-center py-4 text-gray-600">1</td>
+                                        <td class="text-right py-4 text-gray-600">RM 7,000.00</td>
+                                        <td class="text-right py-4 font-semibold text-black">RM 7,000.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-4">
+                                            <p class="font-semibold text-black">Team Training Sessions</p>
+                                            <p class="text-sm text-gray-600">5 comprehensive training sessions for team (2 hours each)</p>
+                                        </td>
+                                        <td class="text-center py-4 text-gray-600">5</td>
+                                        <td class="text-right py-4 text-gray-600">RM 1,000.00</td>
+                                        <td class="text-right py-4 font-semibold text-black">RM 5,000.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Totals -->
+                        <div class="flex justify-end mb-8">
+                            <div class="w-full md:w-1/2">
+                                <div class="space-y-2">
+                                    <div class="flex justify-between py-2">
+                                        <span class="text-gray-600">Subtotal</span>
+                                        <span class="font-semibold text-black">RM 45,000.00</span>
+                                    </div>
+                                    <div class="flex justify-between py-2">
+                                        <span class="text-gray-600">Tax (0%)</span>
+                                        <span class="font-semibold text-black">RM 0.00</span>
+                                    </div>
+                                    <div class="flex justify-between py-2">
+                                        <span class="text-gray-600">Discount</span>
+                                        <span class="font-semibold text-black">RM 0.00</span>
+                                    </div>
+                                    <div class="border-t-2 border-purple-600 pt-3 mt-3">
+                                        <div class="flex justify-between">
+                                            <span class="text-lg font-bold text-black">Total</span>
+                                            <span class="text-2xl font-bold text-purple-600">RM 45,000.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline & Deliverables -->
+                        <div class="mb-8 pb-8 border-b border-gray-200">
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Project Timeline & Deliverables</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-gray-50 rounded-lg p-3">
+                                    <p class="font-semibold text-black text-sm mb-2">Phase 1: Design (2 weeks)</p>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Wireframes and mockups</li>
+                                        <li>• Design review and approval</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-3">
+                                    <p class="font-semibold text-black text-sm mb-2">Phase 2: Development (4 weeks)</p>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Frontend development</li>
+                                        <li>• Backend integration</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-3">
+                                    <p class="font-semibold text-black text-sm mb-2">Phase 3: Testing (1 week)</p>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Quality assurance</li>
+                                        <li>• Bug fixes</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-3">
+                                    <p class="font-semibold text-black text-sm mb-2">Phase 4: Launch (1 week)</p>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Deployment</li>
+                                        <li>• Team training</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Terms & Conditions -->
+                        <div class="mb-8 pb-8 border-b border-gray-200">
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Terms & Conditions</p>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li>• This quotation is valid for 30 days from the issue date</li>
+                                <li>• Payment terms: 50% upfront, 50% upon completion</li>
+                                <li>• Project timeline may vary based on client feedback cycles</li>
+                                <li>• Additional revisions beyond agreed scope will be charged separately</li>
+                                <li>• This quotation does not include ongoing maintenance or hosting fees</li>
+                            </ul>
+                        </div>
+
+                        <!-- Notes -->
+                        <div class="mb-8 pb-8 border-b border-gray-200">
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Notes</p>
+                            <p class="text-sm text-gray-600">Thank you for considering our services. We look forward to working with you on this exciting project. If you have any questions or would like to discuss any aspect of this quotation, please don't hesitate to contact us.</p>
+                        </div>
+
+                        <!-- Acceptance -->
+                        <div class="bg-purple-50 rounded-lg p-6 text-center">
+                            <p class="text-sm text-gray-700 mb-4">
+                                To accept this quotation, please reply to this email or contact us directly. We'll send you an invoice and begin work upon receipt of the initial payment.
+                            </p>
+                            <p class="text-xs text-gray-500">
+                                By accepting this quotation, you agree to the terms and conditions outlined above.
+                            </p>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="mt-8 pt-8 border-t border-gray-200 text-center text-sm text-gray-500">
+                            <p>This is a computer-generated quotation. No signature is required.</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Activity Timeline (No Print) -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6 no-print">
+                        <h3 class="text-lg font-bold text-black mb-4">Quotation Activity</h3>
+                        <div class="space-y-4">
+                            <!-- Activity Item -->
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-check text-green-600"></i>
+                                    </div>
+                                    <div class="w-0.5 h-full bg-gray-200 mt-2"></div>
+                                </div>
+                                <div class="flex-1 pb-4">
+                                    <p class="font-semibold text-black">Quotation Accepted</p>
+                                    <p class="text-sm text-gray-600">Client accepted the quotation</p>
+                                    <p class="text-xs text-gray-500 mt-1">December 10, 2024 at 3:45 PM</p>
+                                </div>
+                            </div>
+
+                            <!-- Activity Item -->
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-eye text-blue-600"></i>
+                                    </div>
+                                    <div class="w-0.5 h-full bg-gray-200 mt-2"></div>
+                                </div>
+                                <div class="flex-1 pb-4">
+                                    <p class="font-semibold text-black">Quotation Viewed</p>
+                                    <p class="text-sm text-gray-600">Client viewed the quotation</p>
+                                    <p class="text-xs text-gray-500 mt-1">December 3, 2024 at 11:20 AM</p>
+                                </div>
+                            </div>
+
+                            <!-- Activity Item -->
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-paper-plane text-purple-600"></i>
+                                    </div>
+                                    <div class="w-0.5 h-full bg-gray-200 mt-2"></div>
+                                </div>
+                                <div class="flex-1 pb-4">
+                                    <p class="font-semibold text-black">Quotation Sent</p>
+                                    <p class="text-sm text-gray-600">Sent to john@acmecorp.com</p>
+                                    <p class="text-xs text-gray-500 mt-1">December 1, 2024 at 2:30 PM</p>
+                                </div>
+                            </div>
+
+                            <!-- Activity Item -->
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-file-contract text-gray-600"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-semibold text-black">Quotation Created</p>
+                                    <p class="text-sm text-gray-600">Quotation QUO-2024-001 was created</p>
+                                    <p class="text-xs text-gray-500 mt-1">December 1, 2024 at 2:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- More Actions (No Print) -->
+                    <div class="flex items-center justify-between bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6 no-print">
+                        <div>
+                            <h4 class="font-bold text-black mb-1">Need to make changes?</h4>
+                            <p class="text-sm text-gray-600">You can edit, duplicate, or delete this quotation</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="duplicateQuotation()" class="px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-copy mr-2"></i>Duplicate
+                            </button>
+                            <button onclick="deleteQuotation()" class="px-4 py-2 text-red-600 bg-white border border-red-200 rounded-lg hover:bg-red-50 transition-colors">
+                                <i class="fas fa-trash mr-2"></i>Delete
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden hidden no-print"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        if (menuToggle && sidebar && overlay) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        }
+
+        // Download PDF
+        function downloadPDF() {
+            alert('In production, this would generate and download a PDF of the quotation.');
+            console.log('Download PDF clicked');
+        }
+
+        // Send Quotation
+        function sendQuotation() {
+            if (confirm('Send this quotation to john@acmecorp.com?')) {
+                alert('Quotation sent successfully! (Demo)');
+                console.log('Send quotation clicked');
+            }
+        }
+
+        // Convert to Invoice
+        function convertToInvoice() {
+            if (confirm('Convert this accepted quotation to an invoice?')) {
+                alert('Converting to invoice... (Demo)\nYou will be redirected to the invoice creation page with pre-filled data.');
+                console.log('Convert to invoice clicked');
+                // In production, redirect to create invoice page with pre-filled data
+                // window.location.href = 'create-invoice.html?from=QUO-2024-001';
+            }
+        }
+
+        // Duplicate Quotation
+        function duplicateQuotation() {
+            if (confirm('Create a duplicate of this quotation?')) {
+                alert('Quotation duplicated successfully! (Demo)');
+                console.log('Duplicate quotation clicked');
+                // In production, redirect to create quotation page with pre-filled data
+            }
+        }
+
+        // Delete Quotation
+        function deleteQuotation() {
+            if (confirm('Are you sure you want to delete this quotation? This action cannot be undone.')) {
+                alert('Quotation deleted! (Demo)');
+                console.log('Delete quotation clicked');
+                // In production, delete and redirect to all quotations
+                // window.location.href = 'quotations.html';
+            }
+        }
+    </script>
+
+</body>
+</html>

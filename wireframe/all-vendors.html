@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Vendors - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Print styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container" class="no-print"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="no-print bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+
+                    <!-- Mobile Menu Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button id="menuToggle" class="lg:hidden p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-black">Vendors</h2>
+                            <p class="text-sm text-gray-600">Manage your business vendors</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Actions -->
+                    <div class="flex items-center gap-3">
+                        <button onclick="window.location.href='add-vendor.html'" class="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition-colors">
+                            <i class="fas fa-plus"></i>
+                            <span>Add Vendor</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <!-- Filter Bar -->
+                <div class="no-print bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+                    <div class="flex flex-col lg:flex-row gap-4">
+                        <!-- Status Filter -->
+                        <div class="flex-1">
+                            <select class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
+                                <option value="all">All Vendors</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+
+                        <!-- Category Filter -->
+                        <div class="flex-1">
+                            <select class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
+                                <option value="">All Categories</option>
+                                <option value="office">Office Supplies</option>
+                                <option value="software">Software & Services</option>
+                                <option value="utilities">Utilities</option>
+                                <option value="professional">Professional Services</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Sort -->
+                        <div class="flex-1">
+                            <select class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
+                                <option value="name-asc">Name (A-Z)</option>
+                                <option value="name-desc">Name (Z-A)</option>
+                                <option value="amount-desc">Total Spent (High to Low)</option>
+                                <option value="amount-asc">Total Spent (Low to High)</option>
+                                <option value="recent">Recently Added</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <!-- Total Vendors -->
+                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-orange-100">Total Vendors</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-store text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">24</p>
+                    </div>
+
+                    <!-- Active Vendors -->
+                    <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-green-100">Active</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-check-circle text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">21</p>
+                    </div>
+
+                    <!-- Total Spent -->
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-blue-100">Total Spent</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-dollar-sign text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">RM 125,450</p>
+                    </div>
+
+                    <!-- This Year -->
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-purple-100">This Year</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-calendar-alt text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">RM 45,780</p>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search by vendor name, email, or phone..."
+                            class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                        >
+                    </div>
+                </div>
+
+                <!-- Vendors Table -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+
+                    <!-- Table Header -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4 text-left">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Vendor Name
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Contact
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Category
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Total Spent
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Last Transaction
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+
+                                <!-- Vendor 1 -->
+                                <tr class="vendor-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="active" onclick="window.location.href='view-vendor.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <i class="fab fa-google text-blue-600"></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm font-bold text-black">Google Workspace</span>
+                                                <p class="text-xs text-gray-500">Technology</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-gray-900">workspace@google.com</div>
+                                        <div class="text-xs text-gray-500">+1 650-253-0000</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-purple-50 text-purple-700">
+                                            <i class="fas fa-laptop-code mr-1"></i> Software
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-black">RM 12,480</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 28, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Vendor 2 -->
+                                <tr class="vendor-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="active" onclick="window.location.href='view-vendor.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <i class="fab fa-amazon text-orange-600"></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm font-bold text-black">Amazon Business</span>
+                                                <p class="text-xs text-gray-500">Retail</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-gray-900">business@amazon.com</div>
+                                        <div class="text-xs text-gray-500">+1 888-281-3847</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-50 text-blue-700">
+                                            <i class="fas fa-briefcase mr-1"></i> Office
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-black">RM 8,750</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 26, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Vendor 3 -->
+                                <tr class="vendor-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="active" onclick="window.location.href='view-vendor.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <i class="fas fa-building text-red-600"></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm font-bold text-black">Office Depot</span>
+                                                <p class="text-xs text-gray-500">Office Supplies</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-gray-900">sales@officedepot.com</div>
+                                        <div class="text-xs text-gray-500">+1 800-463-3768</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-50 text-blue-700">
+                                            <i class="fas fa-briefcase mr-1"></i> Office
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-black">RM 15,230</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 24, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Vendor 4 -->
+                                <tr class="vendor-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="active" onclick="window.location.href='view-vendor.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <i class="fas fa-signal text-blue-600"></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm font-bold text-black">Telekom Malaysia</span>
+                                                <p class="text-xs text-gray-500">Telecommunications</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-gray-900">business@tm.com.my</div>
+                                        <div class="text-xs text-gray-500">+60 3-2240 5122</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-50 text-yellow-700">
+                                            <i class="fas fa-bolt mr-1"></i> Utilities
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-black">RM 4,250</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 23, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Vendor 5 -->
+                                <tr class="vendor-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="active" onclick="window.location.href='view-vendor.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <i class="fab fa-facebook text-blue-600"></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm font-bold text-black">Facebook Ads</span>
+                                                <p class="text-xs text-gray-500">Social Media</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-gray-900">ads@facebook.com</div>
+                                        <div class="text-xs text-gray-500">+1 650-543-4800</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-indigo-50 text-indigo-700">
+                                            <i class="fas fa-bullhorn mr-1"></i> Marketing
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-black">RM 18,900</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 20, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Vendor 6 -->
+                                <tr class="vendor-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="inactive" onclick="window.location.href='view-vendor.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <i class="fas fa-car text-green-600"></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm font-bold text-black">Grab</span>
+                                                <p class="text-xs text-gray-500">Transportation</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-gray-900">business@grab.com</div>
+                                        <div class="text-xs text-gray-500">+60 3-2718 0000</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            <i class="fas fa-plane mr-1"></i> Travel
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-black">RM 3,420</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Nov 15, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-700">
+                                            Inactive
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Vendor 7 -->
+                                <tr class="vendor-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="active" onclick="window.location.href='view-vendor.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <i class="fas fa-briefcase text-gray-600"></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm font-bold text-black">Ahmad & Partners</span>
+                                                <p class="text-xs text-gray-500">Legal Services</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-gray-900">info@ahmadpartners.com</div>
+                                        <div class="text-xs text-gray-500">+60 3-2161 0808</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-700">
+                                            <i class="fas fa-user-tie mr-1"></i> Professional
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm font-bold text-black">RM 25,800</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 18, 2024
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="bg-white px-6 py-4 border-t border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-700">
+                                Showing <span class="font-semibold">1</span> to <span class="font-semibold">7</span> of <span class="font-semibold">24</span> vendors
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50" disabled>
+                                    Previous
+                                </button>
+                                <button class="px-4 py-2 text-sm font-medium text-white bg-orange-600 border border-orange-600 rounded-lg hover:bg-orange-700">
+                                    1
+                                </button>
+                                <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                    2
+                                </button>
+                                <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                    3
+                                </button>
+                                <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden hidden"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        if (menuToggle && sidebar && overlay) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('.vendor-row');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Report - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Print styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container" class="no-print"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="no-print bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+
+                    <!-- Mobile Menu Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button id="menuToggle" class="lg:hidden p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-black">Sales Report</h2>
+                            <p class="text-sm text-gray-600">Detailed sales analysis</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Actions -->
+                    <div class="flex items-center gap-3">
+                        <button onclick="window.print()" class="flex items-center gap-2 px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-print"></i>
+                            <span>Print</span>
+                        </button>
+                        <button onclick="exportReport()" class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                            <i class="fas fa-download"></i>
+                            <span>Export</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <!-- Period Selection -->
+                <div class="no-print bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+                    <div class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+                        <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Report Period
+                                </label>
+                                <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                                    <option value="this-month">This Month</option>
+                                    <option value="last-month">Last Month</option>
+                                    <option value="this-quarter">This Quarter</option>
+                                    <option value="this-year" selected>This Year</option>
+                                    <option value="last-year">Last Year</option>
+                                    <option value="custom">Custom Range</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Group By
+                                </label>
+                                <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                                    <option value="customer" selected>Customer</option>
+                                    <option value="product">Product/Service</option>
+                                    <option value="month">Month</option>
+                                    <option value="category">Category</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Filter by Status
+                                </label>
+                                <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                                    <option value="all" selected>All Sales</option>
+                                    <option value="paid">Paid Only</option>
+                                    <option value="unpaid">Unpaid Only</option>
+                                    <option value="overdue">Overdue Only</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <!-- Total Sales -->
+                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-emerald-100">Total Sales</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-dollar-sign text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">RM 285,900</p>
+                        <p class="text-xs text-emerald-100">
+                            <i class="fas fa-arrow-up mr-1"></i>
+                            <span class="font-semibold">12.5%</span> from last year
+                        </p>
+                    </div>
+
+                    <!-- Total Invoices -->
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-blue-100">Total Invoices</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-file-invoice text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">124</p>
+                        <p class="text-xs text-blue-100">
+                            <i class="fas fa-arrow-up mr-1"></i>
+                            <span class="font-semibold">8 invoices</span> this month
+                        </p>
+                    </div>
+
+                    <!-- Average Sale -->
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-purple-100">Average Sale</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-line text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">RM 2,305</p>
+                        <p class="text-xs text-purple-100">
+                            <i class="fas fa-arrow-up mr-1"></i>
+                            <span class="font-semibold">3.2%</span> increase
+                        </p>
+                    </div>
+
+                    <!-- Top Customer -->
+                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-orange-100">Top Customer</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-trophy text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-xl font-bold mb-1">Acme Corporation</p>
+                        <p class="text-xs text-orange-100">
+                            <span class="font-semibold">RM 45,600</span> revenue
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Report Header -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                    <div class="text-center">
+                        <h1 class="text-3xl font-bold text-black mb-2">Kerisi Lite</h1>
+                        <h2 class="text-xl font-semibold text-gray-700 mb-1">Sales Report by Customer</h2>
+                        <p class="text-sm text-gray-600">January 1, 2024 - December 31, 2024</p>
+                    </div>
+                </div>
+
+                <!-- Sales by Customer Report -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-emerald-50">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-emerald-900 uppercase tracking-wider">Customer</th>
+                                    <th class="px-6 py-4 text-center text-xs font-bold text-emerald-900 uppercase tracking-wider">Invoices</th>
+                                    <th class="px-6 py-4 text-right text-xs font-bold text-emerald-900 uppercase tracking-wider">Total Sales</th>
+                                    <th class="px-6 py-4 text-right text-xs font-bold text-emerald-900 uppercase tracking-wider">Paid</th>
+                                    <th class="px-6 py-4 text-right text-xs font-bold text-emerald-900 uppercase tracking-wider">Outstanding</th>
+                                    <th class="px-6 py-4 text-right text-xs font-bold text-emerald-900 uppercase tracking-wider">% of Total</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-blue-600">AC</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-bold text-black">Acme Corporation</p>
+                                                <p class="text-xs text-gray-500">Business</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-900">18</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">RM 45,600.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-green-600">RM 36,700.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-orange-600">RM 8,900.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-emerald-600">16.0%</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-green-600">GT</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-bold text-black">Global Tech Solutions</p>
+                                                <p class="text-xs text-gray-500">Business</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-900">22</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">RM 52,300.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-green-600">RM 48,800.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-orange-600">RM 3,500.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-emerald-600">18.3%</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-purple-600">BC</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-bold text-black">Bright Concepts Sdn Bhd</p>
+                                                <p class="text-xs text-gray-500">Business</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-900">15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">RM 38,200.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-green-600">RM 38,200.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-gray-600">RM 0.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-emerald-600">13.4%</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-pink-600">MP</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-bold text-black">Metro Plaza Holdings</p>
+                                                <p class="text-xs text-gray-500">Business</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-900">19</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">RM 42,800.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-green-600">RM 36,200.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-orange-600">RM 6,600.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-emerald-600">15.0%</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-yellow-600">SP</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-bold text-black">Sunrise Properties</p>
+                                                <p class="text-xs text-gray-500">Business</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-900">12</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">RM 28,500.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-green-600">RM 24,600.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-orange-600">RM 3,900.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-emerald-600">10.0%</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-indigo-600">DC</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-bold text-black">Digital Creatives Studio</p>
+                                                <p class="text-xs text-gray-500">Business</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-900">16</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">RM 35,200.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-green-600">RM 31,750.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-orange-600">RM 3,450.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-emerald-600">12.3%</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-red-600">OT</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-bold text-black">Other Customers</p>
+                                                <p class="text-xs text-gray-500">Various</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-900">22</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">RM 43,300.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-green-600">RM 41,200.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-semibold text-orange-600">RM 2,100.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-emerald-600">15.1%</td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="bg-emerald-50">
+                                <tr>
+                                    <td class="px-6 py-4">
+                                        <span class="text-sm font-bold text-emerald-900">TOTAL</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-bold text-emerald-900">124</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-emerald-900">RM 285,900.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-green-700">RM 257,450.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-orange-700">RM 28,450.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-emerald-900">100.0%</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Collection Performance -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-lg font-bold text-black mb-6 flex items-center gap-2">
+                        <i class="fas fa-chart-pie text-emerald-600"></i>
+                        Collection Performance
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center p-6 bg-green-50 rounded-lg">
+                            <p class="text-sm text-gray-600 mb-2">Collection Rate</p>
+                            <p class="text-4xl font-bold text-green-600 mb-1">90.0%</p>
+                            <p class="text-xs text-gray-500">RM 257,450 collected</p>
+                        </div>
+                        <div class="text-center p-6 bg-orange-50 rounded-lg">
+                            <p class="text-sm text-gray-600 mb-2">Outstanding Amount</p>
+                            <p class="text-4xl font-bold text-orange-600 mb-1">10.0%</p>
+                            <p class="text-xs text-gray-500">RM 28,450 pending</p>
+                        </div>
+                        <div class="text-center p-6 bg-blue-50 rounded-lg">
+                            <p class="text-sm text-gray-600 mb-2">Average Collection Time</p>
+                            <p class="text-4xl font-bold text-blue-600 mb-1">18 days</p>
+                            <p class="text-xs text-gray-500">Payment terms: Net 30</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Footer -->
+                <div class="mt-6 text-center text-sm text-gray-500">
+                    Generated on December 31, 2024 at 3:45 PM
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden hidden"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        if (menuToggle && sidebar && overlay) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        }
+
+        // Export report function
+        function exportReport() {
+            alert('Exporting Sales Report as PDF...');
+        }
+
+        // Compare report function
+        function compareReport() {
+            alert('Compare with another period - feature coming soon!');
+        }
+    </script>
+
+</body>
+</html>

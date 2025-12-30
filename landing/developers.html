@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kerisi Lite Developer API - Build powerful integrations with our REST API">
+    <title>Developers - Kerisi Lite API Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        pre, code {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Code block styling */
+        pre {
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Sidebar sticky positioning */
+        .sidebar-sticky {
+            position: sticky;
+            top: 5rem;
+            height: calc(100vh - 6rem);
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="antialiased bg-gray-50">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 text-white rounded-lg flex items-center justify-center text-xl font-bold">
+                            K
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">Kerisi Lite</h1>
+                            <p class="text-xs text-gray-500">Developer API</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Home</a>
+                    <a href="index.html#features" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Features</a>
+                    <a href="index.html#pricing" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Pricing</a>
+                    <a href="extensions.html" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Extensions</a>
+                    <a href="developers.html" class="text-indigo-600 font-semibold transition-colors">Developers</a>
+                    <a href="../wireframe/login.html" class="text-gray-700 hover:text-gray-900 font-semibold transition-colors">Sign In</a>
+                    <a href="index.html#pricing" class="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all">
+                        Start Free Trial
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200 bg-white">
+            <div class="px-4 py-3 space-y-3">
+                <a href="index.html" class="block text-gray-700 hover:text-indigo-600 font-medium py-2">Home</a>
+                <a href="index.html#features" class="block text-gray-700 hover:text-indigo-600 font-medium py-2">Features</a>
+                <a href="index.html#pricing" class="block text-gray-700 hover:text-indigo-600 font-medium py-2">Pricing</a>
+                <a href="extensions.html" class="block text-gray-700 hover:text-indigo-600 font-medium py-2">Extensions</a>
+                <a href="developers.html" class="block text-indigo-600 font-semibold py-2">Developers</a>
+                <a href="../wireframe/login.html" class="block text-gray-700 font-semibold py-2">Sign In</a>
+                <a href="index.html#pricing" class="block px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg text-center">
+                    Start Free Trial
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+                Build with <span class="text-indigo-300">Kerisi Lite API</span>
+            </h1>
+            <p class="text-xl text-indigo-100 mb-8 max-w-3xl mx-auto">
+                Powerful REST API to integrate financial management into your applications. Simple, secure, and scalable.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#getting-started" class="px-8 py-4 bg-white text-indigo-600 font-bold rounded-lg hover:shadow-2xl transition-all">
+                    Get Started
+                </a>
+                <a href="#endpoints" class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-indigo-600 transition-all">
+                    View API Reference
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+                <!-- Sidebar Navigation -->
+                <aside class="lg:col-span-1">
+                    <div class="sidebar-sticky bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-900 mb-4">Documentation</h3>
+                        <nav class="space-y-2">
+                            <a href="#getting-started" class="block text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-rocket w-4 mr-2"></i>Getting Started
+                            </a>
+                            <a href="#authentication" class="block text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-key w-4 mr-2"></i>Authentication
+                            </a>
+                            <a href="#endpoints" class="block text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-code w-4 mr-2"></i>API Endpoints
+                            </a>
+                            <a href="#invoices-api" class="block text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-lg transition-colors ml-4">
+                                Invoices
+                            </a>
+                            <a href="#customers-api" class="block text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-lg transition-colors ml-4">
+                                Customers
+                            </a>
+                            <a href="#expenses-api" class="block text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-lg transition-colors ml-4">
+                                Expenses
+                            </a>
+                            <a href="#reports-api" class="block text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-lg transition-colors ml-4">
+                                Reports
+                            </a>
+                            <a href="#webhooks" class="block text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-webhook w-4 mr-2"></i>Webhooks
+                            </a>
+                            <a href="#sdks" class="block text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-cube w-4 mr-2"></i>SDKs & Libraries
+                            </a>
+                            <a href="#rate-limits" class="block text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-tachometer-alt w-4 mr-2"></i>Rate Limits
+                            </a>
+                            <a href="#errors" class="block text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-exclamation-triangle w-4 mr-2"></i>Error Codes
+                            </a>
+                        </nav>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="lg:col-span-3 space-y-12">
+
+                    <!-- Getting Started -->
+                    <div id="getting-started" class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Getting Started</h2>
+                        <p class="text-gray-600 mb-6">
+                            Welcome to the Kerisi Lite API! This guide will help you get started with integrating our financial management capabilities into your application.
+                        </p>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 mb-6">
+                            <p class="text-sm text-blue-900">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                <strong>Base URL:</strong> <code class="bg-blue-100 px-2 py-1 rounded">https://api.kerisilite.com/v1</code>
+                            </p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Quick Start</h3>
+                        <ol class="list-decimal list-inside space-y-3 text-gray-600 mb-6">
+                            <li>Create an account at <a href="../wireframe/dashboard.html" class="text-indigo-600 hover:underline">Kerisi Lite Dashboard</a></li>
+                            <li>Generate your API key from Settings → Integrations</li>
+                            <li>Make your first API call using the examples below</li>
+                        </ol>
+
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Example Request</h3>
+                        <pre class="bg-gray-900 text-gray-100 rounded-lg overflow-x-auto"><code class="language-bash">curl https://api.kerisilite.com/v1/invoices \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json"</code></pre>
+                    </div>
+
+                    <!-- Authentication -->
+                    <div id="authentication" class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Authentication</h2>
+                        <p class="text-gray-600 mb-6">
+                            The Kerisi Lite API uses API keys to authenticate requests. Include your API key in the Authorization header of every request.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Getting Your API Key</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-6">
+                            <li>Log in to your Kerisi Lite dashboard</li>
+                            <li>Navigate to Settings → Business Settings → Integrations</li>
+                            <li>Click "Generate New API Key"</li>
+                            <li>Copy and securely store your API key</li>
+                        </ol>
+
+                        <div class="bg-yellow-50 border-l-4 border-yellow-600 p-4 mb-6">
+                            <p class="text-sm text-yellow-900">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                <strong>Warning:</strong> Keep your API keys secure! Do not share them in publicly accessible areas such as GitHub, client-side code, etc.
+                            </p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Authentication Header</h3>
+                        <pre class="bg-gray-900 text-gray-100 rounded-lg overflow-x-auto"><code class="language-bash">Authorization: Bearer YOUR_API_KEY</code></pre>
+                    </div>
+
+                    <!-- API Endpoints -->
+                    <div id="endpoints" class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6">API Endpoints</h2>
+
+                        <!-- Invoices API -->
+                        <div id="invoices-api" class="mb-8">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Invoices</h3>
+
+                            <!-- List Invoices -->
+                            <div class="mb-6 border-l-4 border-indigo-600 pl-4">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-bold rounded">GET</span>
+                                    <code class="text-gray-900">/invoices</code>
+                                </div>
+                                <p class="text-gray-600 mb-3">Retrieve a list of all invoices</p>
+                                <pre class="bg-gray-900 text-gray-100 rounded-lg overflow-x-auto"><code class="language-javascript">fetch('https://api.kerisilite.com/v1/invoices', {
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data));</code></pre>
+                            </div>
+
+                            <!-- Create Invoice -->
+                            <div class="mb-6 border-l-4 border-blue-600 pl-4">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-700 text-sm font-bold rounded">POST</span>
+                                    <code class="text-gray-900">/invoices</code>
+                                </div>
+                                <p class="text-gray-600 mb-3">Create a new invoice</p>
+                                <pre class="bg-gray-900 text-gray-100 rounded-lg overflow-x-auto"><code class="language-javascript">fetch('https://api.kerisilite.com/v1/invoices', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    customer_id: 123,
+    invoice_number: 'INV-2025-001',
+    invoice_date: '2025-12-29',
+    due_date: '2026-01-28',
+    items: [
+      {
+        description: 'Website Development',
+        quantity: 1,
+        rate: 8500.00
+      }
+    ],
+    tax_rate: 6,
+    notes: 'Thank you for your business'
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data));</code></pre>
+                            </div>
+
+                            <!-- Get Invoice -->
+                            <div class="mb-6 border-l-4 border-indigo-600 pl-4">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-bold rounded">GET</span>
+                                    <code class="text-gray-900">/invoices/:id</code>
+                                </div>
+                                <p class="text-gray-600 mb-3">Retrieve a specific invoice</p>
+                                <pre class="bg-gray-900 text-gray-100 rounded-lg overflow-x-auto"><code class="language-bash">curl https://api.kerisilite.com/v1/invoices/12345 \
+  -H "Authorization: Bearer YOUR_API_KEY"</code></pre>
+                            </div>
+
+                            <!-- Update Invoice -->
+                            <div class="mb-6 border-l-4 border-yellow-600 pl-4">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-sm font-bold rounded">PUT</span>
+                                    <code class="text-gray-900">/invoices/:id</code>
+                                </div>
+                                <p class="text-gray-600 mb-3">Update an existing invoice</p>
+                            </div>
+
+                            <!-- Delete Invoice -->
+                            <div class="mb-6 border-l-4 border-red-600 pl-4">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="px-3 py-1 bg-red-100 text-red-700 text-sm font-bold rounded">DELETE</span>
+                                    <code class="text-gray-900">/invoices/:id</code>
+                                </div>
+                                <p class="text-gray-600 mb-3">Delete an invoice</p>
+                            </div>
+                        </div>
+
+                        <!-- Customers API -->
+                        <div id="customers-api" class="mb-8">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Customers</h3>
+
+                            <div class="mb-6 border-l-4 border-indigo-600 pl-4">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-bold rounded">GET</span>
+                                    <code class="text-gray-900">/customers</code>
+                                </div>
+                                <p class="text-gray-600 mb-3">List all customers</p>
+                            </div>
+
+                            <div class="mb-6 border-l-4 border-blue-600 pl-4">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-700 text-sm font-bold rounded">POST</span>
+                                    <code class="text-gray-900">/customers</code>
+                                </div>
+                                <p class="text-gray-600 mb-3">Create a new customer</p>
+                                <pre class="bg-gray-900 text-gray-100 rounded-lg overflow-x-auto"><code class="language-json">{
+  "name": "Acme Corporation",
+  "email": "contact@acmecorp.com",
+  "phone": "+60 12-345 6789",
+  "address": "123 Business Street, KL",
+  "country": "Malaysia"
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Expenses API -->
+                        <div id="expenses-api" class="mb-8">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Expenses</h3>
+
+                            <div class="mb-6 border-l-4 border-indigo-600 pl-4">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-bold rounded">GET</span>
+                                    <code class="text-gray-900">/expenses</code>
+                                </div>
+                                <p class="text-gray-600">List all expenses</p>
+                            </div>
+
+                            <div class="mb-6 border-l-4 border-blue-600 pl-4">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-700 text-sm font-bold rounded">POST</span>
+                                    <code class="text-gray-900">/expenses</code>
+                                </div>
+                                <p class="text-gray-600">Create a new expense</p>
+                            </div>
+                        </div>
+
+                        <!-- Reports API -->
+                        <div id="reports-api" class="mb-8">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Reports</h3>
+
+                            <div class="mb-6 border-l-4 border-indigo-600 pl-4">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-bold rounded">GET</span>
+                                    <code class="text-gray-900">/reports/profit-loss</code>
+                                </div>
+                                <p class="text-gray-600">Generate profit & loss report</p>
+                            </div>
+
+                            <div class="mb-6 border-l-4 border-indigo-600 pl-4">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-bold rounded">GET</span>
+                                    <code class="text-gray-900">/reports/balance-sheet</code>
+                                </div>
+                                <p class="text-gray-600">Generate balance sheet</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Webhooks -->
+                    <div id="webhooks" class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Webhooks</h2>
+                        <p class="text-gray-600 mb-6">
+                            Webhooks allow you to receive real-time notifications when events occur in your Kerisi Lite account.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Available Events</h3>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <div>
+                                    <code class="text-indigo-600">invoice.created</code>
+                                    <p class="text-sm text-gray-600">Triggered when a new invoice is created</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <div>
+                                    <code class="text-indigo-600">invoice.paid</code>
+                                    <p class="text-sm text-gray-600">Triggered when an invoice is marked as paid</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <div>
+                                    <code class="text-indigo-600">customer.created</code>
+                                    <p class="text-sm text-gray-600">Triggered when a new customer is added</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <div>
+                                    <code class="text-indigo-600">expense.created</code>
+                                    <p class="text-sm text-gray-600">Triggered when a new expense is recorded</p>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Webhook Payload Example</h3>
+                        <pre class="bg-gray-900 text-gray-100 rounded-lg overflow-x-auto"><code class="language-json">{
+  "event": "invoice.created",
+  "timestamp": "2025-12-29T10:30:00Z",
+  "data": {
+    "id": 12345,
+    "invoice_number": "INV-2025-001",
+    "customer_id": 123,
+    "total": 9010.00,
+    "status": "pending"
+  }
+}</code></pre>
+                    </div>
+
+                    <!-- SDKs -->
+                    <div id="sdks" class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">SDKs & Libraries</h2>
+                        <p class="text-gray-600 mb-6">
+                            Official SDKs to integrate Kerisi Lite API in your favorite programming language.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- JavaScript/Node.js -->
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <i class="fab fa-js text-yellow-500 text-3xl"></i>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900">JavaScript / Node.js</h4>
+                                        <p class="text-sm text-gray-600">npm install kerisi-lite</p>
+                                    </div>
+                                </div>
+                                <pre class="bg-gray-900 text-gray-100 rounded-lg overflow-x-auto text-sm"><code class="language-javascript">const Kerisi = require('kerisi-lite');
+const client = new Kerisi('YOUR_API_KEY');
+
+const invoices = await client.invoices.list();</code></pre>
+                            </div>
+
+                            <!-- Python -->
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <i class="fab fa-python text-blue-500 text-3xl"></i>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900">Python</h4>
+                                        <p class="text-sm text-gray-600">pip install kerisi-lite</p>
+                                    </div>
+                                </div>
+                                <pre class="bg-gray-900 text-gray-100 rounded-lg overflow-x-auto text-sm"><code class="language-python">import kerisi
+
+client = kerisi.Client('YOUR_API_KEY')
+invoices = client.invoices.list()</code></pre>
+                            </div>
+
+                            <!-- PHP -->
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <i class="fab fa-php text-purple-500 text-3xl"></i>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900">PHP</h4>
+                                        <p class="text-sm text-gray-600">composer require kerisi/lite</p>
+                                    </div>
+                                </div>
+                                <pre class="bg-gray-900 text-gray-100 rounded-lg overflow-x-auto text-sm"><code class="language-php">$client = new \Kerisi\Client('YOUR_API_KEY');
+$invoices = $client->invoices->list();</code></pre>
+                            </div>
+
+                            <!-- Ruby -->
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <i class="fas fa-gem text-red-500 text-3xl"></i>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900">Ruby</h4>
+                                        <p class="text-sm text-gray-600">gem install kerisi-lite</p>
+                                    </div>
+                                </div>
+                                <pre class="bg-gray-900 text-gray-100 rounded-lg overflow-x-auto text-sm"><code class="language-ruby">client = Kerisi::Client.new('YOUR_API_KEY')
+invoices = client.invoices.list</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rate Limits -->
+                    <div id="rate-limits" class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Rate Limits</h2>
+                        <p class="text-gray-600 mb-6">
+                            To ensure fair usage and system stability, API requests are rate limited.
+                        </p>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Plan</th>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Rate Limit</th>
+                                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Burst</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 text-sm text-gray-900">Starter</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">100 requests/minute</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">200 requests</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 text-sm text-gray-900">Professional</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">1,000 requests/minute</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">2,000 requests</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 text-sm text-gray-900">Enterprise</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">Custom</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">Custom</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mt-6 bg-blue-50 border-l-4 border-blue-600 p-4">
+                            <p class="text-sm text-blue-900">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                Rate limit headers are included in every API response: <code class="bg-blue-100 px-2 py-1 rounded">X-RateLimit-Limit</code>, <code class="bg-blue-100 px-2 py-1 rounded">X-RateLimit-Remaining</code>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Error Codes -->
+                    <div id="errors" class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Error Codes</h2>
+                        <p class="text-gray-600 mb-6">
+                            The Kerisi Lite API uses conventional HTTP response codes to indicate success or failure.
+                        </p>
+
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-green-600 pl-4">
+                                <h4 class="font-bold text-gray-900">200 - OK</h4>
+                                <p class="text-sm text-gray-600">Everything worked as expected</p>
+                            </div>
+
+                            <div class="border-l-4 border-yellow-600 pl-4">
+                                <h4 class="font-bold text-gray-900">400 - Bad Request</h4>
+                                <p class="text-sm text-gray-600">The request was unacceptable, often due to missing a required parameter</p>
+                            </div>
+
+                            <div class="border-l-4 border-red-600 pl-4">
+                                <h4 class="font-bold text-gray-900">401 - Unauthorized</h4>
+                                <p class="text-sm text-gray-600">No valid API key provided</p>
+                            </div>
+
+                            <div class="border-l-4 border-red-600 pl-4">
+                                <h4 class="font-bold text-gray-900">404 - Not Found</h4>
+                                <p class="text-sm text-gray-600">The requested resource doesn't exist</p>
+                            </div>
+
+                            <div class="border-l-4 border-orange-600 pl-4">
+                                <h4 class="font-bold text-gray-900">429 - Too Many Requests</h4>
+                                <p class="text-sm text-gray-600">Too many requests hit the API too quickly</p>
+                            </div>
+
+                            <div class="border-l-4 border-red-600 pl-4">
+                                <h4 class="font-bold text-gray-900">500, 502, 503, 504 - Server Errors</h4>
+                                <p class="text-sm text-gray-600">Something went wrong on Kerisi Lite's end</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-gray-900 mt-6 mb-3">Error Response Format</h3>
+                        <pre class="bg-gray-900 text-gray-100 rounded-lg overflow-x-auto"><code class="language-json">{
+  "error": {
+    "type": "invalid_request_error",
+    "message": "Invalid customer_id provided",
+    "param": "customer_id",
+    "code": "invalid_parameter"
+  }
+}</code></pre>
+                    </div>
+
+                </main>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-indigo-600 to-purple-600">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6">
+                Ready to Start Building?
+            </h2>
+            <p class="text-xl text-indigo-100 mb-8">
+                Get your API key and start integrating today
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="../wireframe/dashboard.html" class="px-8 py-4 bg-white text-indigo-600 font-bold rounded-lg hover:shadow-2xl transition-all">
+                    Get API Key
+                </a>
+                <a href="https://github.com" target="_blank" class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-indigo-600 transition-all">
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center text-xl font-bold">
+                            K
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Kerisi Lite</h3>
+                            <p class="text-xs text-gray-400">Developer API</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Build powerful integrations with our REST API.
+                    </p>
+                </div>
+
+                <!-- Documentation -->
+                <div>
+                    <h4 class="font-bold mb-4">Documentation</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#getting-started" class="text-gray-400 hover:text-white transition-colors">Getting Started</a></li>
+                        <li><a href="#authentication" class="text-gray-400 hover:text-white transition-colors">Authentication</a></li>
+                        <li><a href="#endpoints" class="text-gray-400 hover:text-white transition-colors">API Reference</a></li>
+                        <li><a href="#webhooks" class="text-gray-400 hover:text-white transition-colors">Webhooks</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources -->
+                <div>
+                    <h4 class="font-bold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#sdks" class="text-gray-400 hover:text-white transition-colors">SDKs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Changelog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Status</a></li>
+                        <li><a href="https://github.com" class="text-gray-400 hover:text-white transition-colors">GitHub</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="font-bold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="../wireframe/help.html" class="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact Support</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Community</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2025 Kerisi Lite. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Highlight.js initialization
+        hljs.highlightAll();
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

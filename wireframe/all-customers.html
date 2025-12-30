@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Customers - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Print styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container" class="no-print"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="no-print bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+
+                    <!-- Mobile Menu Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button id="menuToggle" class="lg:hidden p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-black">All Customers</h2>
+                            <p class="text-sm text-gray-600">Manage your customer relationships</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Actions -->
+                    <div class="flex items-center gap-3">
+                        <button onclick="window.location.href='add-customer.html'" class="flex items-center gap-2 px-4 py-2 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700 transition-colors">
+                            <i class="fas fa-plus"></i>
+                            <span>Add Customer</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <!-- Filter Bar -->
+                <div class="no-print bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+                    <div class="flex flex-col lg:flex-row gap-4">
+                        <!-- Status Filter -->
+                        <div class="flex-1">
+                            <select class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500">
+                                <option value="all">All Customers</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+
+                        <!-- Sort -->
+                        <div class="flex-1">
+                            <select class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500">
+                                <option value="name-asc">Name (A-Z)</option>
+                                <option value="name-desc">Name (Z-A)</option>
+                                <option value="revenue-desc">Revenue (High to Low)</option>
+                                <option value="revenue-asc">Revenue (Low to High)</option>
+                                <option value="recent">Recently Added</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <!-- Total Customers -->
+                    <div class="bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-pink-100">Total Customers</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">48</p>
+                    </div>
+
+                    <!-- Active Customers -->
+                    <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-green-100">Active</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-user-check text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">42</p>
+                    </div>
+
+                    <!-- Total Revenue -->
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-blue-100">Total Revenue</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-line text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">RM 285,900</p>
+                    </div>
+
+                    <!-- Outstanding Balance -->
+                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-sm p-6 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-orange-100">Outstanding</h3>
+                            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-exclamation-circle text-lg"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold mb-1">RM 28,450</p>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search by customer name, email, or phone..."
+                            class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500"
+                        >
+                    </div>
+                </div>
+
+                <!-- Customers Table -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+
+                    <!-- Table Header -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4 text-left">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Customer Name
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Contact
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Location
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Total Revenue
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Outstanding
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+
+                                <!-- Customer 1 -->
+                                <tr class="customer-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="active" onclick="window.location.href='view-customer.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-blue-600">AC</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm font-bold text-black">Acme Corporation</span>
+                                                <p class="text-xs text-gray-500">Business</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-gray-900">contact@acme.com</div>
+                                        <div class="text-xs text-gray-500">+60 3-1234 5678</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Kuala Lumpur, MY
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        <span class="text-sm font-bold text-black">RM 45,600.00</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        <span class="text-sm font-bold text-orange-600">RM 8,900.00</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Customer 2 -->
+                                <tr class="customer-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="active" onclick="window.location.href='view-customer.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-purple-600">TS</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm font-bold text-black">Tech Solutions Ltd</span>
+                                                <p class="text-xs text-gray-500">Business</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-gray-900">info@techsolutions.com</div>
+                                        <div class="text-xs text-gray-500">+60 3-2345 6789</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Petaling Jaya, MY
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        <span class="text-sm font-bold text-black">RM 62,300.00</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        <span class="text-sm text-gray-500">RM 0.00</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Customer 3 -->
+                                <tr class="customer-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="active" onclick="window.location.href='view-customer.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-pink-600">CA</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm font-bold text-black">Creative Agency</span>
+                                                <p class="text-xs text-gray-500">Business</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-gray-900">hello@creative.agency</div>
+                                        <div class="text-xs text-gray-500">+60 3-3456 7890</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Shah Alam, MY
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        <span class="text-sm font-bold text-black">RM 28,900.00</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        <span class="text-sm font-bold text-orange-600">RM 3,200.00</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Customer 4 -->
+                                <tr class="customer-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="active" onclick="window.location.href='view-customer.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-green-600">MP</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm font-bold text-black">Marketing Pro</span>
+                                                <p class="text-xs text-gray-500">Business</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-gray-900">team@marketingpro.com</div>
+                                        <div class="text-xs text-gray-500">+60 3-4567 8901</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Johor Bahru, MY
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        <span class="text-sm font-bold text-black">RM 38,200.00</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        <span class="text-sm font-bold text-orange-600">RM 2,750.00</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Customer 5 -->
+                                <tr class="customer-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="active" onclick="window.location.href='view-customer.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-orange-600">DS</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm font-bold text-black">Digital Startups Inc</span>
+                                                <p class="text-xs text-gray-500">Business</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-gray-900">startup@digital.com</div>
+                                        <div class="text-xs text-gray-500">+60 3-5678 9012</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Penang, MY
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        <span class="text-sm font-bold text-black">RM 52,800.00</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        <span class="text-sm font-bold text-orange-600">RM 4,500.00</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Active
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Customer 6 - Inactive -->
+                                <tr class="customer-row hover:bg-gray-50 transition-colors cursor-pointer" data-status="inactive" onclick="window.location.href='view-customer.html'">
+                                    <td class="px-6 py-4" onclick="event.stopPropagation()">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                                <span class="text-xs font-bold text-teal-600">GB</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-sm font-bold text-black">Global Brands Co</span>
+                                                <p class="text-xs text-gray-500">Business</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="text-sm text-gray-900">contact@globalbrands.com</div>
+                                        <div class="text-xs text-gray-500">+60 3-6789 0123</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Singapore, SG
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        <span class="text-sm font-bold text-black">RM 58,100.00</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        <span class="text-sm font-bold text-orange-600">RM 6,850.00</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-700">
+                                            Inactive
+                                        </span>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="bg-white px-6 py-4 border-t border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-700">
+                                Showing <span class="font-semibold">1</span> to <span class="font-semibold">6</span> of <span class="font-semibold">48</span> customers
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50" disabled>
+                                    Previous
+                                </button>
+                                <button class="px-4 py-2 text-sm font-medium text-white bg-pink-600 border border-pink-600 rounded-lg hover:bg-pink-700">
+                                    1
+                                </button>
+                                <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                    2
+                                </button>
+                                <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                    3
+                                </button>
+                                <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden hidden"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        if (menuToggle && sidebar && overlay) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('.customer-row');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

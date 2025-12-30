@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kerisi Lite Extensions - Extend your financial management capabilities with powerful add-on modules">
+    <title>Extensions & Modules - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .module-card {
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="antialiased bg-gray-50">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 text-white rounded-lg flex items-center justify-center text-xl font-bold">
+                            K
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">Kerisi Lite</h1>
+                            <p class="text-xs text-gray-500">Extensions & Modules</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Home</a>
+                    <a href="index.html#features" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Features</a>
+                    <a href="index.html#pricing" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Pricing</a>
+                    <a href="extensions.html" class="text-indigo-600 font-semibold transition-colors">Extensions</a>
+                    <a href="developers.html" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Developers</a>
+                    <a href="../wireframe/login.html" class="text-gray-700 hover:text-gray-900 font-semibold transition-colors">Sign In</a>
+                    <a href="index.html#pricing" class="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all">
+                        Start Free Trial
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-gray-200 bg-white">
+            <div class="px-4 py-3 space-y-3">
+                <a href="index.html" class="block text-gray-700 hover:text-indigo-600 font-medium py-2">Home</a>
+                <a href="index.html#features" class="block text-gray-700 hover:text-indigo-600 font-medium py-2">Features</a>
+                <a href="index.html#pricing" class="block text-gray-700 hover:text-indigo-600 font-medium py-2">Pricing</a>
+                <a href="extensions.html" class="block text-indigo-600 font-semibold py-2">Extensions</a>
+                <a href="developers.html" class="block text-gray-700 hover:text-indigo-600 font-medium py-2">Developers</a>
+                <a href="../wireframe/login.html" class="block text-gray-700 font-semibold py-2">Sign In</a>
+                <a href="index.html#pricing" class="block px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg text-center">
+                    Start Free Trial
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+                Extend Your <span class="text-indigo-300">Capabilities</span>
+            </h1>
+            <p class="text-xl text-indigo-100 mb-8 max-w-3xl mx-auto">
+                Powerful add-on modules to scale your business operations. From procurement to payroll, we've got you covered.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#modules" class="px-8 py-4 bg-white text-indigo-600 font-bold rounded-lg hover:shadow-2xl transition-all">
+                    Browse Modules
+                </a>
+                <a href="../wireframe/dashboard.html" class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-indigo-600 transition-all">
+                    Get Started
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <p class="text-4xl font-bold text-indigo-600 mb-2">9+</p>
+                    <p class="text-gray-600">Extension Modules</p>
+                </div>
+                <div>
+                    <p class="text-4xl font-bold text-indigo-600 mb-2">5K+</p>
+                    <p class="text-gray-600">Active Users</p>
+                </div>
+                <div>
+                    <p class="text-4xl font-bold text-indigo-600 mb-2">100%</p>
+                    <p class="text-gray-600">Integrated</p>
+                </div>
+                <div>
+                    <p class="text-4xl font-bold text-indigo-600 mb-2">24/7</p>
+                    <p class="text-gray-600">Support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section -->
+    <section id="modules" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Available <span class="gradient-text">Extensions</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Choose from our powerful modules to customize Kerisi Lite for your business needs
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Procurement Module -->
+                <div class="module-card bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="openModal('procurement')">
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-6">
+                        <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-shopping-cart text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Procurement</h3>
+                        <p class="text-blue-100">Streamline purchasing & vendor management</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Purchase order management</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Vendor management & tracking</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Inventory requisition workflows</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Approval hierarchies</span>
+                            </li>
+                        </ul>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-gray-900">RM 99<span class="text-sm font-normal text-gray-600">/mo</span></span>
+                            <button class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asset Management Module -->
+                <div class="module-card bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="openModal('asset')">
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-6">
+                        <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-box text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Asset Management</h3>
+                        <p class="text-purple-100">Track & manage company assets</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Fixed asset register</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Depreciation calculation</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Asset tracking & maintenance</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>QR code labeling</span>
+                            </li>
+                        </ul>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-gray-900">RM 79<span class="text-sm font-normal text-gray-600">/mo</span></span>
+                            <button class="px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cashbook Module -->
+                <div class="module-card bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="openModal('cashbook')">
+                    <div class="bg-gradient-to-br from-green-500 to-green-600 p-6">
+                        <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-wallet text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Cashbook</h3>
+                        <p class="text-green-100">Advanced cash management & reconciliation</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Multi-account cash tracking</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Petty cash management</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Bank reconciliation</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Cash flow forecasting</span>
+                            </li>
+                        </ul>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-gray-900">RM 69<span class="text-sm font-normal text-gray-600">/mo</span></span>
+                            <button class="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- General Ledger Module -->
+                <div class="module-card bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="openModal('gl')">
+                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 p-6">
+                        <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-book text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">General Ledger (GL)</h3>
+                        <p class="text-orange-100">Complete accounting ledger system</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Advanced chart of accounts</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Journal entry posting</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Trial balance generation</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Multi-currency support</span>
+                            </li>
+                        </ul>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-gray-900">RM 129<span class="text-sm font-normal text-gray-600">/mo</span></span>
+                            <button class="px-4 py-2 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition-colors">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- E-Invoices Module -->
+                <div class="module-card bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="openModal('einvoice')">
+                    <div class="bg-gradient-to-br from-red-500 to-red-600 p-6">
+                        <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-file-invoice-dollar text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">E-Invoices</h3>
+                        <p class="text-red-100">LHDN compliant e-invoicing system</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>MyInvois integration</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Auto LHDN submission</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Digital signature support</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Real-time validation</span>
+                            </li>
+                        </ul>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-gray-900">RM 149<span class="text-sm font-normal text-gray-600">/mo</span></span>
+                            <button class="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accounting Module -->
+                <div class="module-card bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="openModal('accounting')">
+                    <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 p-6">
+                        <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-calculator text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Accounting Suite</h3>
+                        <p class="text-indigo-100">Full-featured accounting system</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Accounts payable/receivable</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Financial statement generation</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Budget management</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Cost center tracking</span>
+                            </li>
+                        </ul>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-gray-900">RM 199<span class="text-sm font-normal text-gray-600">/mo</span></span>
+                            <button class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tax Module -->
+                <div class="module-card bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="openModal('tax')">
+                    <div class="bg-gradient-to-br from-pink-500 to-pink-600 p-6">
+                        <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-percentage text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Tax Management</h3>
+                        <p class="text-pink-100">Comprehensive tax compliance & filing</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>SST & GST calculation</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Corporate tax computation</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Tax report generation</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>LHDN compliance tools</span>
+                            </li>
+                        </ul>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-gray-900">RM 89<span class="text-sm font-normal text-gray-600">/mo</span></span>
+                            <button class="px-4 py-2 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700 transition-colors">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Banking Module -->
+                <div class="module-card bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="openModal('banking')">
+                    <div class="bg-gradient-to-br from-teal-500 to-teal-600 p-6">
+                        <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-university text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Banking Integration</h3>
+                        <p class="text-teal-100">Connect with Malaysian banks</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Bank feed integration</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Auto transaction import</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Online payment gateway</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>FPX payment support</span>
+                            </li>
+                        </ul>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-gray-900">RM 119<span class="text-sm font-normal text-gray-600">/mo</span></span>
+                            <button class="px-4 py-2 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition-colors">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payroll Module -->
+                <div class="module-card bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer" onclick="openModal('payroll')">
+                    <div class="bg-gradient-to-br from-yellow-500 to-yellow-600 p-6">
+                        <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-users text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Payroll</h3>
+                        <p class="text-yellow-100">Complete payroll management system</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Employee salary processing</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>EPF, SOCSO, PCB calculation</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>Leave management</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <i class="fas fa-check text-green-600 mt-1"></i>
+                                <span>EA form generation</span>
+                            </li>
+                        </ul>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-gray-900">RM 159<span class="text-sm font-normal text-gray-600">/mo</span></span>
+                            <button class="px-4 py-2 bg-yellow-600 text-white font-semibold rounded-lg hover:bg-yellow-700 transition-colors">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Bundle Pricing Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Bundle & <span class="gradient-text">Save More</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Get multiple modules together and save up to 30%
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Starter Bundle -->
+                <div class="bg-white rounded-2xl shadow-lg border-2 border-gray-200 p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Starter Bundle</h3>
+                    <p class="text-gray-600 mb-6">Essential modules for small businesses</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold text-gray-900">RM 299</span>
+                        <span class="text-gray-600">/month</span>
+                        <p class="text-sm text-green-600 mt-2">Save RM 50/month</p>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Cashbook</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Tax Management</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Banking Integration</span>
+                        </li>
+                    </ul>
+                    <button class="w-full px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                        Get Bundle
+                    </button>
+                </div>
+
+                <!-- Professional Bundle -->
+                <div class="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl shadow-2xl p-8 transform scale-105 relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-gray-900 text-sm font-bold px-4 py-1 rounded-full">
+                        MOST POPULAR
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Professional Bundle</h3>
+                    <p class="text-indigo-100 mb-6">Complete solution for growing businesses</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold text-white">RM 599</span>
+                        <span class="text-indigo-100">/month</span>
+                        <p class="text-sm text-yellow-300 mt-2">Save RM 150/month</p>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-white">
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check"></i>
+                            <span>All Starter Bundle modules</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check"></i>
+                            <span>Procurement</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check"></i>
+                            <span>Asset Management</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check"></i>
+                            <span>E-Invoices</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check"></i>
+                            <span>General Ledger</span>
+                        </li>
+                    </ul>
+                    <button class="w-full px-6 py-3 bg-white text-indigo-600 font-semibold rounded-lg hover:shadow-lg transition-all">
+                        Get Bundle
+                    </button>
+                </div>
+
+                <!-- Enterprise Bundle -->
+                <div class="bg-white rounded-2xl shadow-lg border-2 border-gray-200 p-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise Bundle</h3>
+                    <p class="text-gray-600 mb-6">Full suite for large organizations</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold text-gray-900">RM 899</span>
+                        <span class="text-gray-600">/month</span>
+                        <p class="text-sm text-green-600 mt-2">Save RM 250/month</p>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>All Professional modules</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Accounting Suite</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Payroll</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Dedicated support</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span>Custom integrations</span>
+                        </li>
+                    </ul>
+                    <button class="w-full px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-indigo-600 to-purple-600">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6">
+                Ready to Extend Your Platform?
+            </h2>
+            <p class="text-xl text-indigo-100 mb-8">
+                Start with a free trial and add modules as you grow
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="../wireframe/dashboard.html" class="px-8 py-4 bg-white text-indigo-600 font-bold rounded-lg hover:shadow-2xl transition-all">
+                    Start Free Trial
+                </a>
+                <a href="index.html" class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-indigo-600 transition-all">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center text-xl font-bold">
+                            K
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Kerisi Lite</h3>
+                            <p class="text-xs text-gray-400">Extensions</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Extend your capabilities with powerful modules.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html#features" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
+                        <li><a href="index.html#pricing" class="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="extensions.html" class="text-gray-400 hover:text-white transition-colors">Extensions</a></li>
+                        <li><a href="developers.html" class="text-gray-400 hover:text-white transition-colors">API</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="../wireframe/help.html" class="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Community</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2025 Kerisi Lite. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Module Detail Modals -->
+    <div id="moduleModal" class="modal fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div id="modalContent">
+                <!-- Content will be inserted dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Module Modal Data
+        const moduleData = {
+            procurement: {
+                title: 'Procurement Module',
+                icon: 'fa-shopping-cart',
+                color: 'blue',
+                description: 'Streamline your entire procurement process from requisition to payment. Manage vendors, track purchase orders, and maintain complete visibility over your purchasing operations.',
+                features: [
+                    'Purchase Requisition Workflows',
+                    'Purchase Order Management',
+                    'Vendor Database & Rating System',
+                    'Automated Approval Hierarchies',
+                    'Goods Receipt Notes',
+                    'Vendor Performance Analytics',
+                    'Multi-level Authorization',
+                    'Purchase Return Tracking'
+                ],
+                preview: 'https://via.placeholder.com/800x400/3b82f6/ffffff?text=Procurement+Dashboard+Preview'
+            },
+            asset: {
+                title: 'Asset Management',
+                icon: 'fa-box',
+                color: 'purple',
+                description: 'Keep track of all your company assets with comprehensive asset management. From acquisition to disposal, manage depreciation, maintenance schedules, and asset locations.',
+                features: [
+                    'Fixed Asset Register',
+                    'Automated Depreciation Calculation',
+                    'Asset Tracking with QR Codes',
+                    'Maintenance Schedule Management',
+                    'Asset Transfer Tracking',
+                    'Asset Disposal Management',
+                    'Asset Valuation Reports',
+                    'Mobile Asset Scanning'
+                ],
+                preview: 'https://via.placeholder.com/800x400/a855f7/ffffff?text=Asset+Management+Preview'
+            },
+            cashbook: {
+                title: 'Cashbook Module',
+                icon: 'fa-wallet',
+                color: 'green',
+                description: 'Advanced cash management for multiple accounts. Track petty cash, perform bank reconciliation, and forecast cash flow with precision.',
+                features: [
+                    'Multi-Account Cash Tracking',
+                    'Petty Cash Management',
+                    'Bank Reconciliation Tools',
+                    'Cash Flow Forecasting',
+                    'Receipt & Payment Vouchers',
+                    'Cash Position Dashboard',
+                    'Automated Bank Import',
+                    'Cash Float Management'
+                ],
+                preview: 'https://via.placeholder.com/800x400/22c55e/ffffff?text=Cashbook+Preview'
+            },
+            gl: {
+                title: 'General Ledger',
+                icon: 'fa-book',
+                color: 'orange',
+                description: 'Complete double-entry accounting system with advanced chart of accounts, journal entries, and trial balance generation.',
+                features: [
+                    'Customizable Chart of Accounts',
+                    'Journal Entry Posting',
+                    'Trial Balance Generation',
+                    'Multi-Currency Support',
+                    'Account Grouping & Mapping',
+                    'Closing Entry Automation',
+                    'Audit Trail Tracking',
+                    'Budget vs Actual Comparison'
+                ],
+                preview: 'https://via.placeholder.com/800x400/f97316/ffffff?text=General+Ledger+Preview'
+            },
+            einvoice: {
+                title: 'E-Invoices Module',
+                icon: 'fa-file-invoice-dollar',
+                color: 'red',
+                description: 'Stay compliant with LHDN requirements through seamless MyInvois integration. Generate, submit, and track e-invoices automatically.',
+                features: [
+                    'MyInvois API Integration',
+                    'Automated LHDN Submission',
+                    'Digital Signature Support',
+                    'Real-time Validation',
+                    'E-Invoice Template Builder',
+                    'QR Code Generation',
+                    'Status Tracking Dashboard',
+                    'Bulk E-Invoice Processing'
+                ],
+                preview: 'https://via.placeholder.com/800x400/ef4444/ffffff?text=E-Invoice+Preview'
+            },
+            accounting: {
+                title: 'Accounting Suite',
+                icon: 'fa-calculator',
+                color: 'indigo',
+                description: 'Full-featured accounting system with accounts payable/receivable, financial statements, and comprehensive reporting capabilities.',
+                features: [
+                    'Accounts Payable Management',
+                    'Accounts Receivable Tracking',
+                    'Automated Financial Statements',
+                    'Budget Planning & Control',
+                    'Cost Center Accounting',
+                    'Project Costing',
+                    'Inter-company Transactions',
+                    'Period-end Closing Tools'
+                ],
+                preview: 'https://via.placeholder.com/800x400/6366f1/ffffff?text=Accounting+Suite+Preview'
+            },
+            tax: {
+                title: 'Tax Management',
+                icon: 'fa-percentage',
+                color: 'pink',
+                description: 'Comprehensive tax compliance tools for Malaysian businesses. Calculate SST, GST, and corporate tax with automated reporting.',
+                features: [
+                    'SST & GST Calculation',
+                    'Corporate Tax Computation',
+                    'Tax Return Preparation',
+                    'LHDN Compliance Tools',
+                    'Tax Planning & Forecasting',
+                    'Withholding Tax Management',
+                    'Tax Audit Trail',
+                    'E-Filing Integration'
+                ],
+                preview: 'https://via.placeholder.com/800x400/ec4899/ffffff?text=Tax+Management+Preview'
+            },
+            banking: {
+                title: 'Banking Integration',
+                icon: 'fa-university',
+                color: 'teal',
+                description: 'Connect seamlessly with major Malaysian banks. Auto-import transactions, enable online payments, and support FPX integration.',
+                features: [
+                    'Bank Feed Integration (Maybank, CIMB, etc.)',
+                    'Auto Transaction Import',
+                    'Online Payment Gateway',
+                    'FPX Payment Support',
+                    'Cheque Management',
+                    'Bank Reconciliation Automation',
+                    'Multi-bank Dashboard',
+                    'Standing Instructions'
+                ],
+                preview: 'https://via.placeholder.com/800x400/14b8a6/ffffff?text=Banking+Integration+Preview'
+            },
+            payroll: {
+                title: 'Payroll Module',
+                icon: 'fa-users',
+                color: 'yellow',
+                description: 'Complete payroll solution compliant with Malaysian regulations. Process salaries, calculate statutory contributions, and generate payslips automatically.',
+                features: [
+                    'Employee Salary Processing',
+                    'EPF, SOCSO, PCB Calculation',
+                    'Leave Management System',
+                    'EA Form Generation',
+                    'Payslip Auto-generation',
+                    'Overtime & Allowance Tracking',
+                    'Bank Transfer Files',
+                    'Payroll Report Suite'
+                ],
+                preview: 'https://via.placeholder.com/800x400/eab308/ffffff?text=Payroll+Module+Preview'
+            }
+        };
+
+        function openModal(moduleId) {
+            const module = moduleData[moduleId];
+            const modal = document.getElementById('moduleModal');
+            const modalContent = document.getElementById('modalContent');
+
+            modalContent.innerHTML = `
+                <div class="p-8">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 bg-${module.color}-100 rounded-xl flex items-center justify-center">
+                                <i class="fas ${module.icon} text-${module.color}-600 text-3xl"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-3xl font-bold text-gray-900">${module.title}</h2>
+                                <p class="text-gray-600 mt-1">${module.description}</p>
+                            </div>
+                        </div>
+                        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times text-2xl"></i>
+                        </button>
+                    </div>
+
+                    <div class="mb-8">
+                        <img src="${module.preview}" alt="${module.title}" class="w-full rounded-lg shadow-lg">
+                    </div>
+
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Key Features</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            ${module.features.map(feature => `
+                                <div class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-600 mt-1"></i>
+                                    <span class="text-gray-700">${feature}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <a href="../wireframe/dashboard.html" class="flex-1 px-6 py-3 bg-${module.color}-600 text-white font-semibold rounded-lg text-center hover:bg-${module.color}-700 transition-colors">
+                            Activate Module
+                        </a>
+                        <button onclick="closeModal()" class="px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('moduleModal');
+            modal.classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('moduleModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+
+</body>
+</html>

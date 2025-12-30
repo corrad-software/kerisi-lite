@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Sales - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+
+                    <!-- Mobile Menu Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button id="menuToggle" class="lg:hidden text-gray-600 hover:text-black">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-black">All Sales</h2>
+                            <p class="text-sm text-gray-600">View and manage all your sales transactions</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Side Actions -->
+                    <div class="flex items-center gap-4">
+                        <!-- Notifications -->
+                        <button class="relative p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bell text-lg"></i>
+                            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </button>
+
+                        <!-- Add New Sale Button -->
+                        <button class="flex items-center gap-2 px-4 py-2 bg-black text-white font-semibold rounded-lg hover:bg-gray-900 transition-colors">
+                            <i class="fas fa-plus"></i>
+                            <span class="hidden sm:inline">New Sale</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Sales Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <!-- Filters Section -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                        <!-- Search -->
+                        <div class="lg:col-span-2">
+                            <label class="block text-sm font-semibold text-black mb-2">Search</label>
+                            <div class="relative">
+                                <input
+                                    type="text"
+                                    id="searchInput"
+                                    placeholder="Search by customer, invoice, or amount..."
+                                    class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10 transition-all"
+                                >
+                                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <!-- Date Range -->
+                        <div>
+                            <label class="block text-sm font-semibold text-black mb-2">Date Range</label>
+                            <select class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10 transition-all">
+                                <option>All Time</option>
+                                <option>Today</option>
+                                <option>This Week</option>
+                                <option>This Month</option>
+                                <option>Last Month</option>
+                                <option>This Year</option>
+                                <option>Custom Range</option>
+                            </select>
+                        </div>
+
+                        <!-- Status Filter -->
+                        <div>
+                            <label class="block text-sm font-semibold text-black mb-2">Status</label>
+                            <select id="statusFilter" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10 transition-all">
+                                <option value="all">All Status</option>
+                                <option value="paid">Paid</option>
+                                <option value="pending">Pending</option>
+                                <option value="overdue">Overdue</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- Summary Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-gray-200">
+                        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-sm p-4 text-white text-center">
+                            <p class="text-xs font-semibold text-blue-100 mb-1">Total Sales</p>
+                            <p class="text-2xl font-bold">RM 128,450</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-sm p-4 text-white text-center">
+                            <p class="text-xs font-semibold text-green-100 mb-1">Paid</p>
+                            <p class="text-2xl font-bold">RM 98,230</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-sm p-4 text-white text-center">
+                            <p class="text-xs font-semibold text-orange-100 mb-1">Pending</p>
+                            <p class="text-2xl font-bold">RM 22,140</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-xl shadow-sm p-4 text-white text-center">
+                            <p class="text-xs font-semibold text-red-100 mb-1">Overdue</p>
+                            <p class="text-2xl font-bold">RM 8,080</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sales Table -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+
+                    <!-- Table Header -->
+                    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-black">Sales Transactions</h3>
+                        <div class="flex items-center gap-2">
+                            <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors" title="Export">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors" title="Print">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Date
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Invoice #
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Customer
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Description
+                                    </th>
+                                    <th class="px-6 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Amount
+                                    </th>
+                                    <th class="px-6 py-3 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                    <th class="px-6 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200" id="salesTableBody">
+                                <!-- Sales Row 1 -->
+                                <tr class="hover:bg-gray-50 transition-colors sales-row" data-status="paid">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 28, 2025
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+                                        INV-2024-156
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold text-xs">
+                                                AC
+                                            </div>
+                                            <span class="text-sm font-medium text-black">Acme Corporation</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600">
+                                        Website Development
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 5,500.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Paid
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Download">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="More">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Sales Row 2 -->
+                                <tr class="hover:bg-gray-50 transition-colors sales-row" data-status="pending">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 27, 2025
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+                                        INV-2024-155
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-semibold text-xs">
+                                                TS
+                                            </div>
+                                            <span class="text-sm font-medium text-black">Tech Solutions Ltd</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600">
+                                        Mobile App Design
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 8,900.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-orange-50 text-orange-700">
+                                            Pending
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Download">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="More">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Sales Row 3 -->
+                                <tr class="hover:bg-gray-50 transition-colors sales-row" data-status="overdue">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 20, 2025
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+                                        INV-2024-154
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center text-pink-600 font-semibold text-xs">
+                                                CA
+                                            </div>
+                                            <span class="text-sm font-medium text-black">Creative Agency</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600">
+                                        Branding Package
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 3,200.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-50 text-red-700">
+                                            Overdue
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Download">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="More">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Sales Row 4 -->
+                                <tr class="hover:bg-gray-50 transition-colors sales-row" data-status="paid">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 18, 2025
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+                                        INV-2024-153
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-semibold text-xs">
+                                                MP
+                                            </div>
+                                            <span class="text-sm font-medium text-black">Marketing Pro</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600">
+                                        SEO Optimization
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 2,750.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Paid
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Download">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="More">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Sales Row 5 -->
+                                <tr class="hover:bg-gray-50 transition-colors sales-row" data-status="paid">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 15, 2025
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+                                        INV-2024-152
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-semibold text-xs">
+                                                DS
+                                            </div>
+                                            <span class="text-sm font-medium text-black">Digital Startups Inc</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600">
+                                        Consulting Services
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 4,500.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
+                                            Paid
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Download">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="More">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <!-- Sales Row 6 -->
+                                <tr class="hover:bg-gray-50 transition-colors sales-row" data-status="pending">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                        Dec 12, 2025
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">
+                                        INV-2024-151
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 font-semibold text-xs">
+                                                GB
+                                            </div>
+                                            <span class="text-sm font-medium text-black">Global Brands Co</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600">
+                                        Logo Design
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-black">
+                                        RM 1,850.00
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-orange-50 text-orange-700">
+                                            Pending
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="Download">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-black p-2 hover:bg-gray-100 rounded transition-colors" title="More">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                        <div class="text-sm text-gray-600">
+                            Showing <span class="font-semibold">1</span> to <span class="font-semibold">6</span> of <span class="font-semibold">48</span> results
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                Previous
+                            </button>
+                            <button class="px-3 py-2 text-sm font-semibold text-white bg-black rounded-lg">
+                                1
+                            </button>
+                            <button class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                2
+                            </button>
+                            <button class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                3
+                            </button>
+                            <span class="px-2 text-gray-600">...</span>
+                            <button class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                8
+                            </button>
+                            <button class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden hidden"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        if (menuToggle && sidebar && overlay) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        }
+
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('.sales-row');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Status Filter
+        const statusFilter = document.getElementById('statusFilter');
+        statusFilter.addEventListener('change', function(e) {
+            const filterValue = e.target.value;
+            const rows = document.querySelectorAll('.sales-row');
+
+            rows.forEach(row => {
+                const status = row.getAttribute('data-status');
+                if (filterValue === 'all' || status === filterValue) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Prevent actual navigation on anchor clicks (for wireframe)
+        document.querySelectorAll('a[href="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('Link clicked:', this.textContent);
+            });
+        });
+    </script>
+
+</body>
+</html>

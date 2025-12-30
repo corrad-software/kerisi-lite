@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Quotation - Kerisi Lite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/navigation.js"></script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased">
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Navigation Container -->
+        <div id="nav-container"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Top Navigation Bar -->
+            <header class="bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+
+                    <!-- Mobile Menu Button & Title -->
+                    <div class="flex items-center gap-4">
+                        <button id="menuToggle" class="lg:hidden text-gray-600 hover:text-black">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-black">Create Quotation</h2>
+                            <p class="text-sm text-gray-600">Create a new quotation for your customer</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Side Actions -->
+                    <div class="flex items-center gap-4">
+                        <!-- Search -->
+                        <div class="hidden md:flex items-center gap-2 bg-gray-100 rounded-lg px-4 py-2">
+                            <i class="fas fa-search text-gray-400"></i>
+                            <input type="text" placeholder="Search..." class="bg-transparent border-none outline-none text-sm w-64">
+                        </div>
+
+                        <!-- Notifications -->
+                        <button class="relative p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </button>
+
+                        <!-- User Profile -->
+                        <div class="flex items-center gap-3 pl-4 border-l border-gray-200">
+                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                <span class="text-white font-semibold text-sm">JD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+
+                <form id="quotationForm">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                        <!-- Left Column - Quotation Form -->
+                        <div class="lg:col-span-2 space-y-6">
+
+                            <!-- Customer Information -->
+                            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                                <h3 class="text-lg font-bold text-black mb-4">Customer Information</h3>
+
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">Customer *</label>
+                                        <input type="hidden" id="customer" required>
+                                        <button type="button" onclick="openCustomerModal()" id="customerButton" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-black text-left flex items-center justify-between hover:bg-gray-50 transition-colors">
+                                            <span id="selectedCustomerText" class="text-gray-400">Select a customer</span>
+                                            <i class="fas fa-chevron-down text-gray-400"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-semibold text-gray-700 mb-2">Quotation Date *</label>
+                                            <input type="date" id="quotationDate" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-black" value="2025-12-29">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-semibold text-gray-700 mb-2">Valid Until *</label>
+                                            <input type="date" id="validUntil" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-black" value="2026-01-28">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">Quotation Number *</label>
+                                        <input type="text" id="quotationNumber" required placeholder="QUO-2026-001" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-black" value="QUO-2026-001">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Line Items -->
+                            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-bold text-black">Items</h3>
+                                    <button type="button" onclick="addLineItem()" class="px-4 py-2 text-sm font-semibold bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                                        <i class="fas fa-plus mr-2"></i>Add Item
+                                    </button>
+                                </div>
+
+                                <div class="overflow-x-auto">
+                                    <table class="w-full" id="lineItemsTable">
+                                        <thead class="bg-gray-50 border-b border-gray-200">
+                                            <tr>
+                                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Item</th>
+                                                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Description</th>
+                                                <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">Qty</th>
+                                                <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">Rate (RM)</th>
+                                                <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase">Amount (RM)</th>
+                                                <th class="px-4 py-3 text-center text-xs font-semibold text-gray-600 uppercase">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="lineItemsBody">
+                                            <tr class="border-b border-gray-200 line-item">
+                                                <td class="px-4 py-3">
+                                                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-black item-select" onchange="updateLineItem(this)">
+                                                        <option value="">Select item</option>
+                                                        <option value="1" data-rate="8500">Website Development</option>
+                                                        <option value="2" data-rate="5200">UI/UX Design</option>
+                                                        <option value="3" data-rate="12000">CRM Software License</option>
+                                                        <option value="4" data-rate="3500">Business Consulting</option>
+                                                        <option value="5" data-rate="1800">Logo Design Package</option>
+                                                    </select>
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    <input type="text" placeholder="Description" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-black item-description">
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    <input type="number" value="1" min="1" class="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm text-right focus:outline-none focus:border-black item-qty" onchange="calculateLineTotal(this)">
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    <input type="number" step="0.01" placeholder="0.00" class="w-28 px-3 py-2 border border-gray-300 rounded-lg text-sm text-right focus:outline-none focus:border-black item-rate" onchange="calculateLineTotal(this)">
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    <div class="text-sm font-bold text-black text-right item-amount">RM 0.00</div>
+                                                </td>
+                                                <td class="px-4 py-3 text-center">
+                                                    <button type="button" onclick="removeLineItem(this)" class="text-red-600 hover:text-red-800 p-2 hover:bg-red-50 rounded transition-colors">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                                <h3 class="text-lg font-bold text-black mb-4">Additional Information</h3>
+
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">Notes (Optional)</label>
+                                        <textarea id="notes" rows="3" placeholder="Add any notes or special instructions..." class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-black"></textarea>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">Terms & Conditions (Optional)</label>
+                                        <textarea id="terms" rows="3" placeholder="Quotation terms and conditions..." class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-black">This quotation is valid for 30 days. Prices are subject to change without notice after expiry.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Right Column - Summary & Actions -->
+                        <div class="lg:col-span-1 space-y-6">
+
+                            <!-- Quotation Summary -->
+                            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-6">
+                                <h3 class="text-lg font-bold text-black mb-4">Summary</h3>
+
+                                <div class="space-y-3 mb-4 pb-4 border-b border-gray-200">
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-gray-600">Subtotal</span>
+                                        <span class="font-semibold text-black" id="subtotal">RM 0.00</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-gray-600">Tax</span>
+                                            <input type="number" id="taxRate" value="0" min="0" max="100" step="0.1" class="w-16 px-2 py-1 border border-gray-300 rounded text-xs text-right" onchange="calculateTotals()" placeholder="0">
+                                            <span class="text-gray-500 text-xs">%</span>
+                                        </div>
+                                        <span class="font-semibold text-black" id="taxAmount">RM 0.00</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-gray-600">Discount</span>
+                                        <div class="flex items-center gap-2">
+                                            <input type="number" id="discount" value="0" min="0" step="0.01" class="w-20 px-2 py-1 border border-gray-300 rounded text-xs text-right" onchange="calculateTotals()" placeholder="0.00">
+                                            <span class="text-gray-500 text-xs">RM</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between items-center mb-6">
+                                    <span class="text-lg font-bold text-black">Total</span>
+                                    <span class="text-2xl font-bold text-purple-600" id="total">RM 0.00</span>
+                                </div>
+
+                                <!-- Action Buttons -->
+                                <div class="space-y-3">
+                                    <button type="submit" class="w-full px-4 py-3 text-sm font-semibold bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                                        <i class="fas fa-save mr-2"></i>Save & Send Quotation
+                                    </button>
+                                    <button type="button" onclick="saveDraft()" class="w-full px-4 py-3 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                        <i class="fas fa-file mr-2"></i>Save as Draft
+                                    </button>
+                                    <button type="button" onclick="previewQuotation()" class="w-full px-4 py-3 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                        <i class="fas fa-eye mr-2"></i>Preview
+                                    </button>
+                                    <button type="button" onclick="window.location.href='quotations.html'" class="w-full px-4 py-3 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                        <i class="fas fa-times mr-2"></i>Cancel
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Overlay for mobile menu -->
+    <div id="overlay" class="hidden fixed inset-0 bg-black/50 z-30 lg:hidden"></div>
+
+    <!-- Customer Selection Modal -->
+    <div id="customerModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col">
+
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                <div>
+                    <h3 class="text-xl font-bold text-black">Select Customer</h3>
+                    <p class="text-sm text-gray-600 mt-1">Choose a customer for this quotation</p>
+                </div>
+                <button type="button" onclick="closeCustomerModal()" class="text-gray-400 hover:text-black p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Search Input -->
+            <div class="p-6 border-b border-gray-200">
+                <div class="relative">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="customerSearch" placeholder="Search by customer name, email, or company..." class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black" oninput="filterCustomers()">
+                </div>
+            </div>
+
+            <!-- Customer List -->
+            <div class="flex-1 overflow-y-auto p-6">
+                <div id="customerList" class="space-y-2">
+                    <!-- Customer items will be populated by JavaScript -->
+                </div>
+                <div id="noResults" class="hidden text-center py-8">
+                    <i class="fas fa-search text-gray-300 text-4xl mb-3"></i>
+                    <p class="text-gray-500">No customers found</p>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-6 border-t border-gray-200">
+                <div class="flex items-center justify-between">
+                    <a href="add-customer.html" class="text-sm text-purple-600 hover:text-purple-700 font-semibold">
+                        <i class="fas fa-plus mr-1"></i>Add New Customer
+                    </a>
+                    <button type="button" onclick="closeCustomerModal()" class="px-6 py-2.5 text-sm font-semibold text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Add line item
+        function addLineItem() {
+            const tbody = document.getElementById('lineItemsBody');
+            const newRow = tbody.rows[0].cloneNode(true);
+
+            // Reset values
+            newRow.querySelectorAll('input, select').forEach(input => {
+                if (input.classList.contains('item-qty')) {
+                    input.value = '1';
+                } else if (input.classList.contains('item-rate')) {
+                    input.value = '';
+                } else if (input.classList.contains('item-description')) {
+                    input.value = '';
+                } else if (input.classList.contains('item-select')) {
+                    input.value = '';
+                }
+            });
+            newRow.querySelector('.item-amount').textContent = 'RM 0.00';
+
+            tbody.appendChild(newRow);
+        }
+
+        // Remove line item
+        function removeLineItem(button) {
+            const tbody = document.getElementById('lineItemsBody');
+            if (tbody.rows.length > 1) {
+                button.closest('tr').remove();
+                calculateTotals();
+            } else {
+                alert('You must have at least one line item.');
+            }
+        }
+
+        // Update line item when product is selected
+        function updateLineItem(select) {
+            const row = select.closest('tr');
+            const selectedOption = select.options[select.selectedIndex];
+            const rate = selectedOption.getAttribute('data-rate');
+
+            if (rate) {
+                row.querySelector('.item-rate').value = rate;
+                calculateLineTotal(row.querySelector('.item-rate'));
+            }
+        }
+
+        // Calculate line item total
+        function calculateLineTotal(input) {
+            const row = input.closest('tr');
+            const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+            const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
+            const amount = qty * rate;
+
+            row.querySelector('.item-amount').textContent = 'RM ' + amount.toFixed(2);
+            calculateTotals();
+        }
+
+        // Calculate totals
+        function calculateTotals() {
+            let subtotal = 0;
+
+            document.querySelectorAll('.line-item').forEach(row => {
+                const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+                const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
+                subtotal += qty * rate;
+            });
+
+            const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+            const discount = parseFloat(document.getElementById('discount').value) || 0;
+
+            const taxAmount = (subtotal * taxRate) / 100;
+            const total = subtotal + taxAmount - discount;
+
+            document.getElementById('subtotal').textContent = 'RM ' + subtotal.toFixed(2);
+            document.getElementById('taxAmount').textContent = 'RM ' + taxAmount.toFixed(2);
+            document.getElementById('total').textContent = 'RM ' + total.toFixed(2);
+        }
+
+        // Save draft
+        function saveDraft() {
+            console.log('Saving draft...');
+            alert('Quotation saved as draft! (Demo)');
+        }
+
+        // Preview quotation
+        function previewQuotation() {
+            console.log('Previewing quotation...');
+            alert('Quotation preview will open in a new window (Demo)');
+        }
+
+        // Form submission
+        document.getElementById('quotationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const customer = document.getElementById('customer').value;
+            if (!customer) {
+                alert('Please select a customer');
+                return;
+            }
+
+            console.log('Submitting quotation...');
+            alert('Quotation created and sent successfully! (Demo)');
+            // In production, this would send the quotation data to the server
+            // window.location.href = 'quotations.html';
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const overlay = document.getElementById('overlay');
+
+        if (menuToggle && overlay) {
+            menuToggle.addEventListener('click', () => {
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                overlay.classList.add('hidden');
+            });
+        }
+
+        // Initialize totals
+        calculateTotals();
+
+        // Customer Selection Modal
+        const customers = [
+            {
+                id: 1,
+                name: 'Acme Corporation',
+                email: 'contact@acmecorp.com',
+                company: 'Acme Corporation',
+                phone: '+60 12-345 6789'
+            },
+            {
+                id: 2,
+                name: 'Tech Solutions Ltd',
+                email: 'info@techsolutions.com',
+                company: 'Tech Solutions Ltd',
+                phone: '+60 12-456 7890'
+            },
+            {
+                id: 3,
+                name: 'Creative Agency',
+                email: 'hello@creativeagency.com',
+                company: 'Creative Agency',
+                phone: '+60 12-567 8901'
+            },
+            {
+                id: 4,
+                name: 'Marketing Pro',
+                email: 'contact@marketingpro.com',
+                company: 'Marketing Pro',
+                phone: '+60 12-678 9012'
+            },
+            {
+                id: 5,
+                name: 'Digital Startups Inc',
+                email: 'admin@digitalstartups.com',
+                company: 'Digital Startups Inc',
+                phone: '+60 12-789 0123'
+            }
+        ];
+
+        function openCustomerModal() {
+            document.getElementById('customerModal').classList.remove('hidden');
+            document.getElementById('customerSearch').value = '';
+            renderCustomerList(customers);
+            // Focus on search input
+            setTimeout(() => {
+                document.getElementById('customerSearch').focus();
+            }, 100);
+        }
+
+        function closeCustomerModal() {
+            document.getElementById('customerModal').classList.add('hidden');
+        }
+
+        function renderCustomerList(customerArray) {
+            const customerList = document.getElementById('customerList');
+            const noResults = document.getElementById('noResults');
+
+            if (customerArray.length === 0) {
+                customerList.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            customerList.innerHTML = customerArray.map(customer => `
+                <div onclick="selectCustomer(${customer.id}, '${customer.name}')"
+                     class="p-4 border border-gray-200 rounded-lg hover:bg-purple-50 hover:border-purple-300 cursor-pointer transition-all">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-white font-semibold text-sm">${customer.name.charAt(0)}</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-black">${customer.company}</h4>
+                            <p class="text-sm text-gray-600 mt-1">${customer.email}</p>
+                            <p class="text-xs text-gray-500 mt-1">${customer.phone}</p>
+                        </div>
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterCustomers() {
+            const searchTerm = document.getElementById('customerSearch').value.toLowerCase();
+            const filteredCustomers = customers.filter(customer =>
+                customer.name.toLowerCase().includes(searchTerm) ||
+                customer.email.toLowerCase().includes(searchTerm) ||
+                customer.company.toLowerCase().includes(searchTerm) ||
+                customer.phone.toLowerCase().includes(searchTerm)
+            );
+            renderCustomerList(filteredCustomers);
+        }
+
+        function selectCustomer(customerId, customerName) {
+            // Update hidden input with customer ID
+            document.getElementById('customer').value = customerId;
+
+            // Update button text
+            const buttonText = document.getElementById('selectedCustomerText');
+            buttonText.textContent = customerName;
+            buttonText.classList.remove('text-gray-400');
+            buttonText.classList.add('text-black', 'font-semibold');
+
+            // Close modal
+            closeCustomerModal();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('customerModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCustomerModal();
+            }
+        });
+
+        // Initialize customer list on page load
+        renderCustomerList(customers);
+    </script>
+
+</body>
+</html>
